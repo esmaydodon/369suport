@@ -1,0 +1,45 @@
+.bg-warning {
+    background-color: #faf8d8 !important;
+}
+
+.bg-danger {
+    background-color: #fde2e2 !important;
+}
+
+.text-danger {
+    color: red;
+}
+
+
+.td-small {
+    font-size: 90%;
+}
+
+.el-table thead th {
+    background-color: #f5f8fa;
+    padding-top: 3px;
+    padding-bottom: 5px;
+    font-size: 90%;
+}
+
+.el-table--medium td {
+    padding: 5px 0;
+}
+
+tr.headerCustonClass th {
+    background-color: #f2f6fc !important;
+    color: #000000 !important;
+  }
+  
+  .el-table .py-2 td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  
+  .el-table .warning-row {
+    background: oldlace;
+  }
+  
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
