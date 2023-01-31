@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import AdministracionRoutes from './modules/administracion'
 
 /* Router Modules */
 // import componentsRouter from './modules/components'
@@ -106,41 +107,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/auth',
-    component: Layout,
-    name: 'auth',
-    redirect: '/auth/usuarios',
-    meta: {
-      title: 'Auth',
-      icon: 'excel',
-      permissions: [
-        'menu.auth.permisos',
-        'menu.auth.roles',
-        'menu.auth.usuarios'
-      ]
-    },
-    children: [
-      {
-        path: 'permisos',
-        component: () => import('@/views/auth/permisos/index'),
-        name: 'Permisos',
-        meta: { title: 'Permisos', icon: 'el-icon-tickets', noCache: true, permissions: ['menu.auth.permisos'] }
-      },
-      {
-        path: 'roles',
-        component: () => import('@/views/auth/roles/index'),
-        name: 'Roles',
-        meta: { title: 'Roles', icon: 'el-icon-tickets', noCache: true, permissions: ['menu.auth.roles'] }
-      },
-      {
-        path: 'usuarios',
-        component: () => import('@/views/auth/usuarios/index'),
-        name: 'Usuarios',
-        meta: { title: 'Usuarios', icon: 'el-icon-s-custom', noCache: true, permissions: ['menu.auth.usuarios'] }
-      }
-    ]
-  },
+  AdministracionRoutes,
   // 404 page must be placed at the end a!!!
   { path: '*', redirect: '/404', hidden: true }
 ]

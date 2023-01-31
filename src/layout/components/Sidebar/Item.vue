@@ -41,7 +41,7 @@ export default {
 }
 
 .el-submenu [class^="el-icon-"] {
-    color: currentColor;
-    text-align: left;
-  }
+  color: currentColor;
+  text-align: left;
+}
 </style>

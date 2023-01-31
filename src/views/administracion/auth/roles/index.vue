@@ -4,7 +4,7 @@
       <div slot="header" class="box-card-header">
         <h3 class="card-header">ROLES</h3>
       </div>
-      <div style="position: relative">
+      <div style="position: relative;height: calc(100vh - 210px)">
         <div class="row justify-content-center">
           <div class="col-md-8">
             <div class="card card-default">
@@ -41,6 +41,7 @@
                   v-loading="listLoading"
                   :data="list"
                   border
+                  height="calc(calc(100vh - 380px))"
                   fit
                   :row-class-name="tableRowClassName"
                   :header-row-class-name="tableHeaderRowClassName"
@@ -276,7 +277,7 @@ export default {
       },
       listQuery: {
         page: 1,
-        limit: 7,
+        limit: 14,
         keybuscar: ''
       },
       filterTextPermiso: '',

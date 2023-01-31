@@ -26,6 +26,11 @@ import * as filters from './filters' // global filters
 // Mapbox
 import VueMapboxTs from 'vue-mapbox-ts-legacy'
 Vue.use(VueMapboxTs)
+
+// SweetAlert 2
+window.Swal = require('sweetalert2')
+
+// element-io config
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   locale: esLang
@@ -40,30 +45,7 @@ Vue.use(VModal, {
   }
 })
 
-import Echo from 'laravel-echo'
-window.Pusher = require('pusher-js')
-
 // This assumes you have already saved your bearer token in your browsers local storage
-
-const token = sessionStorage.getItem('token')
-
-window.Echo = new Echo({
-  broadcaster: 'pusher',
-  key: '405e1b516bd8d4e091fc',
-  wsHost: 'localhost',
-  authEndpoint: process.env.VUE_APP_BASE_API + '/pedidosreload',
-  encrypted: true,
-  forceTLS: false,
-  wsPort: 6001,
-  wssPort: 6001,
-  disableStats: true,
-  enabledTransports: ['ws', 'wss'],
-  auth: {
-    headers: {
-      authorization: 'Bearer ' + token
-    }
-  }
-})
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
