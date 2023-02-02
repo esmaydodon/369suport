@@ -6,6 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import AdministracionRoutes from './modules/administracion'
+import DesarrolloRoutes from './modules/desarrollo'
 
 /* Router Modules */
 // import componentsRouter from './modules/components'
@@ -108,6 +109,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   AdministracionRoutes,
+  DesarrolloRoutes,
   // 404 page must be placed at the end a!!!
   { path: '*', redirect: '/404', hidden: true }
 ]

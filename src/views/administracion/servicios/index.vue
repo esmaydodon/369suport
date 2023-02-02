@@ -47,6 +47,7 @@
             >
               <el-table-column
                 header-align="center"
+                align="center"
                 type="index"
                 label="#"
                 width="100"
@@ -71,7 +72,6 @@
               <el-table-column
                 header-align="center"
                 align="center"
-                prop="activo"
                 label="OPCIONES"
                 width="250"
               >
@@ -87,7 +87,6 @@
                       <el-dropdown-item :command="{command:'ELIMINAR',id:scope.row.id}" icon="el-icon-delete-solid">Eliminar</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
-                  <el-button type="primary" :class="scope.id" style="display: none">PRUEBA</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -129,8 +128,9 @@ import AgregarEditarServicio from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
 import ServiciosResource from '@/api/servicios'
-import Swal from 'sweetalert2'
 const serviciosResource = new ServiciosResource()
+// Swal
+import Swal from 'sweetalert2'
 export default {
   name: 'Servicios',
   components: { AgregarEditarServicio, Paginator },
