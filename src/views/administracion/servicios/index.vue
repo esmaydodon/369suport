@@ -60,6 +60,20 @@
               <el-table-column
                 header-align="center"
                 align="center"
+                label="CAMAS"
+                min-width="80"
+              >
+                <template slot-scope="scope">
+                  <div>
+                    <el-button type="info" plain @click="openModalCamas(scope.row.id,scope.row.nombre)">
+                      <svg-icon :key="scope.row.id" icon-class="custom-lista-camas" class-name="customIcon" />
+                    </el-button>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                header-align="center"
+                align="center"
                 prop="activo"
                 label="ACTIVO"
                 width="150"
@@ -103,7 +117,7 @@
         </el-row>
       </div>
     </el-card>
-    <!-- Dialogo para editar o Crear un servicio -->
+    <!-- Modal para editar o Crear un servicio -->
     <el-dialog
       :title="tituloModalAgregarEditar"
       :visible.sync="modalAgregarEditar"
@@ -117,6 +131,17 @@
         @close="closeModalAgregarEditar"
       />
     </el-dialog>
+    <!-- Modal vincular camas-->
+    <el-dialog
+      :title="'CAMAS DEL SERVICIO: ' + servicioVerCamaNombre"
+      :visible.sync="modalVicularCamaServicio"
+      :width="widthModal"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <listar-vincular-camas-servicio :servicio-id="servicioVerCamas_Id" @close="cerrarModalCamas" />
+    </el-dialog>
   </div>
 </template>
 
@@ -125,6 +150,7 @@
 import { debounce } from '@/utils'
 // Componentes
 import AgregarEditarServicio from './components/agregar_editar'
+import ListarVincularCamasServicio from './components/vincular_cama'
 import Paginator from '@/components/Pagination'
 // Resource
 import ServiciosResource from '@/api/servicios'
@@ -133,13 +159,14 @@ const serviciosResource = new ServiciosResource()
 import Swal from 'sweetalert2'
 export default {
   name: 'Servicios',
-  components: { AgregarEditarServicio, Paginator },
+  components: { AgregarEditarServicio, ListarVincularCamasServicio, Paginator },
   data() {
     return {
       loading: false,
       data: [],
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
+      modalVicularCamaServicio: false,
       widthModal: '40%',
       listQuery: {
         total: 0,
@@ -147,7 +174,9 @@ export default {
         limit: 14,
         keyword: ''
       },
-      servicioEditar_Id: -1
+      servicioEditar_Id: -1,
+      servicioVerCamas_Id: -1,
+      servicioVerCamaNombre: ''
     }
   },
   mounted() {
@@ -155,6 +184,8 @@ export default {
       const windowWidth = document.documentElement.clientWidth
       if (windowWidth < 768) {
         this.widthModal = '90%'
+      } else if (windowWidth <= 992 && windowWidth >= 768) {
+        this.widthModal = '60%'
       } else {
         this.widthModal = '40%'
       }
@@ -298,7 +329,25 @@ export default {
       this.modalAgregarEditar = false
       this.servicioEditar_Id = -1
       this.listaServicios()
+    },
+    // Visualizar y vincular camas
+    openModalCamas(id, nombreServicio) {
+      this.servicioVerCamas_Id = id
+      this.servicioVerCamaNombre = nombreServicio
+      this.$nextTick(() => {
+        this.modalVicularCamaServicio = true
+      })
+    },
+    cerrarModalCamas() {
+      this.modalVicularCamaServicio = false
+      this.servicioVerCamaNombre = ''
+      this.servicioVerCamas_Id = -5
     }
   }
 }
 </script>
+<style>
+.customIcon {
+  fill: blue;
+}
+</style>
