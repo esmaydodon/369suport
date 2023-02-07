@@ -2,35 +2,38 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">CAMAS</h3>
+        <h3 class="card-header">DIAGNOSTICOS</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
-          <el-input
-            v-model="listQuery.keyword"
-            placeholder="Buscar"
-            style="width: 300px"
-            class="filter-item"
-            clearable
-            @clear="listaCamas"
-          />
-          <el-button
-            class="filter-item"
-            type="primary"
-            style="margin-left: 10px"
-            icon="el-icon-search"
-            @click="listaCamas"
-          />
-          <!-- v-permission="['permisos.crear']" -->
-          <el-button
-            class="filter-item"
-            style="margin-left: 10px"
-            type="primary"
-            icon="el-icon-plus"
-            @click="abrirModalAgregar"
-          >
-            Agregar
-          </el-button>
+          <el-col :xs="24" :sm="24" :md="12" :lg="8">
+            <el-input
+              v-model="listQuery.keyword"
+              placeholder="Buscar"
+              style="margin: 5px 0px;width: 100%;"
+              class="filter-item"
+              clearable
+            />
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="4" :lg="2">
+            <el-button
+              class="filter-item"
+              type="primary"
+              style="margin: 5px 0px; width: 100%;"
+              icon="el-icon-search"
+            />
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="6" :lg="4">
+            <el-button
+              class="filter-item"
+              style="margin: 5px 0px; width: 100%;"
+              type="primary"
+              icon="el-icon-plus"
+              @click="abriModalAgregarDiagnostico"
+            >
+              Agregar
+            </el-button>
+          </el-col>
         </el-row>
         <el-row :gutter="10">
           <el-col :span="24">
@@ -42,7 +45,6 @@
             >
               <el-table-column
                 header-align="center"
-                align="center"
                 type="index"
                 label="#"
                 width="100"
@@ -50,16 +52,9 @@
               <el-table-column
                 header-align="center"
                 align="center"
-                prop="nro_cama"
-                label="NRO DE CAMA"
-                min-width="150"
-              />
-              <el-table-column
-                header-align="center"
-                align="center"
-                prop="servicio"
-                label="SERVICIO"
-                min-width="400"
+                prop="nombre"
+                label="DIAGNOSTICO"
+                min-width="500"
               />
               <el-table-column
                 header-align="center"
@@ -76,6 +71,7 @@
               <el-table-column
                 header-align="center"
                 align="center"
+                prop="activo"
                 label="OPCIONES"
                 width="250"
               >
@@ -96,59 +92,52 @@
             </el-table>
           </el-col>
           <el-col :span="24">
-            <paginator
-              :total="listQuery.total"
-              :page.sync="listQuery.page"
-              :limit.sync="listQuery.limit"
-              layout="total, prev, pager, next"
-              @pagination="listaCamas"
-            />
+            <paginator :total="listQuery.total" />
           </el-col>
         </el-row>
       </div>
     </el-card>
-    <!-- Dialogo para editar o Crear un servicio -->
+    <!-- Modal Agregar o Editar Diagnostico -->
     <el-dialog
       :title="tituloModalAgregarEditar"
-      :visible.sync="modalAgregarEditar"
+      :visible.sync="modalAgregarEditarDiagnostico"
       :width="widthModal"
       :show-close="false"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-cama :cama-id="camaEditar_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-diagnostico :diagnostico-id="diagnosticoEditar_id" @close="cerrarModalAgregarEditarDiagnostico" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-// Utilidades
-import { debounce } from '@/utils'
-// Componentes
-import AgregarEditarCama from './components/agregar_editar'
-import Paginator from '@/components/Pagination'
 // Resource
-import CamasResource from '@/api/camas'
+import DiagnosticosResource from '@/api/diagnosticos'
+const diagnosticosResource = new DiagnosticosResource()
+// @note components
+import AgregarEditarDiagnostico from './components/agregar_editar'
+import Paginator from '@/components/Pagination'
+import { debounce } from '@/utils'
 import Swal from 'sweetalert2'
-const camasResource = new CamasResource()
+
 export default {
-  name: 'Camas',
-  components: { AgregarEditarCama, Paginator },
+  name: 'Diagnosticos',
+  components: { AgregarEditarDiagnostico, Paginator },
   data() {
     return {
       loading: false,
-      data: [],
-      tituloModalAgregarEditar: '',
-      modalAgregarEditar: false,
       widthModal: '40%',
+      data: [],
       listQuery: {
         total: 0,
         page: 1,
         limit: 14,
         keyword: ''
       },
-      camaEditar_Id: -1
+      modalAgregarEditarDiagnostico: false,
+      tituloModalAgregarEditar: '',
+      diagnosticoEditar_id: -1
     }
   },
   mounted() {
@@ -156,25 +145,26 @@ export default {
       const windowWidth = document.documentElement.clientWidth
       if (windowWidth < 768) {
         this.widthModal = '90%'
+      } else if (windowWidth <= 992 && windowWidth >= 768) {
+        this.widthModal = '60%'
       } else {
         this.widthModal = '40%'
       }
+      return true
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaCamas()
+    this.getListaDiagnosticos()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaCamas() {
+    getListaDiagnosticos() {
       this.loading = true
-      camasResource.list(this.listQuery)
+      diagnosticosResource.list(this.listQuery)
         .then(
           (response) => {
-            const { data, meta } = response
-            this.data = data
-            this.listQuery.total = meta.total
+            this.data = response.data
             this.loading = false
           }
         )
@@ -185,11 +175,11 @@ export default {
           }
         )
     },
-    abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR CAMA'
-      this.camaEditar_Id = -5
+    abriModalAgregarDiagnostico() {
+      this.tituloModalAgregarEditar = 'AGREGAR DIAGNOSTICO'
+      this.diagnosticoEditar_id = -5
       this.$nextTick(() => {
-        this.modalAgregarEditar = true
+        this.modalAgregarEditarDiagnostico = true
       })
     },
     handleCommand({ command, id }) {
@@ -198,27 +188,34 @@ export default {
         console.log(command)
       }
       if (command === 'DESACTIVAR') {
-        this.handleDesactivarCama(id, false)
+        this.handleDesactivarDiagnostico(id, false)
       }
       if (command === 'ACTIVAR') {
-        this.handleDesactivarCama(id, true)
+        this.handleDesactivarDiagnostico(id, true)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarCama(id)
+        this.handleEliminarDiagnostico(id)
       }
     },
-    handleDesactivarCama(cama_id, activar) {
+    abrirModalEditar(diagnostico_id) {
+      this.tituloModalAgregarEditar = 'EDITAR DIAGNOSTICO'
+      this.diagnosticoEditar_id = diagnostico_id
+      this.$nextTick(() => {
+        this.modalAgregarEditarDiagnostico = true
+      })
+    },
+    handleDesactivarDiagnostico(diagnostico_id, activar) {
       if (activar) {
         this.loading = true
-        camasResource.desactivar(cama_id)
+        diagnosticosResource.desactivar(diagnostico_id)
           .then(
             (response) => {
+              this.loading = false
               this.$message({
                 type: 'info',
                 message: response.message
               })
-              this.loading = false
-              this.listaCamas()
+              this.getListaDiagnosticos()
             }
           )
           .catch(
@@ -229,8 +226,8 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar la cama?',
-          text: 'La cama no podrá volver a usarse, hasta ser activada',
+          title: '¿Esta seguro de desactivar el diagnostico?',
+          text: 'Al desactivar el diagnostico, no podra ser usado en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -240,7 +237,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.loading = true
-            camasResource.desactivar(cama_id)
+            diagnosticosResource.desactivar(diagnostico_id)
               .then(
                 (response) => {
                   this.$message({
@@ -248,7 +245,7 @@ export default {
                     message: response.message
                   })
                   this.loading = false
-                  this.listaCamas()
+                  this.getListaDiagnosticos()
                 }
               )
               .catch(
@@ -263,10 +260,10 @@ export default {
         })
       }
     },
-    handleEliminarCama(cama_id) {
+    handleEliminarDiagnostico(diagnostico_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la cama?',
-        text: 'Realizar esta acción si es estrictamente necesario, si la cama está obsoleta solo debe desactivarla',
+        title: '¿Esta seguro de eliminar el diagnostico?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el diagnostico, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -276,7 +273,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          camasResource.destroy(cama_id)
+          diagnosticosResource.destroy(diagnostico_id)
             .then(
               (response) => {
                 this.$message({
@@ -284,7 +281,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaCamas()
+                this.getListaDiagnosticos()
               }
             )
             .catch(
@@ -298,17 +295,11 @@ export default {
         }
       })
     },
-    abrirModalEditar(camaId) {
-      this.tituloModalAgregarEditar = 'EDITAR CAMA'
-      this.camaEditar_Id = camaId
-      this.$nextTick(() => {
-        this.modalAgregarEditar = true
-      })
-    },
-    closeModalAgregarEditar() {
-      this.modalAgregarEditar = false
-      this.camaEditar_Id = -1
-      this.listaCamas()
+    cerrarModalAgregarEditarDiagnostico() {
+      this.modalAgregarEditarDiagnostico = false
+      this.diagnosticoEditar_id = -5
+      this.tituloModalAgregarEditar = ''
+      this.getListaDiagnosticos()
     }
   }
 }

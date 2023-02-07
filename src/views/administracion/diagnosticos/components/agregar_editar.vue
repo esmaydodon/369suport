@@ -1,24 +1,22 @@
 <template>
-  <div>
-    <div v-loading="loading">
-      <el-row :gutter="10">
-        <el-col :span="24">
-          <el-form ref="form" :model="cama" label-position="top">
-            <el-form-item label="Nro cama" prop="nro_cama">
-              <el-input v-model="cama.nro_cama" />
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-      <el-row :gutter="10" :type="rowType" justify="center">
-        <el-col :xs="24" :sm="12" :md="8" style="text-align: right;">
-          <el-button type="primary" plain style="width: 100%; margin: 7px 0px;" @click="close">Cancelar</el-button>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="8" style="text-align: left;">
-          <el-button type="primary" style="width: 100%; margin: 7px 0px;" @click="handleSubmitForm">Guardar</el-button>
-        </el-col>
-      </el-row>
-    </div>
+  <div v-loading="loading">
+    <el-row :gutter="10">
+      <el-col :span="24">
+        <el-form ref="form" :model="diagnostico" label-position="top">
+          <el-form-item label="Diagnostico" prop="nombre">
+            <el-input v-model="diagnostico.nombre" />
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+    <el-row :gutter="10" :type="rowType" justify="center">
+      <el-col :xs="24" :sm="12" :md="8" style="text-align: right;">
+        <el-button type="primary" plain style="width: 100%; margin: 7px 0px;" @click="close">Cancelar</el-button>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" style="text-align: left;">
+        <el-button type="primary" style="width: 100%; margin: 7px 0px;" @click="handleSubmitForm">Guardar</el-button>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -26,31 +24,30 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import CamasResource from '@/api/camas'
-const camasResource = new CamasResource()
-
+import DiagnosticosResource from '@/api/diagnosticos'
+const diagnosticosResource = new DiagnosticosResource()
 export default {
-  name: 'AgregarEditarCama',
+  name: 'AgregarEditarDiagnostico',
   props: {
-    camaId: {
+    diagnosticoId: {
       required: true,
       type: Number
     }
   },
   data() {
     return {
+      rowType: 'flex',
       loading: false,
-      cama: {
+      diagnostico: {
         id: undefined,
-        nro_cama: ''
-      },
-      rowType: 'flex'
+        nombre: ''
+      }
     }
   },
   watch: {
-    camaId(newValue, oldValue) {
-      if (newValue > 0) {
-        this.getCama()
+    diagnosticoId(newValue, oldValue) {
+      if (newValue > 0 && newValue !== oldValue) {
+        this.getDiagnostico()
       }
     }
   },
@@ -62,23 +59,23 @@ export default {
       } else {
         this.rowType = 'flex'
       }
+      return true
     })
-
     window.addEventListener('resize', this.__resizeHandler)
-    if (this.camaId > 0) {
-      this.getCama()
+    if (this.diagnosticoId > 0) {
+      this.getDiagnostico()
     }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    getCama() {
+    getDiagnostico() {
       this.loading = true
-      camasResource.get(this.camaId)
+      diagnosticosResource.get(this.diagnosticoId)
         .then(
           (response) => {
-            this.cama = response.data
+            this.diagnostico = response.data
             this.loading = false
           }
         )
@@ -90,15 +87,15 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.camaId < 0) {
-        this.agregarCama()
+      if (this.diagnosticoId < 0) {
+        this.agregarDiagnostico()
       } else {
-        this.editarCama()
+        this.editarDiagnostico()
       }
     },
-    agregarCama() {
+    agregarDiagnostico() {
       this.loading = true
-      camasResource.store(this.cama)
+      diagnosticosResource.store(this.diagnostico)
         .then(
           (response) => {
             this.$message({
@@ -116,9 +113,9 @@ export default {
           }
         )
     },
-    editarCama() {
+    editarDiagnostico() {
       this.loading = true
-      camasResource.update(this.camaId, this.cama)
+      diagnosticosResource.update(this.diagnosticoId, this.diagnostico)
         .then(
           (response) => {
             this.$message({
@@ -137,14 +134,12 @@ export default {
         )
     },
     close() {
-      this.cama = {
+      this.diagnostico = {
         id: undefined,
-        nro_cama: ''
+        nombre: ''
       }
-
       this.$emit('close')
     }
   }
 }
-
 </script>

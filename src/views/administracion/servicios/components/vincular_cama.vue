@@ -135,7 +135,6 @@ export default {
       camasResource.camasPorServicio(this.servicioId)
         .then(
           (response) => {
-            console.log(response)
             this.listaCamasServicio = response.data
             this.loadingtab1 = false
           }
@@ -152,7 +151,6 @@ export default {
       camasResource.camasSinServicio()
         .then(
           (response) => {
-            console.log(response)
             this.listaCamasSinServicio = response.data
             this.loadingtab2 = false
           }
@@ -169,7 +167,6 @@ export default {
       camasResource.eliminarVinculoCamaServicio({ cama_id: id })
         .then(
           (response) => {
-            console.log(response)
             this.$message({
               type: 'success',
               message: response.message
@@ -199,7 +196,6 @@ export default {
         camasResource.vincularCamaServicio({ servicioId: this.servicioId, camas: camas })
           .then(
             (response) => {
-              console.log(response)
               this.$message({
                 type: 'success',
                 message: response.message

@@ -251,6 +251,10 @@ export default {
         serviciosResource.desactivar(servicio_id)
           .then(
             (response) => {
+              this.$message({
+                type: 'info',
+                message: response.message
+              })
               this.loading = false
               this.listaServicios()
             }
@@ -277,6 +281,10 @@ export default {
             serviciosResource.desactivar(servicio_id)
               .then(
                 (response) => {
+                  this.$message({
+                    type: 'info',
+                    message: response.message
+                  })
                   this.loading = false
                   this.listaServicios()
                 }
@@ -296,7 +304,7 @@ export default {
     handleEliminarServicio(servicio_id) {
       Swal.fire({
         title: '¿Esta seguro de eliminar el servicio?',
-        text: 'Si se visualiza información incorrecta se recomienda editar el servicio, o desactivarlo, amenos que el servicio nunca haya sido parte del HRDC',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el servicio, o desactivarlo, amenos que el servicio nunca haya sido parte del HRDC',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -309,7 +317,10 @@ export default {
           serviciosResource.destroy(servicio_id)
             .then(
               (response) => {
-                console.log(response)
+                this.$message({
+                  type: 'info',
+                  message: response.message
+                })
                 this.loading = false
                 this.listaServicios()
               }

@@ -12,18 +12,6 @@ const AdministracionRoutes = {
   },
   children: [
     {
-      path: 'servicios',
-      component: () => import('@/views/administracion/servicios'),
-      name: 'Servicios',
-      meta: { title: 'Servicios', icon: 'el-icon-s-operation', noCache: true }
-    },
-    {
-      path: 'camas',
-      component: () => import('@/views/administracion/camas'),
-      name: 'Camas',
-      meta: { title: 'Camas', icon: 'el-icon-s-operation', noCache: true }
-    },
-    {
       path: '/auth',
       component: AuthLayout,
       name: 'auth',
@@ -57,6 +45,24 @@ const AdministracionRoutes = {
           meta: { title: 'Usuarios', icon: 'el-icon-s-custom', noCache: true, permissions: ['menu.auth.usuarios'] }
         }
       ]
+    },
+    {
+      path: 'servicios',
+      component: () => import('@/views/administracion/servicios'),
+      name: 'Servicios',
+      meta: { title: 'Servicios', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
+      path: 'camas',
+      component: () => import('@/views/administracion/camas'),
+      name: 'Camas',
+      meta: { title: 'Camas', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
+      path: 'diagnosticos',
+      component: () => import('@/views/administracion/diagnosticos'),
+      name: 'Diagnosticos',
+      meta: { title: 'Diagnosticos', icon: 'el-icon-s-operation', noCache: true }
     }
   ]
 }

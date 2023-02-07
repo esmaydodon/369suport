@@ -61,13 +61,13 @@ export default {
       }
       return true
     })
-    window.addEventListener('rowType', this.__resizeHandler)
+    window.addEventListener('resize', this.__resizeHandler)
     if (this.servicioId > 0) {
       this.getServicio()
     }
   },
   beforeDestroy() {
-    window.removeEventListener('rowType', this.__resizeHandler)
+    window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
     getServicio() {
@@ -99,7 +99,6 @@ export default {
       serviciosResource.store(this.servicio)
         .then(
           (response) => {
-            console.log(response)
             this.$message({
               type: 'success',
               message: response.message
@@ -120,7 +119,6 @@ export default {
       serviciosResource.update(this.servicioId, this.servicio)
         .then(
           (response) => {
-            console.log(response)
             this.$message({
               type: 'success',
               message: response.message
