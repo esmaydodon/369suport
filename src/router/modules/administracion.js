@@ -47,6 +47,24 @@ const AdministracionRoutes = {
       ]
     },
     {
+      path: '/cirugia',
+      component: AuthLayout,
+      name: 'cirugia',
+      redirect: '/cirugia/salasoperaciones',
+      meta: {
+        title: 'Cirugia',
+        icon: 'custom-config-cirugia'
+      },
+      children: [
+        {
+          path: 'salasoperaciones',
+          component: () => import('@/views/administracion/configs-cirugia/salas-operaciones'),
+          name: 'SalasOperaciones',
+          meta: { title: 'Salas Operaciones', icon: 'custom-operations-room', noCache: true }
+        }
+      ]
+    },
+    {
       path: 'servicios',
       component: () => import('@/views/administracion/servicios'),
       name: 'Servicios',
@@ -63,6 +81,12 @@ const AdministracionRoutes = {
       component: () => import('@/views/administracion/diagnosticos'),
       name: 'Diagnosticos',
       meta: { title: 'Diagnosticos', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
+      path: 'operaciones',
+      component: () => import('@/views/administracion/operaciones'),
+      name: 'Operaciones',
+      meta: { title: 'Operaciones', icon: 'el-icon-s-operation', noCache: true }
     }
   ]
 }

@@ -13,6 +13,7 @@
               style="margin: 5px 0px;width: 100%;"
               class="filter-item"
               clearable
+              @clear="getListaDiagnosticos"
             />
           </el-col>
           <el-col :xs="24" :sm="24" :md="4" :lg="2">
@@ -21,6 +22,7 @@
               type="primary"
               style="margin: 5px 0px; width: 100%;"
               icon="el-icon-search"
+              @click="getListaDiagnosticos"
             />
           </el-col>
           <el-col :xs="24" :sm="24" :md="6" :lg="4">
@@ -50,8 +52,6 @@
                 width="100"
               />
               <el-table-column
-                header-align="center"
-                align="center"
                 prop="nombre"
                 label="DIAGNOSTICO"
                 min-width="500"
@@ -92,7 +92,13 @@
             </el-table>
           </el-col>
           <el-col :span="24">
-            <paginator :total="listQuery.total" />
+            <paginator
+              :total="listQuery.total"
+              :page.sync="listQuery.page"
+              :limit.sync="listQuery.limit"
+              layout="total, prev, pager, next"
+              @pagination="getListaDiagnosticos"
+            />
           </el-col>
         </el-row>
       </div>
@@ -164,7 +170,9 @@ export default {
       diagnosticosResource.list(this.listQuery)
         .then(
           (response) => {
-            this.data = response.data
+            const { data, meta } = response
+            this.data = data
+            this.listQuery.total = meta.total
             this.loading = false
           }
         )

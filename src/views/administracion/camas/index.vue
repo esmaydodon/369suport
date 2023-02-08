@@ -48,15 +48,11 @@
                 width="100"
               />
               <el-table-column
-                header-align="center"
-                align="center"
                 prop="nro_cama"
                 label="NRO DE CAMA"
                 min-width="150"
               />
               <el-table-column
-                header-align="center"
-                align="center"
                 prop="servicio"
                 label="SERVICIO"
                 min-width="400"

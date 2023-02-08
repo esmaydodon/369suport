@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">SERVICIOS</h3>
+        <h3 class="card-header">OPERACIONES</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -13,7 +13,7 @@
               style="margin: 5px 0px;width: 100%;"
               class="filter-item"
               clearable
-              @clear="listaServicios"
+              @clear="getListaOperaciones"
             />
           </el-col>
           <el-col :xs="24" :sm="24" :md="4" :lg="2">
@@ -22,7 +22,7 @@
               type="primary"
               style="margin: 5px 0px; width: 100%;"
               icon="el-icon-search"
-              @click="listaServicios"
+              @click="getListaOperaciones"
             />
           </el-col>
           <el-col :xs="24" :sm="24" :md="6" :lg="4">
@@ -31,7 +31,7 @@
               style="margin: 5px 0px; width: 100%;"
               type="primary"
               icon="el-icon-plus"
-              @click="abrirModalAgregar"
+              @click="abriModalAgregarOperacion"
             >
               Agregar
             </el-button>
@@ -47,30 +47,15 @@
             >
               <el-table-column
                 header-align="center"
-                align="center"
                 type="index"
                 label="#"
                 width="100"
               />
               <el-table-column
                 prop="nombre"
-                label="NOMBRE DEL SERVICIO"
-                min-width="300"
+                label="Operacion"
+                min-width="500"
               />
-              <el-table-column
-                header-align="center"
-                align="center"
-                label="CAMAS"
-                min-width="80"
-              >
-                <template slot-scope="scope">
-                  <div>
-                    <el-button type="info" plain @click="openModalCamas(scope.row.id,scope.row.nombre)">
-                      <svg-icon :key="scope.row.id" icon-class="custom-lista-camas" class-name="customIcon" />
-                    </el-button>
-                  </div>
-                </template>
-              </el-table-column>
               <el-table-column
                 header-align="center"
                 align="center"
@@ -86,6 +71,7 @@
               <el-table-column
                 header-align="center"
                 align="center"
+                prop="activo"
                 label="OPCIONES"
                 width="250"
               >
@@ -111,72 +97,53 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaServicios"
+              @pagination="getListaOperaciones"
             />
           </el-col>
         </el-row>
       </div>
     </el-card>
-    <!-- Modal para editar o Crear un servicio -->
+    <!-- Modal Agregar o Editar Operacion -->
     <el-dialog
       :title="tituloModalAgregarEditar"
-      :visible.sync="modalAgregarEditar"
+      :visible.sync="modalAgregarEditarOperacion"
       :width="widthModal"
       :show-close="false"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <agregar-editar-servicio
-        :servicio-id="servicioEditar_Id"
-        @close="closeModalAgregarEditar"
-      />
-    </el-dialog>
-    <!-- Modal vincular camas-->
-    <el-dialog
-      :title="'CAMAS DEL SERVICIO: ' + servicioVerCamaNombre"
-      :visible.sync="modalVicularCamaServicio"
-      :width="widthModal"
-      :show-close="false"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-    >
-      <listar-vincular-camas-servicio :servicio-id="servicioVerCamas_Id" @close="cerrarModalCamas" />
+      <agregar-editar-operacion :operacion-id="operacionEditar_id" @close="cerrarModalAgregarEditarOperacion" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-// Utilidades
-import { debounce } from '@/utils'
-// Componentes
-import AgregarEditarServicio from './components/agregar_editar'
-import ListarVincularCamasServicio from './components/vincular_cama'
-import Paginator from '@/components/Pagination'
 // Resource
-import ServiciosResource from '@/api/servicios'
-const serviciosResource = new ServiciosResource()
-// Swal
+import OperacionesResource from '@/api/operaciones'
+const operacionesResource = new OperacionesResource()
+// @note components
+import AgregarEditarOperacion from './components/agregar_editar'
+import Paginator from '@/components/Pagination'
+import { debounce } from '@/utils'
 import Swal from 'sweetalert2'
+
 export default {
-  name: 'Servicios',
-  components: { AgregarEditarServicio, ListarVincularCamasServicio, Paginator },
+  name: 'Operaciones',
+  components: { AgregarEditarOperacion, Paginator },
   data() {
     return {
       loading: false,
-      data: [],
-      tituloModalAgregarEditar: '',
-      modalAgregarEditar: false,
-      modalVicularCamaServicio: false,
       widthModal: '40%',
+      data: [],
       listQuery: {
         total: 0,
         page: 1,
         limit: 14,
         keyword: ''
       },
-      servicioEditar_Id: -1,
-      servicioVerCamas_Id: -1,
-      servicioVerCamaNombre: ''
+      modalAgregarEditarOperacion: false,
+      tituloModalAgregarEditar: '',
+      operacionEditar_id: -1
     }
   },
   mounted() {
@@ -192,15 +159,15 @@ export default {
       return true
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaServicios()
+    this.getListaOperaciones()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaServicios() {
+    getListaOperaciones() {
       this.loading = true
-      serviciosResource.list(this.listQuery)
+      operacionesResource.list(this.listQuery)
         .then(
           (response) => {
             const { data, meta } = response
@@ -216,11 +183,11 @@ export default {
           }
         )
     },
-    abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR SERVICIO'
-      this.servicioEditar_Id = -5
+    abriModalAgregarOperacion() {
+      this.tituloModalAgregarEditar = 'AGREGAR OPERACION'
+      this.operacionEditar_id = -5
       this.$nextTick(() => {
-        this.modalAgregarEditar = true
+        this.modalAgregarEditarOperacion = true
       })
     },
     handleCommand({ command, id }) {
@@ -229,34 +196,34 @@ export default {
         console.log(command)
       }
       if (command === 'DESACTIVAR') {
-        this.handleDesactivarServicio(id, false)
+        this.handleDesactivarOperacion(id, false)
       }
       if (command === 'ACTIVAR') {
-        this.handleDesactivarServicio(id, true)
+        this.handleDesactivarOperacion(id, true)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarServicio(id)
+        this.handleEliminarOperacion(id)
       }
     },
-    abrirModalEditar(servicioId) {
-      this.tituloModalAgregarEditar = 'EDITAR SERVICIO'
-      this.servicioEditar_Id = servicioId
+    abrirModalEditar(operacion_id) {
+      this.tituloModalAgregarEditar = 'EDITAR OPERACION'
+      this.operacionEditar_id = operacion_id
       this.$nextTick(() => {
-        this.modalAgregarEditar = true
+        this.modalAgregarEditarOperacion = true
       })
     },
-    handleDesactivarServicio(servicio_id, activar) {
+    handleDesactivarOperacion(operacion_id, activar) {
       if (activar) {
         this.loading = true
-        serviciosResource.desactivar(servicio_id)
+        operacionesResource.desactivar(operacion_id)
           .then(
             (response) => {
+              this.loading = false
               this.$message({
                 type: 'info',
                 message: response.message
               })
-              this.loading = false
-              this.listaServicios()
+              this.getListaOperaciones()
             }
           )
           .catch(
@@ -267,8 +234,8 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el servicio?',
-          text: 'Al desactivar el servicio, se inhabilita las camas que estén registradas en el mismo y otras funciones en el sistema.',
+          title: '¿Esta seguro de desactivar la operacion?',
+          text: 'Al desactivar la operacion, no podra ser usado en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -278,7 +245,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.loading = true
-            serviciosResource.desactivar(servicio_id)
+            operacionesResource.desactivar(operacion_id)
               .then(
                 (response) => {
                   this.$message({
@@ -286,7 +253,7 @@ export default {
                     message: response.message
                   })
                   this.loading = false
-                  this.listaServicios()
+                  this.getListaOperaciones()
                 }
               )
               .catch(
@@ -301,10 +268,10 @@ export default {
         })
       }
     },
-    handleEliminarServicio(servicio_id) {
+    handleEliminarOperacion(operacion_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el servicio?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el servicio, o desactivarlo, amenos que el servicio nunca haya sido parte del HRDC',
+        title: '¿Esta seguro de eliminar la operacion?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar la operacion, o desactivarla.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -314,7 +281,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          serviciosResource.destroy(servicio_id)
+          operacionesResource.destroy(operacion_id)
             .then(
               (response) => {
                 this.$message({
@@ -322,7 +289,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaServicios()
+                this.getListaOperaciones()
               }
             )
             .catch(
@@ -336,26 +303,12 @@ export default {
         }
       })
     },
-    closeModalAgregarEditar() {
-      this.modalAgregarEditar = false
-      this.servicioEditar_Id = -1
-      this.listaServicios()
-    },
-    // Visualizar y vincular camas
-    openModalCamas(id, nombreServicio) {
-      this.servicioVerCamas_Id = id
-      this.servicioVerCamaNombre = nombreServicio
-      this.$nextTick(() => {
-        this.modalVicularCamaServicio = true
-      })
-    },
-    cerrarModalCamas() {
-      this.modalVicularCamaServicio = false
-      this.servicioVerCamaNombre = ''
-      this.servicioVerCamas_Id = -5
+    cerrarModalAgregarEditarOperacion() {
+      this.modalAgregarEditarOperacion = false
+      this.operacionEditar_id = -5
+      this.tituloModalAgregarEditar = ''
+      this.getListaOperaciones()
     }
   }
 }
 </script>
-<style>
-</style>
