@@ -1,6 +1,7 @@
 /* Layout */
 import Layout from '@/layout'
 import AuthLayout from '@/views/administracion/auth/layout'
+import CirugiaLayout from '@/views/administracion/configs-cirugia/layout'
 
 const AdministracionRoutes = {
   path: '/administracion',
@@ -48,7 +49,7 @@ const AdministracionRoutes = {
     },
     {
       path: '/cirugia',
-      component: AuthLayout,
+      component: CirugiaLayout,
       name: 'cirugia',
       redirect: '/cirugia/salasoperaciones',
       meta: {

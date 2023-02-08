@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'AuthLayout',
+  name: 'CirugiaLayout',
   computed: {
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
