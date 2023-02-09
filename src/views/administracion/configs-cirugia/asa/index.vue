@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">SALAS DE OPERACIONES</h3>
+        <h3 class="card-header">NIVELES ASA</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -12,14 +12,14 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaSalasOperacion"
+            @clear="listaNivelesASA"
           />
           <el-button
             class="filter-item"
             type="primary"
             style="margin-left: 10px"
             icon="el-icon-search"
-            @click="listaSalasOperacion"
+            @click="listaNivelesASA"
           />
           <!-- v-permission="['permisos.crear']" -->
           <el-button
@@ -47,14 +47,14 @@
                 width="100"
               />
               <el-table-column
-                prop="nro_sala"
-                label="NRO DE SALA"
-                min-width="200"
+                prop="nombre"
+                label="Nivel ASA"
+                min-width="500"
               />
               <el-table-column
-                prop="especialidad"
-                label="Especialidad"
-                min-width="500"
+                prop="abreviatura"
+                label="Abreviatura"
+                min-width="200"
               />
               <el-table-column
                 header-align="center"
@@ -97,7 +97,7 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaSalasOperacion"
+              @pagination="listaNivelesASA"
             />
           </el-col>
         </el-row>
@@ -113,7 +113,7 @@
       :close-on-press-escape="false"
     >
       <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-sala-operaciones :sala-operaciones-id="salaOperacionesEditar_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-nivel-asa :nivel-asa-id="asaEditar_Id" @close="closeModalAgregarEditar" />
     </el-dialog>
   </div>
 </template>
@@ -121,17 +121,17 @@
 <script>
 // Utilidades
 import { debounce } from '@/utils'
-// Resource
-import SalasOperacionesResource from '@/api/salas-operaciones'
-const salasOperacionesResource = new SalasOperacionesResource()
-// Componentes
-import AgregarEditarSalaOperaciones from './components/agregar_editar'
-import Paginator from '@/components/Pagination'
 import Swal from 'sweetalert2'
 // Resource
+import AsaResource from '@/api/asa'
+const asaResource = new AsaResource()
+// Componentes
+import AgregarEditarNivelAsa from './components/agreagar_editar'
+import Paginator from '@/components/Pagination'
+// Resource
 export default {
-  name: 'ConfigSalasOperaciones',
-  components: { AgregarEditarSalaOperaciones, Paginator },
+  name: 'ConfigNivelesASA',
+  components: { AgregarEditarNivelAsa, Paginator },
   data() {
     return {
       data: [],
@@ -145,7 +145,7 @@ export default {
         keyword: ''
       },
       loading: false,
-      salaOperacionesEditar_Id: -1
+      asaEditar_Id: -1
     }
   },
   mounted() {
@@ -158,15 +158,15 @@ export default {
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaSalasOperacion()
+    this.listaNivelesASA()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaSalasOperacion() {
+    listaNivelesASA() {
       this.loading = true
-      salasOperacionesResource.list(this.listQuery)
+      asaResource.list(this.listQuery)
         .then(
           (response) => {
             const { data, meta } = response
@@ -183,8 +183,8 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR SALA DE OPERACIONES'
-      this.salaOperacionesEditar_Id = -5
+      this.tituloModalAgregarEditar = 'REGISTRAR NIVEL ASA'
+      this.asaEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -195,19 +195,19 @@ export default {
         console.log(command)
       }
       if (command === 'DESACTIVAR') {
-        this.handleCambiarEstadoSalaOperaciones(id, false)
+        this.handleCambiarEstadoASA(id, false)
       }
       if (command === 'ACTIVAR') {
-        this.handleCambiarEstadoSalaOperaciones(id, true)
+        this.handleCambiarEstadoASA(id, true)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarSalaOperaciones(id)
+        this.handleEliminarASA(id)
       }
     },
-    handleCambiarEstadoSalaOperaciones(salaOperacionesId, activar) {
+    handleCambiarEstadoASA(salaOperacionesId, activar) {
       if (activar) {
         this.loading = true
-        salasOperacionesResource.cambiarEstado(salaOperacionesId)
+        asaResource.cambiarEstado(salaOperacionesId)
           .then(
             (response) => {
               this.$message({
@@ -215,7 +215,7 @@ export default {
                 message: response.message
               })
               this.loading = false
-              this.listaSalasOperacion()
+              this.listaNivelesASA()
             }
           )
           .catch(
@@ -226,8 +226,8 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar la sala de operaciones?',
-          text: 'La sala de operaciones no podrá volver a usarse, hasta ser activada',
+          title: '¿Esta seguro de desactivar el nivel ASA?',
+          text: 'El nivel ASA no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -237,7 +237,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.loading = true
-            salasOperacionesResource.cambiarEstado(salaOperacionesId)
+            asaResource.cambiarEstado(salaOperacionesId)
               .then(
                 (response) => {
                   this.$message({
@@ -245,7 +245,7 @@ export default {
                     message: response.message
                   })
                   this.loading = false
-                  this.listaSalasOperacion()
+                  this.listaNivelesASA()
                 }
               )
               .catch(
@@ -260,10 +260,10 @@ export default {
         })
       }
     },
-    handleEliminarSalaOperaciones(salaOperacionesId) {
+    handleEliminarASA(salaOperacionesId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la sala de operaciones?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la sala de operaciones, o desactivarla.',
+        title: '¿Esta seguro de eliminar el nivel ASA?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el nivel ASA, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -273,7 +273,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          salasOperacionesResource.destroy(salaOperacionesId)
+          asaResource.destroy(salaOperacionesId)
             .then(
               (response) => {
                 this.$message({
@@ -281,7 +281,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaSalasOperacion()
+                this.listaNivelesASA()
               }
             )
             .catch(
@@ -296,8 +296,8 @@ export default {
       })
     },
     abrirModalEditar(salaOperacionesId) {
-      this.tituloModalAgregarEditar = 'EDITAR SALA DE OPERACIONES'
-      this.salaOperacionesEditar_Id = salaOperacionesId
+      this.tituloModalAgregarEditar = 'EDITAR NIVEL ASA'
+      this.asaEditar_Id = salaOperacionesId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -305,8 +305,8 @@ export default {
     closeModalAgregarEditar() {
       this.modalAgregarEditar = false
       this.tituloModalAgregarEditar = ''
-      this.salaOperacionesEditar_Id = -5
-      this.listaSalasOperacion()
+      this.asaEditar_Id = -5
+      this.listaNivelesASA()
     }
   }
 }

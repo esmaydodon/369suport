@@ -62,6 +62,12 @@ const AdministracionRoutes = {
           component: () => import('@/views/administracion/configs-cirugia/salas-operaciones'),
           name: 'SalasOperaciones',
           meta: { title: 'Salas Operaciones', icon: 'custom-operations-room', noCache: true }
+        },
+        {
+          path: 'nivelesasa',
+          component: () => import('@/views/administracion/configs-cirugia/asa'),
+          name: 'NivelesASA',
+          meta: { title: 'Niveles ASA', icon: 'custom-list-to-do', noCache: true }
         }
       ]
     },
