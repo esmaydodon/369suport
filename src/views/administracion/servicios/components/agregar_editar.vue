@@ -2,7 +2,7 @@
   <div v-loading="loading">
     <el-row :gutter="10">
       <el-col :span="24">
-        <el-form ref="form" :model="servicio" label-position="top">
+        <el-form ref="formServicios" :model="servicio" :rules="reglas" label-position="top">
           <el-form-item label="Nombre del servicio" prop="nombre">
             <el-input v-model="servicio.nombre" />
           </el-form-item>
@@ -40,6 +40,12 @@ export default {
       servicio: {
         id: undefined,
         nombre: ''
+      },
+      reglas: {
+        nombre: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 150, message: 'El campo debe tener máximo 150 caracteres.', trigger: 'blur' }
+        ]
       },
       rowType: 'flex'
     }
@@ -87,12 +93,19 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.servicioId < 0) {
-        console.log('Crear')
-        this.agregarServicio()
-      } else {
-        this.editarServicio()
-      }
+      this.$refs['formServicios'].validate((valid) => {
+        if (valid) {
+          if (this.servicioId < 0) {
+            console.log('Crear')
+            this.agregarServicio()
+          } else {
+            this.editarServicio()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     agregarServicio() {
       this.loading = true
@@ -139,6 +152,7 @@ export default {
         id: undefined,
         nombre: ''
       }
+      this.$refs['formServicios'].resetFields()
       this.$emit('close')
     }
   }

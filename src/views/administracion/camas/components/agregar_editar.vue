@@ -3,7 +3,7 @@
     <div v-loading="loading">
       <el-row :gutter="10">
         <el-col :span="24">
-          <el-form ref="form" :model="cama" label-position="top">
+          <el-form ref="formCama" :model="cama" :rules="reglas" label-position="top">
             <el-form-item label="Nro cama" prop="nro_cama">
               <el-input v-model="cama.nro_cama" />
             </el-form-item>
@@ -43,6 +43,12 @@ export default {
       cama: {
         id: undefined,
         nro_cama: ''
+      },
+      reglas: {
+        nro_cama: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 20, message: 'El campo debe tener máximo 20 caracteres.', trigger: 'blur' }
+        ]
       },
       rowType: 'flex'
     }
@@ -90,11 +96,19 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.camaId < 0) {
-        this.agregarCama()
-      } else {
-        this.editarCama()
-      }
+      this.$refs['formCama'].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+          if (this.camaId < 0) {
+            this.agregarCama()
+          } else {
+            this.editarCama()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     agregarCama() {
       this.loading = true
@@ -141,7 +155,7 @@ export default {
         id: undefined,
         nro_cama: ''
       }
-
+      this.$refs['formCama'].resetFields()
       this.$emit('close')
     }
   }

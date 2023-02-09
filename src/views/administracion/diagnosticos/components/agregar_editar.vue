@@ -2,7 +2,7 @@
   <div v-loading="loading">
     <el-row :gutter="10">
       <el-col :span="24">
-        <el-form ref="form" :model="diagnostico" label-position="top">
+        <el-form ref="formDiagnosticos" :model="diagnostico" :rules="reglas" label-position="top">
           <el-form-item label="Diagnostico" prop="nombre">
             <el-input v-model="diagnostico.nombre" />
           </el-form-item>
@@ -41,6 +41,12 @@ export default {
       diagnostico: {
         id: undefined,
         nombre: ''
+      },
+      reglas: {
+        nombre: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 100, message: 'El campo debe tener máximo 100 caracteres.', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -87,11 +93,18 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.diagnosticoId < 0) {
-        this.agregarDiagnostico()
-      } else {
-        this.editarDiagnostico()
-      }
+      this.$refs['formDiagnosticos'].validate((valid) => {
+        if (valid) {
+          if (this.diagnosticoId < 0) {
+            this.agregarDiagnostico()
+          } else {
+            this.editarDiagnostico()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     agregarDiagnostico() {
       this.loading = true
@@ -138,6 +151,7 @@ export default {
         id: undefined,
         nombre: ''
       }
+      this.$refs['formDiagnosticos'].resetFields()
       this.$emit('close')
     }
   }

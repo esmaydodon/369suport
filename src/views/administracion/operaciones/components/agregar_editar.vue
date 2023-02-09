@@ -2,7 +2,7 @@
   <div v-loading="loading">
     <el-row :gutter="10">
       <el-col :span="24">
-        <el-form ref="form" :model="operacion" label-position="top">
+        <el-form ref="formOperaciones" :model="operacion" :rules="reglas" label-position="top">
           <el-form-item label="Operacion" prop="nombre">
             <el-input v-model="operacion.nombre" />
           </el-form-item>
@@ -41,6 +41,12 @@ export default {
       operacion: {
         id: undefined,
         nombre: ''
+      },
+      reglas: {
+        nombre: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 100, message: 'El campo debe tener máximo 100 caracteres.', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -87,11 +93,18 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.operacionId < 0) {
-        this.agregarOperacion()
-      } else {
-        this.editarOperacion()
-      }
+      this.$refs['formOperaciones'].validate((valid) => {
+        if (valid) {
+          if (this.operacionId < 0) {
+            this.agregarOperacion()
+          } else {
+            this.editarOperacion()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     agregarOperacion() {
       this.loading = true
@@ -138,6 +151,7 @@ export default {
         id: undefined,
         nombre: ''
       }
+      this.$refs['formOperaciones'].resetFields()
       this.$emit('close')
     }
   }

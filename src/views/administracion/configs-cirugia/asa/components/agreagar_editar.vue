@@ -3,7 +3,7 @@
     <div v-loading="loading">
       <el-row :gutter="10">
         <el-col :span="24">
-          <el-form ref="form" :model="nivelASA" label-position="top">
+          <el-form ref="formNivelesAsa" :model="nivelASA" :rules="reglas" label-position="top">
             <el-form-item label="Nombre" prop="nombre">
               <el-input v-model="nivelASA.nombre" />
             </el-form-item>
@@ -46,6 +46,16 @@ export default {
         id: undefined,
         nombre: '',
         abreviatura: ''
+      },
+      reglas: {
+        nombre: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres.', trigger: 'blur' }
+        ],
+        abreviatura: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 10, message: 'El campo debe tener máximo 10 caracteres.', trigger: 'blur' }
+        ]
       },
       rowType: 'flex'
     }
@@ -93,11 +103,18 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.nivelAsaId < 0) {
-        this.agregarSalaOperaciones()
-      } else {
-        this.editarSalaOperaciones()
-      }
+      this.$refs['formNivelesAsa'].validate((valid) => {
+        if (valid) {
+          if (this.nivelAsaId < 0) {
+            this.agregarSalaOperaciones()
+          } else {
+            this.editarSalaOperaciones()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     agregarSalaOperaciones() {
       this.loading = true
@@ -145,7 +162,7 @@ export default {
         nombre: '',
         abreviatura: ''
       }
-
+      this.$refs['formNivelesAsa'].resetFields()
       this.$emit('close')
     }
   }

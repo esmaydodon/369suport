@@ -3,7 +3,7 @@
     <div v-loading="loading">
       <el-row :gutter="10">
         <el-col :span="24">
-          <el-form ref="form" :model="salaOperaciones" label-position="top">
+          <el-form ref="formSalasOperaciones" :model="salaOperaciones" :rules="reglas" label-position="top">
             <el-form-item label="Nro de sala" prop="nro_sala">
               <el-input v-model="salaOperaciones.nro_sala" />
             </el-form-item>
@@ -46,6 +46,16 @@ export default {
         id: undefined,
         nro_sala: '',
         especialidad: ''
+      },
+      reglas: {
+        nro_sala: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 20, message: 'El campo debe tener máximo 20 caracteres.', trigger: 'blur' }
+        ],
+        especialidad: [
+          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
+          { require: true, max: 150, message: 'El campo debe tener máximo 150 caracteres.', trigger: 'blur' }
+        ]
       },
       rowType: 'flex'
     }
@@ -93,11 +103,18 @@ export default {
         )
     },
     handleSubmitForm() {
-      if (this.salaOperacionesId < 0) {
-        this.agregarSalaOperaciones()
-      } else {
-        this.editarSalaOperaciones()
-      }
+      this.$refs['formSalasOperaciones'].validate((valid) => {
+        if (valid) {
+          if (this.salaOperacionesId < 0) {
+            this.agregarSalaOperaciones()
+          } else {
+            this.editarSalaOperaciones()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     agregarSalaOperaciones() {
       this.loading = true
@@ -145,7 +162,7 @@ export default {
         nro_sala: '',
         especialidad: ''
       }
-
+      this.$refs['formSalasOperaciones'].resetFields()
       this.$emit('close')
     }
   }
