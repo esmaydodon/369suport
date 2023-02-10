@@ -68,6 +68,12 @@ const AdministracionRoutes = {
           component: () => import('@/views/administracion/configs-cirugia/asa'),
           name: 'NivelesASA',
           meta: { title: 'Niveles ASA', icon: 'custom-list-to-do', noCache: true }
+        },
+        {
+          path: 'categoriascirugia',
+          component: () => import('@/views/administracion/configs-cirugia/categorias-cirugia'),
+          name: 'CategoriasCirugia',
+          meta: { title: 'Categorias Cirugia', icon: 'custom-list-to-do', noCache: true }
         }
       ]
     },

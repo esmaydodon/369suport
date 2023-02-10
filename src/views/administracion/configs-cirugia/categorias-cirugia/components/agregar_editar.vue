@@ -3,12 +3,9 @@
     <div v-loading="loading">
       <el-row :gutter="10">
         <el-col :span="24">
-          <el-form ref="formNivelesAsa" :model="nivelASA" :rules="reglas" label-position="top">
+          <el-form ref="formCategoriasCirugia" :model="categoriaCirugia" :rules="reglas" label-position="top">
             <el-form-item label="Nombre" prop="nombre">
-              <el-input v-model="nivelASA.nombre" />
-            </el-form-item>
-            <el-form-item label="Abreviatura" prop="abreviatura">
-              <el-input v-model="nivelASA.abreviatura" />
+              <el-input v-model="categoriaCirugia.nombre" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -29,12 +26,12 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import AsaResource from '@/api/asa'
-const asaResource = new AsaResource()
+import CategoriasCirugiaResource from '@/api/categorias-cirugia'
+const categoriasCirugiaResource = new CategoriasCirugiaResource()
 export default {
-  name: 'AgregarEditarNivelAsa',
+  name: 'AgregarEditarCategoriaCirugia',
   props: {
-    nivelAsaId: {
+    categoriaCirugiaId: {
       required: true,
       type: Number
     }
@@ -42,28 +39,23 @@ export default {
   data() {
     return {
       loading: false,
-      nivelASA: {
+      categoriaCirugia: {
         id: undefined,
-        nombre: '',
-        abreviatura: ''
+        nombre: ''
       },
       reglas: {
         nombre: [
           { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
-          { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres.', trigger: 'blur' }
-        ],
-        abreviatura: [
-          { required: true, message: 'El campo es obligatorio.', trigger: 'blur' },
-          { require: true, max: 10, message: 'El campo debe tener máximo 10 caracteres.', trigger: 'blur' }
+          { require: true, max: 100, message: 'El campo debe tener máximo 100 caracteres.', trigger: 'blur' }
         ]
       },
       rowType: 'flex'
     }
   },
   watch: {
-    nivelAsaId(newValue, oldValue) {
+    categoriaCirugiaId(newValue, oldValue) {
       if (newValue > 0 && oldValue !== newValue) {
-        this.getNivelAsa()
+        this.getCategoriaCirugia()
       }
     }
   },
@@ -78,20 +70,20 @@ export default {
     })
 
     window.addEventListener('resize', this.__resizeHandler)
-    if (this.nivelAsaId > 0) {
-      this.getNivelAsa()
+    if (this.categoriaCirugiaId > 0) {
+      this.getCategoriaCirugia()
     }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    getNivelAsa() {
+    getCategoriaCirugia() {
       this.loading = true
-      asaResource.get(this.nivelAsaId)
+      categoriasCirugiaResource.get(this.categoriaCirugiaId)
         .then(
           (response) => {
-            this.nivelASA = response.data
+            this.categoriaCirugia = response.data
             this.loading = false
           }
         )
@@ -103,12 +95,12 @@ export default {
         )
     },
     handleSubmitForm() {
-      this.$refs['formNivelesAsa'].validate((valid) => {
+      this.$refs['formCategoriasCirugia'].validate((valid) => {
         if (valid) {
-          if (this.nivelAsaId < 0) {
-            this.agregarNivelASA()
+          if (this.categoriaCirugiaId < 0) {
+            this.agregarCategoriaCirugia()
           } else {
-            this.editarNivelASA()
+            this.editarCategoriaCirugia()
           }
         } else {
           console.log('error submit!!')
@@ -116,9 +108,9 @@ export default {
         }
       })
     },
-    agregarNivelASA() {
+    agregarCategoriaCirugia() {
       this.loading = true
-      asaResource.store(this.nivelASA)
+      categoriasCirugiaResource.store(this.categoriaCirugia)
         .then(
           (response) => {
             this.$message({
@@ -136,9 +128,9 @@ export default {
           }
         )
     },
-    editarNivelASA() {
+    editarCategoriaCirugia() {
       this.loading = true
-      asaResource.update(this.nivelAsaId, this.nivelASA)
+      categoriasCirugiaResource.update(this.categoriaCirugiaId, this.categoriaCirugia)
         .then(
           (response) => {
             this.$message({
@@ -157,12 +149,11 @@ export default {
         )
     },
     close() {
-      this.nivelASA = {
+      this.categoriaCirugia = {
         id: undefined,
-        nombre: '',
-        abreviatura: ''
+        nombre: ''
       }
-      this.$refs['formNivelesAsa'].resetFields()
+      this.$refs['formCategoriasCirugia'].resetFields()
       this.$emit('close')
     }
   }
