@@ -80,6 +80,12 @@ const AdministracionRoutes = {
           component: () => import('@/views/administracion/configs-cirugia/turnos-cirugia'),
           name: 'TurnosCirugia',
           meta: { title: 'Turnos de cirugia', icon: 'custom-clock-cirugia', noCache: true }
+        },
+        {
+          path: 'turnosanasteciologo',
+          component: () => import('@/views/administracion/configs-cirugia/turnos-anasteciologo'),
+          name: 'TurnosAnasteciologo',
+          meta: { title: 'Turnos de anasteciologo', icon: 'custom-clock-syringe', noCache: true }
         }
       ]
     },
