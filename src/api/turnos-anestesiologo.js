@@ -1,9 +1,9 @@
 import Resource from '@/api/resource'
 import request from '@/utils/request'
 
-class TurnosAnasteciologoResource extends Resource {
+class TurnosAnestesiologoResource extends Resource {
   constructor() {
-    super('turnosanasteciologo')
+    super('turnosanestesiologo')
   }
   cambiarEstado(id) {
     return request({
@@ -13,4 +13,4 @@ class TurnosAnasteciologoResource extends Resource {
   }
 }
 
-export { TurnosAnasteciologoResource as default }
+export { TurnosAnestesiologoResource as default }

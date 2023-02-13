@@ -3,15 +3,15 @@
     <div v-loading="loading">
       <el-row :gutter="10">
         <el-col :span="24">
-          <el-form ref="formTurnoAnasteciologo" :model="turnoAnasteciologo" :rules="reglas" label-position="top">
+          <el-form ref="formTurnoAnesteciologo" :model="turnoAnesteciologo" :rules="reglas" label-position="top">
             <el-form-item label="Nombre del turno" prop="nombre">
-              <el-input v-model="turnoAnasteciologo.nombre" />
+              <el-input v-model="turnoAnesteciologo.nombre" />
             </el-form-item>
             <el-row :gutter="10">
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="Hora inicio" prop="hora_inicio">
                   <el-time-select
-                    v-model="turnoAnasteciologo.hora_inicio"
+                    v-model="turnoAnesteciologo.hora_inicio"
                     :picker-options="{
                       start: '00:00',
                       step: '00:30',
@@ -24,7 +24,7 @@
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="Hora fin" prop="hora_fin">
                   <el-time-select
-                    v-model="turnoAnasteciologo.hora_fin"
+                    v-model="turnoAnesteciologo.hora_fin"
                     :picker-options="{
                       start: '00:00',
                       step: '00:30',
@@ -36,7 +36,7 @@
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="Finaliza al siguiente dia" prop="finaliza_dia_siguiente">
-                  <el-switch v-model="turnoAnasteciologo.finaliza_dia_siguiente" inactive-text="No" active-text="Si" />
+                  <el-switch v-model="turnoAnesteciologo.finaliza_dia_siguiente" inactive-text="No" active-text="Si" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -59,12 +59,12 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import TurnosAnasteciologoResource from '@/api/turnos-anasteciologo'
-const turnosAnasteciologoResource = new TurnosAnasteciologoResource()
+import TurnosAnesteciologoResource from '@/api/turnos-anestesiologo'
+const turnosAnesteciologoResource = new TurnosAnesteciologoResource()
 export default {
-  name: 'AgregarEditarTurnoAnasteciologo',
+  name: 'AgregarEditarTurnoAnesteciologo',
   props: {
-    turnoAnasteciologoId: {
+    turnoAnesteciologoId: {
       required: true,
       type: Number
     }
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       loading: false,
-      turnoAnasteciologo: {
+      turnoAnesteciologo: {
         id: undefined,
         nombre: '',
         hora_inicio: '',
@@ -98,9 +98,9 @@ export default {
     }
   },
   watch: {
-    turnoAnasteciologoId(newValue, oldValue) {
+    turnoAnesteciologoId(newValue, oldValue) {
       if (newValue > 0 && oldValue !== newValue) {
-        this.getTurnoAnasteciologo()
+        this.getTurnoAnesteciologo()
       }
     }
   },
@@ -115,20 +115,20 @@ export default {
     })
 
     window.addEventListener('resize', this.__resizeHandler)
-    if (this.turnoAnasteciologoId > 0) {
-      this.getTurnoAnasteciologo()
+    if (this.turnoAnesteciologoId > 0) {
+      this.getTurnoAnesteciologo()
     }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    getTurnoAnasteciologo() {
+    getTurnoAnesteciologo() {
       this.loading = true
-      turnosAnasteciologoResource.get(this.turnoAnasteciologoId)
+      turnosAnesteciologoResource.get(this.turnoAnesteciologoId)
         .then(
           (response) => {
-            this.turnoAnasteciologo = response.data
+            this.turnoAnesteciologo = response.data
             this.loading = false
           }
         )
@@ -140,12 +140,12 @@ export default {
         )
     },
     handleSubmitForm() {
-      this.$refs['formTurnoAnasteciologo'].validate((valid) => {
+      this.$refs['formTurnoAnesteciologo'].validate((valid) => {
         if (valid) {
-          if (this.turnoAnasteciologoId < 0) {
-            this.agregarTurnoAnasteciologo()
+          if (this.turnoAnesteciologoId < 0) {
+            this.agregarTurnoAnesteciologo()
           } else {
-            this.editarTurnoAnasteciologo()
+            this.editarTurnoAnesteciologo()
           }
         } else {
           console.log('error submit!!')
@@ -153,9 +153,9 @@ export default {
         }
       })
     },
-    agregarTurnoAnasteciologo() {
+    agregarTurnoAnesteciologo() {
       this.loading = true
-      turnosAnasteciologoResource.store(this.turnoAnasteciologo)
+      turnosAnesteciologoResource.store(this.turnoAnesteciologo)
         .then(
           (response) => {
             this.$message({
@@ -173,9 +173,9 @@ export default {
           }
         )
     },
-    editarTurnoAnasteciologo() {
+    editarTurnoAnesteciologo() {
       this.loading = true
-      turnosAnasteciologoResource.update(this.turnoAnasteciologoId, this.turnoAnasteciologo)
+      turnosAnesteciologoResource.update(this.turnoAnesteciologoId, this.turnoAnesteciologo)
         .then(
           (response) => {
             this.$message({
@@ -194,14 +194,14 @@ export default {
         )
     },
     close() {
-      this.turnoAnasteciologo = {
+      this.turnoAnesteciologo = {
         id: undefined,
         nombre: '',
         hora_inicio: '',
         hora_fin: '',
         finaliza_dia_siguiente: false
       }
-      this.$refs['formTurnoAnasteciologo'].resetFields()
+      this.$refs['formTurnoAnesteciologo'].resetFields()
       this.$emit('close')
     }
   }

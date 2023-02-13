@@ -94,10 +94,10 @@ const AdministracionRoutes = {
           meta: { title: 'Tipos Anestesia', icon: 'custom-type-anesthesia', noCache: true }
         },
         {
-          path: 'turnosanasteciologo',
-          component: () => import('@/views/administracion/configs-cirugia/turnos-anasteciologo'),
-          name: 'TurnosAnasteciologo',
-          meta: { title: 'Turnos de anasteciologo', icon: 'custom-clock-syringe', noCache: true }
+          path: 'turnosanestesiologo',
+          component: () => import('@/views/administracion/configs-cirugia/turnos-anestesiologo'),
+          name: 'TurnosAnestesiologo',
+          meta: { title: 'Turnos de anestesiologo', icon: 'custom-clock-syringe', noCache: true }
         }
       ]
     },

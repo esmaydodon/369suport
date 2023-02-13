@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">TURNOS ANASTECIOLOGO</h3>
+        <h3 class="card-header">TURNOS ANESTECIOLOGO</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -12,14 +12,14 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaTurnosAnasteciologo"
+            @clear="listaTurnosAnesteciologo"
           />
           <el-button
             class="filter-item"
             type="primary"
             style="margin-left: 10px"
             icon="el-icon-search"
-            @click="listaTurnosAnasteciologo"
+            @click="listaTurnosAnesteciologo"
           />
           <!-- v-permission="['permisos.crear']" -->
           <el-button
@@ -110,7 +110,7 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaTurnosAnasteciologo"
+              @pagination="listaTurnosAnesteciologo"
             />
           </el-col>
         </el-row>
@@ -126,7 +126,7 @@
       :close-on-press-escape="false"
     >
       <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-turnos-anasteciologo :turno-anasteciologo-id="turnoAnasteciologo_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-turnos-anesteciologo :turno-anesteciologo-id="turnoAnesteciologo_Id" @close="closeModalAgregarEditar" />
     </el-dialog>
   </div>
 </template>
@@ -135,16 +135,16 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import TurnosAnasteciologoResource from '@/api/turnos-anasteciologo'
-const turnosAnasteciologoResource = new TurnosAnasteciologoResource()
+import TurnosAnesteciologoResource from '@/api/turnos-anestesiologo'
+const turnosAnesteciologoResource = new TurnosAnesteciologoResource()
 // Componentes
-import AgregarEditarTurnosAnasteciologo from './components/agregar_editar'
+import AgregarEditarTurnosAnesteciologo from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 import Swal from 'sweetalert2'
 // Resource
 export default {
-  name: 'ConfigTurnosAnasteciologo',
-  components: { AgregarEditarTurnosAnasteciologo, Paginator },
+  name: 'ConfigTurnosAnesteciologo',
+  components: { AgregarEditarTurnosAnesteciologo, Paginator },
   data() {
     return {
       data: [],
@@ -158,7 +158,7 @@ export default {
         keyword: ''
       },
       loading: false,
-      turnoAnasteciologo_Id: -1
+      turnoAnesteciologo_Id: -1
     }
   },
   mounted() {
@@ -173,15 +173,15 @@ export default {
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaTurnosAnasteciologo()
+    this.listaTurnosAnesteciologo()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaTurnosAnasteciologo() {
+    listaTurnosAnesteciologo() {
       this.loading = true
-      turnosAnasteciologoResource.list(this.listQuery)
+      turnosAnesteciologoResource.list(this.listQuery)
         .then(
           (response) => {
             const { data, meta } = response
@@ -198,8 +198,8 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR TURNO DE ANASTECIOLOGO'
-      this.turnoAnasteciologo_Id = -5
+      this.tituloModalAgregarEditar = 'REGISTRAR TURNO DE ANESTECIOLOGO'
+      this.turnoAnesteciologo_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -210,19 +210,19 @@ export default {
         console.log(command)
       }
       if (command === 'DESACTIVAR') {
-        this.handleCambiarEstadoTurnoAnasteciologo(id, false)
+        this.handleCambiarEstadoTurnoAnesteciologo(id, false)
       }
       if (command === 'ACTIVAR') {
-        this.handleCambiarEstadoTurnoAnasteciologo(id, true)
+        this.handleCambiarEstadoTurnoAnesteciologo(id, true)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarTurnoAnasteciologo(id)
+        this.handleEliminarTurnoAnesteciologo(id)
       }
     },
-    handleCambiarEstadoTurnoAnasteciologo(turnoAnasteciologoId, activar) {
+    handleCambiarEstadoTurnoAnesteciologo(turnoAnesteciologoId, activar) {
       if (activar) {
         this.loading = true
-        turnosAnasteciologoResource.cambiarEstado(turnoAnasteciologoId)
+        turnosAnesteciologoResource.cambiarEstado(turnoAnesteciologoId)
           .then(
             (response) => {
               this.$message({
@@ -230,7 +230,7 @@ export default {
                 message: response.message
               })
               this.loading = false
-              this.listaTurnosAnasteciologo()
+              this.listaTurnosAnesteciologo()
             }
           )
           .catch(
@@ -241,8 +241,8 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el turno de anasteciologo?',
-          text: 'El turno de anasteciologo no podrá volver a usarse, hasta ser activado',
+          title: '¿Esta seguro de desactivar el turno de anesteciologo?',
+          text: 'El turno de anesteciologo no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -252,7 +252,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.loading = true
-            turnosAnasteciologoResource.cambiarEstado(turnoAnasteciologoId)
+            turnosAnesteciologoResource.cambiarEstado(turnoAnesteciologoId)
               .then(
                 (response) => {
                   this.$message({
@@ -260,7 +260,7 @@ export default {
                     message: response.message
                   })
                   this.loading = false
-                  this.listaTurnosAnasteciologo()
+                  this.listaTurnosAnesteciologo()
                 }
               )
               .catch(
@@ -275,10 +275,10 @@ export default {
         })
       }
     },
-    handleEliminarTurnoAnasteciologo(turnoAnasteciologoId) {
+    handleEliminarTurnoAnesteciologo(turnoAnesteciologoId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el turno de anasteciologo?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el turno de anasteciologo, o desactivarlo.',
+        title: '¿Esta seguro de eliminar el turno de anesteciologo?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el turno de anesteciologo, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -288,7 +288,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          turnosAnasteciologoResource.destroy(turnoAnasteciologoId)
+          turnosAnesteciologoResource.destroy(turnoAnesteciologoId)
             .then(
               (response) => {
                 this.$message({
@@ -296,7 +296,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaTurnosAnasteciologo()
+                this.listaTurnosAnesteciologo()
               }
             )
             .catch(
@@ -310,9 +310,9 @@ export default {
         }
       })
     },
-    abrirModalEditar(turnoAnasteciologoId) {
-      this.tituloModalAgregarEditar = 'EDITAR TURNO DE ANASTECIOLOGO'
-      this.turnoAnasteciologo_Id = turnoAnasteciologoId
+    abrirModalEditar(turnoAnesteciologoId) {
+      this.tituloModalAgregarEditar = 'EDITAR TURNO DE ANESTECIOLOGO'
+      this.turnoAnesteciologo_Id = turnoAnesteciologoId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -320,8 +320,8 @@ export default {
     closeModalAgregarEditar() {
       this.modalAgregarEditar = false
       this.tituloModalAgregarEditar = ''
-      this.turnoAnasteciologo_Id = -5
-      this.listaTurnosAnasteciologo()
+      this.turnoAnesteciologo_Id = -5
+      this.listaTurnosAnesteciologo()
     }
   }
 }
