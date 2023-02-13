@@ -79,13 +79,19 @@ const AdministracionRoutes = {
           path: 'tiposcirugia',
           component: () => import('@/views/administracion/configs-cirugia/tipos-cirugia'),
           name: 'TiposCirugia',
-          meta: { title: 'Tipos Cirugia', icon: 'custom-list-to-do', noCache: true }
+          meta: { title: 'Tipos Cirugia', icon: 'custom-type-surgery', noCache: true }
         },
         {
           path: 'turnoscirugia',
           component: () => import('@/views/administracion/configs-cirugia/turnos-cirugia'),
           name: 'TurnosCirugia',
           meta: { title: 'Turnos de cirugia', icon: 'custom-clock-cirugia', noCache: true }
+        },
+        {
+          path: 'tiposanestesia',
+          component: () => import('@/views/administracion/configs-cirugia/tipos-anestesia'),
+          name: 'TiposAnestesia',
+          meta: { title: 'Tipos Anestesia', icon: 'custom-type-anesthesia', noCache: true }
         },
         {
           path: 'turnosanasteciologo',

@@ -3,9 +3,9 @@
     <div v-loading="loading">
       <el-row :gutter="10">
         <el-col :span="24">
-          <el-form ref="formTipoCirugia" :model="tipoCirugia" :rules="reglas" label-position="top">
-            <el-form-item label="Tipo Cirugia" prop="nombre">
-              <el-input v-model="tipoCirugia.nombre" />
+          <el-form ref="formTipoAnestesia" :model="tipoAnestesia" :rules="reglas" label-position="top">
+            <el-form-item label="Tipo anestesia" prop="nombre">
+              <el-input v-model="tipoAnestesia.nombre" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -26,12 +26,12 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import TiposCirugiaResource from '@/api/tipos-cirugia'
-const tiposCirugiaResource = new TiposCirugiaResource()
+import TiposAnestesiaResource from '@/api/tipos-anestesia'
+const tiposAnestesiaResource = new TiposAnestesiaResource()
 export default {
-  name: 'AgregarEditarTipoCirugia',
+  name: 'AgregarEditarTipoAnestesia',
   props: {
-    tipoCirugiaId: {
+    tipoAnestesiaId: {
       required: true,
       type: Number
     }
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       loading: false,
-      tipoCirugia: {
+      tipoAnestesia: {
         id: undefined,
         nombre: ''
       },
@@ -53,9 +53,9 @@ export default {
     }
   },
   watch: {
-    tipoCirugiaId(newValue, oldValue) {
+    tipoAnestesiaId(newValue, oldValue) {
       if (newValue > 0 && oldValue !== newValue) {
-        this.getTipoCirugia()
+        this.getTipoAnestesia()
       }
     }
   },
@@ -70,20 +70,20 @@ export default {
     })
 
     window.addEventListener('resize', this.__resizeHandler)
-    if (this.tipoCirugiaId > 0) {
-      this.getTipoCirugia()
+    if (this.tipoAnestesiaId > 0) {
+      this.getTipoAnestesia()
     }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    getTipoCirugia() {
+    getTipoAnestesia() {
       this.loading = true
-      tiposCirugiaResource.get(this.tipoCirugiaId)
+      tiposAnestesiaResource.get(this.tipoAnestesiaId)
         .then(
           (response) => {
-            this.tipoCirugia = response.data
+            this.tipoAnestesia = response.data
             this.loading = false
           }
         )
@@ -95,12 +95,12 @@ export default {
         )
     },
     handleSubmitForm() {
-      this.$refs['formTipoCirugia'].validate((valid) => {
+      this.$refs['formTipoAnestesia'].validate((valid) => {
         if (valid) {
-          if (this.tipoCirugiaId < 0) {
-            this.agregarTipoCirugia()
+          if (this.tipoAnestesiaId < 0) {
+            this.agregarTipoAnestesia()
           } else {
-            this.editarEditarCirugia()
+            this.editarEditarAnestesia()
           }
         } else {
           console.log('error submit!!')
@@ -108,9 +108,9 @@ export default {
         }
       })
     },
-    agregarTipoCirugia() {
+    agregarTipoAnestesia() {
       this.loading = true
-      tiposCirugiaResource.store(this.tipoCirugia)
+      tiposAnestesiaResource.store(this.tipoAnestesia)
         .then(
           (response) => {
             this.$message({
@@ -128,9 +128,9 @@ export default {
           }
         )
     },
-    editarEditarCirugia() {
+    editarEditarAnestesia() {
       this.loading = true
-      tiposCirugiaResource.update(this.tipoCirugiaId, this.tipoCirugia)
+      tiposAnestesiaResource.update(this.tipoAnestesiaId, this.tipoAnestesia)
         .then(
           (response) => {
             this.$message({
@@ -149,11 +149,11 @@ export default {
         )
     },
     close() {
-      this.tipoCirugia = {
+      this.tipoAnestesia = {
         id: undefined,
         nombre: ''
       }
-      this.$refs['formTipoCirugia'].resetFields()
+      this.$refs['formTipoAnestesia'].resetFields()
       this.$emit('close')
     }
   }

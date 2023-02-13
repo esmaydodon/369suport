@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">TIPOS DE CIRUGIA</h3>
+        <h3 class="card-header">TIPOS DE ANESTESIA</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -12,14 +12,14 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaTiposCirugia"
+            @clear="listaTiposAnestesia"
           />
           <el-button
             class="filter-item"
             type="primary"
             style="margin-left: 10px"
             icon="el-icon-search"
-            @click="listaTiposCirugia"
+            @click="listaTiposAnestesia"
           />
           <!-- v-permission="['permisos.crear']" -->
           <el-button
@@ -92,7 +92,7 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaTiposCirugia"
+              @pagination="listaTiposAnestesia"
             />
           </el-col>
         </el-row>
@@ -108,7 +108,7 @@
       :close-on-press-escape="false"
     >
       <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-tipo-cirugia :tipo-cirugia-id="tipoCirugiaEditar_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-tipo-anestesia :tipo-anestesia-id="tipoAnestesiaEditar_Id" @close="closeModalAgregarEditar" />
     </el-dialog>
   </div>
 </template>
@@ -118,15 +118,15 @@
 import { debounce } from '@/utils'
 import Swal from 'sweetalert2'
 // Resource
-import TiposCirugiaResource from '@/api/tipos-cirugia'
-const tiposCirugiaResource = new TiposCirugiaResource()
+import TiposAnestesiaResource from '@/api/tipos-anestesia'
+const tiposAnestesiaResource = new TiposAnestesiaResource()
 // Componentes
-import AgregarEditarTipoCirugia from './components/agregar_editar'
+import AgregarEditarTipoAnestesia from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
 export default {
-  name: 'ConfigTiposCirugia',
-  components: { AgregarEditarTipoCirugia, Paginator },
+  name: 'ConfigTiposAnestesia',
+  components: { AgregarEditarTipoAnestesia, Paginator },
   data() {
     return {
       data: [],
@@ -140,7 +140,7 @@ export default {
         keyword: ''
       },
       loading: false,
-      tipoCirugiaEditar_Id: -1
+      tipoAnestesiaEditar_Id: -1
     }
   },
   mounted() {
@@ -153,15 +153,15 @@ export default {
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaTiposCirugia()
+    this.listaTiposAnestesia()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaTiposCirugia() {
+    listaTiposAnestesia() {
       this.loading = true
-      tiposCirugiaResource.list(this.listQuery)
+      tiposAnestesiaResource.list(this.listQuery)
         .then(
           (response) => {
             const { data, meta } = response
@@ -178,8 +178,8 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR TIPO DE CIRUGIA'
-      this.tipoCirugiaEditar_Id = -5
+      this.tituloModalAgregarEditar = 'REGISTRAR TIPO DE ANESTESIA'
+      this.tipoAnestesiaEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -190,19 +190,19 @@ export default {
         console.log(command)
       }
       if (command === 'DESACTIVAR') {
-        this.handleCambiarEstadoTipoCirugia(id, false)
+        this.handleCambiarEstadoTipoAnestesia(id, false)
       }
       if (command === 'ACTIVAR') {
-        this.handleCambiarEstadoTipoCirugia(id, true)
+        this.handleCambiarEstadoTipoAnestesia(id, true)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarTipoCirugia(id)
+        this.handleEliminarTipoAnestesia(id)
       }
     },
-    handleCambiarEstadoTipoCirugia(tipoCirugiaId, activar) {
+    handleCambiarEstadoTipoAnestesia(tipoAnestesiaId, activar) {
       if (activar) {
         this.loading = true
-        tiposCirugiaResource.cambiarEstado(tipoCirugiaId)
+        tiposAnestesiaResource.cambiarEstado(tipoAnestesiaId)
           .then(
             (response) => {
               this.$message({
@@ -210,7 +210,7 @@ export default {
                 message: response.message
               })
               this.loading = false
-              this.listaTiposCirugia()
+              this.listaTiposAnestesia()
             }
           )
           .catch(
@@ -221,8 +221,8 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar tipo de cirugia?',
-          text: 'El tipo de cirugia no podrá volver a usarse, hasta ser activada',
+          title: '¿Esta seguro de desactivar tipo de anestesia?',
+          text: 'El tipo de anestesia no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -232,7 +232,7 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.loading = true
-            tiposCirugiaResource.cambiarEstado(tipoCirugiaId)
+            tiposAnestesiaResource.cambiarEstado(tipoAnestesiaId)
               .then(
                 (response) => {
                   this.$message({
@@ -240,7 +240,7 @@ export default {
                     message: response.message
                   })
                   this.loading = false
-                  this.listaTiposCirugia()
+                  this.listaTiposAnestesia()
                 }
               )
               .catch(
@@ -255,10 +255,10 @@ export default {
         })
       }
     },
-    handleEliminarTipoCirugia(tipoCirugiaId) {
+    handleEliminarTipoAnestesia(tipoAnestesiaId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar tipo de cirugia?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la tipo de cirugia, o desactivarlo.',
+        title: '¿Esta seguro de eliminar tipo de anestesia?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar la tipo de anestesia, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -268,7 +268,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          tiposCirugiaResource.destroy(tipoCirugiaId)
+          tiposAnestesiaResource.destroy(tipoAnestesiaId)
             .then(
               (response) => {
                 this.$message({
@@ -276,7 +276,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaTiposCirugia()
+                this.listaTiposAnestesia()
               }
             )
             .catch(
@@ -290,9 +290,9 @@ export default {
         }
       })
     },
-    abrirModalEditar(tipoCirugiaId) {
-      this.tituloModalAgregarEditar = 'EDITAR TIPO DE CIRUGIA'
-      this.tipoCirugiaEditar_Id = tipoCirugiaId
+    abrirModalEditar(tipoAnestesiaId) {
+      this.tituloModalAgregarEditar = 'EDITAR TIPO DE ANESTESIA'
+      this.tipoAnestesiaEditar_Id = tipoAnestesiaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -300,8 +300,8 @@ export default {
     closeModalAgregarEditar() {
       this.modalAgregarEditar = false
       this.tituloModalAgregarEditar = ''
-      this.tipoCirugiaEditar_Id = -5
-      this.listaTiposCirugia()
+      this.tipoAnestesiaEditar_Id = -5
+      this.listaTiposAnestesia()
     }
   }
 }
