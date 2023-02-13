@@ -76,6 +76,12 @@ const AdministracionRoutes = {
           meta: { title: 'Categorias Cirugia', icon: 'custom-list-to-do', noCache: true }
         },
         {
+          path: 'tiposcirugia',
+          component: () => import('@/views/administracion/configs-cirugia/tipos-cirugia'),
+          name: 'TiposCirugia',
+          meta: { title: 'Tipos Cirugia', icon: 'custom-list-to-do', noCache: true }
+        },
+        {
           path: 'turnoscirugia',
           component: () => import('@/views/administracion/configs-cirugia/turnos-cirugia'),
           name: 'TurnosCirugia',
