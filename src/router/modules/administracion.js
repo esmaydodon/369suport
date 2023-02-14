@@ -130,6 +130,12 @@ const AdministracionRoutes = {
       component: () => import('@/views/administracion/operaciones'),
       name: 'Operaciones',
       meta: { title: 'Operaciones', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
+      path: 'regiones',
+      component: () => import('@/views/administracion/publics/ubicaciones-geograficas'),
+      name: 'Regiones',
+      meta: { title: 'Ubicaciones geograficas', icon: 'custom-map-peru', noCache: true }
     }
   ]
 }
