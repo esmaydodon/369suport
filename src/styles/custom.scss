@@ -27,23 +27,31 @@
 }
 
 tr.headerCustonClass th {
-    background-color: #f2f6fc !important;
-    color: #000000 !important;
-  }
+  background-color: #f2f6fc !important;
+  color: #000000 !important;
+}
 
-  .el-table .py-2 td {
-    padding-top: 6px;
-    padding-bottom: 6px;
-  }
+.el-table .py-2 td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
 
-  .el-table .warning-row {
-    background: oldlace;
-  }
+.el-table .warning-row {
+  background: oldlace;
+}
 
-  .el-table .success-row {
-    background: #f0f9eb;
-  }
+.el-table .success-row {
+  background: #f0f9eb;
+}
 
-  .swal2-container {
-    z-index:9999 !important;
-  }
+.swal2-container {
+  z-index:9999 !important;
+}
+
+.el-select {
+  width: 100%;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: 100%;
+}

@@ -108,6 +108,12 @@ const AdministracionRoutes = {
       ]
     },
     {
+      path: 'personas',
+      component: () => import('@/views/administracion/personas'),
+      name: 'Personas',
+      meta: { title: 'Personas', icon: 'people', noCache: true }
+    },
+    {
       path: 'servicios',
       component: () => import('@/views/administracion/servicios'),
       name: 'Servicios',
