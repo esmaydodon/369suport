@@ -98,7 +98,6 @@ export default {
     handleSubmitForm() {
       this.$refs['formCama'].validate((valid) => {
         if (valid) {
-          alert('submit!')
           if (this.camaId < 0) {
             this.agregarCama()
           } else {

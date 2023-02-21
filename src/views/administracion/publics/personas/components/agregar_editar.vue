@@ -90,7 +90,7 @@
       </el-form>
       <el-row :gutter="10" :type="rowType" justify="center">
         <el-col :xs="24" :sm="12" :md="8" style="text-align: right;">
-          <el-button type="primary" plain style="width: 100%; margin: 7px 0px;" @click="close">Cancelar</el-button>
+          <el-button type="primary" plain style="width: 100%; margin: 7px 0px;" @click="close(null)">Cancelar</el-button>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" style="text-align: left;">
           <el-button type="primary" style="width: 100%; margin: 7px 0px;" @click="handleSubmitForm">Guardar</el-button>
@@ -310,7 +310,7 @@ export default {
               message: response.message
             })
             this.loading = false
-            this.close()
+            this.close(response)
           }
         )
         .catch(
@@ -330,7 +330,7 @@ export default {
               message: response.message
             })
             this.loading = false
-            this.close()
+            this.close(null)
           }
         )
         .catch(
@@ -340,7 +340,7 @@ export default {
           }
         )
     },
-    close() {
+    close(data) {
       this.persona = {
         id: undefined,
         tipo_doc_identidad: '',
@@ -356,7 +356,7 @@ export default {
         direccion: ''
       }
       this.$refs['formPersona'].resetFields()
-      this.$emit('close')
+      this.$emit('close', { persona_id: data != null ? data.persona_id : null })
     }
   }
 }

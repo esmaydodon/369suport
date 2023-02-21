@@ -110,6 +110,19 @@ export const constantRoutes = [
 export const asyncRoutes = [
   AdministracionRoutes,
   DesarrolloRoutes,
+  {
+    path: '/historiasclinicas',
+    component: Layout,
+    redirect: '/historiasclinicas/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/publics/historiasclinicas'),
+        name: 'HistoriasClinicas',
+        meta: { title: 'Historias Clinicas', icon: 'custom-list-to-do', noCache: true }
+      }
+    ]
+  },
   // 404 page must be placed at the end a!!!
   { path: '*', redirect: '/404', hidden: true }
 ]

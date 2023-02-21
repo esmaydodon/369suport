@@ -55,3 +55,7 @@ tr.headerCustonClass th {
 .el-date-editor.el-input, .el-date-editor.el-input__inner {
   width: 100%;
 }
+
+.el-dialog.is-fullscreen {
+  overflow: hidden !important;
+}

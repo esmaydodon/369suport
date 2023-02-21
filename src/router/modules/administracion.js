@@ -109,31 +109,31 @@ const AdministracionRoutes = {
     },
     {
       path: 'personas',
-      component: () => import('@/views/administracion/personas'),
+      component: () => import('@/views/administracion/publics/personas'),
       name: 'Personas',
       meta: { title: 'Personas', icon: 'people', noCache: true }
     },
     {
       path: 'servicios',
-      component: () => import('@/views/administracion/servicios'),
+      component: () => import('@/views/administracion/publics/servicios'),
       name: 'Servicios',
       meta: { title: 'Servicios', icon: 'el-icon-s-operation', noCache: true }
     },
     {
       path: 'camas',
-      component: () => import('@/views/administracion/camas'),
+      component: () => import('@/views/administracion/publics/camas'),
       name: 'Camas',
       meta: { title: 'Camas', icon: 'el-icon-s-operation', noCache: true }
     },
     {
       path: 'diagnosticos',
-      component: () => import('@/views/administracion/diagnosticos'),
+      component: () => import('@/views/administracion/publics/diagnosticos'),
       name: 'Diagnosticos',
       meta: { title: 'Diagnosticos', icon: 'el-icon-s-operation', noCache: true }
     },
     {
       path: 'operaciones',
-      component: () => import('@/views/administracion/operaciones'),
+      component: () => import('@/views/administracion/publics/operaciones'),
       name: 'Operaciones',
       meta: { title: 'Operaciones', icon: 'el-icon-s-operation', noCache: true }
     },
