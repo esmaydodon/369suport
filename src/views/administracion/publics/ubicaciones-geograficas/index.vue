@@ -199,7 +199,7 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR DESTINO REGION'
+      this.tituloModalAgregarEditar = 'REGISTRAR REGION'
       this.regionEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
