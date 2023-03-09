@@ -2,24 +2,22 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">ADMINISTRACION DE PERSONAS</h3>
+        <h3 class="card-header">Profesiones</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
           <el-input
-            v-model="listQuery.keyword"
             placeholder="Buscar"
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaPersonas"
           />
           <el-button
             class="filter-item"
             type="primary"
             style="margin-left: 10px"
             icon="el-icon-search"
-            @click="listaPersonas"
+            @click="listaProfesiones"
           />
           <!-- v-permission="['permisos.crear']" -->
           <el-button
@@ -27,7 +25,7 @@
             style="margin-left: 10px"
             type="primary"
             icon="el-icon-plus"
-            @click="abrirModalAgregar"
+            @click="AbrirModalAgregar"
           >
             Agregar
           </el-button>
@@ -48,32 +46,23 @@
                 width="100"
               />
               <el-table-column
-                prop="doc_identidad"
-                label="DOC IDENTIDAD"
-                min-width="150"
-              />
-              <el-table-column
-                prop="nombres"
-                label="NOMBRE COMPLETO"
-                min-width="450"
-              >
-                <template slot-scope="scope">
-                  <div>{{ scope.row.nombres+' '+scope.row.apellido_paterno+' '+scope.row.apellido_materno }}</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sexo"
-                label="SEXO"
+                prop="codigo"
+                label="CODIGO"
                 min-width="100"
               />
               <el-table-column
-                prop="telefono"
-                label="TELEFONO"
-                min-width="100"
+                prop="nombre"
+                label="PROFESION"
+                min-width="500"
+              />
+              <el-table-column
+                prop="abreviatura"
+                label="ABREVIATURA"
               />
               <el-table-column
                 header-align="center"
                 align="center"
+                prop="activo"
                 label="OPCIONES"
                 width="250"
               >
@@ -97,7 +86,7 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaPersonas"
+              @pagination="listaProfesiones"
             />
           </el-col>
         </el-row>
@@ -112,8 +101,7 @@
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-persona :persona-id="personaEditar_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-profesion :profesion-id="profesionEditarId" @close="cerrarModalAgregarEditar" />
     </el-dialog>
   </div>
 </template>
@@ -121,16 +109,16 @@
 <script>
 // Utilidades
 import { debounce } from '@/utils'
-import Swal from 'sweetalert2'
 // Componentes
-import AgregarEditarPersona from './components/agregar_editar'
+import AgregarEditarProfesion from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
-import PersonasResource from '@/api/personas'
-const personasResource = new PersonasResource()
+import ProfesionesResource from '@/api/profesiones'
+import Swal from 'sweetalert2'
+const profesionesResource = new ProfesionesResource()
 export default {
-  name: 'Camas',
-  components: { AgregarEditarPersona, Paginator },
+  name: 'Servicios',
+  components: { AgregarEditarProfesion, Paginator },
   data() {
     return {
       loading: false,
@@ -144,7 +132,7 @@ export default {
         limit: 14,
         keyword: ''
       },
-      personaEditar_Id: -1
+      profesionEditarId: -5
     }
   },
   mounted() {
@@ -157,15 +145,15 @@ export default {
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaPersonas()
+    this.listaProfesiones()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaPersonas() {
+    listaProfesiones() {
       this.loading = true
-      personasResource.list(this.listQuery)
+      profesionesResource.list(this.listQuery)
         .then(
           (response) => {
             const { data, meta } = response
@@ -181,9 +169,9 @@ export default {
           }
         )
     },
-    abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR PERSONA'
-      this.personaEditar_Id = -5
+    AbrirModalAgregar() {
+      this.tituloModalAgregarEditar = 'REGISTRAR PROFESION'
+      this.profesionEditarId = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -191,15 +179,23 @@ export default {
     handleCommand({ command, id }) {
       if (command === 'EDITAR') {
         this.abrirModalEditar(id)
+        console.log(command)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarPersona(id)
+        this.handleEliminarCama(id)
       }
     },
-    handleEliminarPersona(peronsa_id) {
+    abrirModalEditar(profesionId) {
+      this.tituloModalAgregarEditar = 'EDITAR PROFESION'
+      this.profesionEditarId = profesionId
+      this.$nextTick(() => {
+        this.modalAgregarEditar = true
+      })
+    },
+    handleEliminarCama(profesionId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el registro de la persona?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el registro de la persona',
+        title: '¿Esta seguro de eliminar el registro de la profesion?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el registro de la profesion',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -209,7 +205,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          personasResource.destroy(peronsa_id)
+          profesionesResource.destroy(profesionId)
             .then(
               (response) => {
                 this.$message({
@@ -217,7 +213,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaPersonas()
+                this.listaProfesiones()
               }
             )
             .catch(
@@ -231,17 +227,13 @@ export default {
         }
       })
     },
-    abrirModalEditar(personaId) {
-      this.tituloModalAgregarEditar = 'EDITAR PERSONA'
-      this.personaEditar_Id = personaId
-      this.$nextTick(() => {
-        this.modalAgregarEditar = true
-      })
-    },
-    closeModalAgregarEditar() {
+    cerrarModalAgregarEditar() {
+      this.tituloModalAgregarEditar = ''
       this.modalAgregarEditar = false
-      this.personaEditar_Id = -1
-      this.listaPersonas()
+      this.listaProfesiones()
+      this.$nextTick(() => {
+        this.profesionEditarId = -5
+      })
     }
   }
 }

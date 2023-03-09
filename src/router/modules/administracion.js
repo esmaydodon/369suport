@@ -142,6 +142,12 @@ const AdministracionRoutes = {
       component: () => import('@/views/administracion/publics/ubicaciones-geograficas'),
       name: 'Regiones',
       meta: { title: 'Ubicaciones geograficas', icon: 'custom-map-peru', noCache: true }
+    },
+    {
+      path: 'profesiones',
+      component: () => import('@/views/administracion/publics/profesiones'),
+      name: 'Profesiones',
+      meta: { title: 'Profesiones', icon: 'el-icon-s-order', noCache: true }
     }
   ]
 }
