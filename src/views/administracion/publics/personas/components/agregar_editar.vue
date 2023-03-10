@@ -81,9 +81,33 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="23">
+          <el-col :span="24">
             <el-form-item label="Direccion" prop="direccion">
               <el-input v-model="persona.direccion" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="24">
+            <el-form-item label="Nivel educativo" prop="nivel_educativo_id">
+              <el-autocomplete
+                :fetch-suggestions="buscarProfesion"
+                placeholder="Busque y seleccione la profesión"
+                style="width: 100%;"
+                @select="seleccionarProfesion"
+                @focus="persona.profesion_id = null"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="Profesion" prop="profesion_id">
+              <el-autocomplete
+                :fetch-suggestions="buscarProfesion"
+                placeholder="Busque y seleccione la profesión"
+                style="width: 100%;"
+                @select="seleccionarProfesion"
+                @focus="persona.profesion_id = null"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -136,7 +160,8 @@ export default {
         telefono: '',
         correo: '',
         distrito_id: '',
-        direccion: ''
+        direccion: '',
+        profesion_id: null
       },
       reglas: {
         tipo_doc_identidad: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
@@ -340,6 +365,13 @@ export default {
           }
         )
     },
+    // funciones del autocompletado de profesion
+    seleccionarProfesion() {
+
+    },
+    buscarProfesion() {
+
+    },
     close(data) {
       this.persona = {
         id: undefined,
@@ -353,7 +385,8 @@ export default {
         telefono: '',
         correo: '',
         distrito_id: '',
-        direccion: ''
+        direccion: '',
+        profesion_id: null
       }
       this.$refs['formPersona'].resetFields()
       this.$emit('close', { persona_id: data != null ? data.persona_id : null })

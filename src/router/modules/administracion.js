@@ -144,6 +144,12 @@ const AdministracionRoutes = {
       meta: { title: 'Ubicaciones geograficas', icon: 'custom-map-peru', noCache: true }
     },
     {
+      path: 'niveleseducativos',
+      component: () => import('@/views/administracion/publics/niveles-educativos'),
+      name: 'NivelesEducativos',
+      meta: { title: 'Niveles Educativos', icon: 'el-icon-s-order', noCache: true }
+    },
+    {
       path: 'profesiones',
       component: () => import('@/views/administracion/publics/profesiones'),
       name: 'Profesiones',
