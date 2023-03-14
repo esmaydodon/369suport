@@ -11,26 +11,26 @@ class CamasResource extends Resource {
       method: 'post'
     })
   }
-  camasPorServicio(servicioId) {
+  camasPorArea(servicioId) {
     return request({
       url: '/' + this.uri + '/' + servicioId + '/listacamas',
       method: 'get'
     })
   }
-  camasSinServicio() {
+  camasSinArea() {
     return request({
-      url: '/' + this.uri + '/sinservicio',
+      url: '/' + this.uri + '/sinarea',
       method: 'post'
     })
   }
-  vincularCamaServicio(data) {
+  vincularCamaArea(data) {
     return request({
       url: '/' + this.uri + '/vincular',
       method: 'post',
       data: data
     })
   }
-  eliminarVinculoCamaServicio(data) {
+  eliminarVinculoCamaArea(data) {
     return request({
       url: '/' + this.uri + '/eliminarvinculo',
       method: 'post',
