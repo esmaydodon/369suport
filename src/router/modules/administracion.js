@@ -190,6 +190,12 @@ const AdministracionRoutes = {
       meta: { title: 'Areas', icon: 'el-icon-s-operation', noCache: true }
     },
     {
+      path: 'cargos',
+      component: () => import('@/views/administracion/publics/cargos'),
+      name: 'Cargos',
+      meta: { title: 'Cargos', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
       path: 'diagnosticos',
       component: () => import('@/views/administracion/publics/diagnosticos'),
       name: 'Diagnosticos',

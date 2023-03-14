@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">AREAS</h3>
+        <h3 class="card-header">CARGOS</h3>
       </div>
       <div style="position: relative; height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -12,15 +12,15 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaAreas"
-            @keyup.enter.native="listaAreas"
+            @clear="listaCargos"
+            @keyup.enter.native="listaCargos"
           />
           <el-button
             class="filter-item"
             type="primary"
             style="margin-left: 10px"
             icon="el-icon-search"
-            @click="listaAreas"
+            @click="listaCargos"
           />
           <!-- v-permission="['permisos.crear']" -->
           <el-button
@@ -50,7 +50,7 @@
               />
               <el-table-column
                 prop="nombre"
-                label="NOMBRE AREA"
+                label="NOMBRE CARGO"
                 min-width="150"
               />
               <el-table-column
@@ -112,7 +112,7 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaAreas"
+              @pagination="listaCargos"
             />
           </el-col>
         </el-row>
@@ -128,8 +128,8 @@
       :close-on-press-escape="false"
     >
       <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-area
-        :area-id="areaEditar_Id"
+      <agregar-editar-cargo
+        :cargo-id="cargoEditar_Id"
         @close="closeModalAgregarEditar"
       />
     </el-dialog>
@@ -140,16 +140,16 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Componentes
-import AgregarEditarArea from './components/agregar_editar'
+import AgregarEditarCargo from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
-import AreasResource from '@/api/areas'
+import CargosResource from '@/api/cargos'
 import Swal from 'sweetalert2'
-const areasResource = new AreasResource()
-// const areasResource = new AreasResource()
+const cargosResource = new CargosResource()
+// const cargosResource = new cargosResource()
 export default {
-  name: 'Areas',
-  components: { AgregarEditarArea, Paginator },
+  name: 'Cargos',
+  components: { AgregarEditarCargo, Paginator },
   data() {
     return {
       loading: false,
@@ -164,7 +164,7 @@ export default {
         limit: 14,
         keyword: ''
       },
-      areaEditar_Id: -1
+      cargoEditar_Id: -1
     }
   },
   mounted() {
@@ -177,15 +177,15 @@ export default {
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaAreas()
+    this.listaCargos()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaAreas() {
+    listaCargos() {
       this.loading = true
-      areasResource
+      cargosResource
         .list(this.listQuery)
         .then((response) => {
           const { data, meta } = response
@@ -199,8 +199,8 @@ export default {
         })
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR AREA'
-      this.areaEditar_Id = -5
+      this.tituloModalAgregarEditar = 'REGISTRAR CARGO'
+      this.cargoEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -211,27 +211,27 @@ export default {
         console.log(command)
       }
       if (command === 'DESACTIVAR') {
-        this.handleDesactivarArea(id, false)
+        this.handleDesactivarCargo(id, false)
       }
       if (command === 'ACTIVAR') {
-        this.handleDesactivarArea(id, true)
+        this.handleDesactivarCargo(id, true)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarArea(id)
+        this.handleEliminarCargo(id)
       }
     },
-    handleDesactivarArea(area_id, activar) {
+    handleDesactivarCargo(cargo_id, activar) {
       if (activar) {
         this.loading = true
-        areasResource
-          .desactivar(area_id)
+        cargosResource
+          .desactivar(cargo_id)
           .then((response) => {
             this.$message({
               type: 'info',
               message: response.message
             })
             this.loading = false
-            this.listaAreas()
+            this.listaCargos()
           })
           .catch((error) => {
             console.log(error)
@@ -239,7 +239,7 @@ export default {
           })
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar El Área?',
+          title: '¿Esta seguro de desactivar El Cárgo?',
           text: 'El Área no podrá volver a usarse, hasta ser activada',
           icon: 'warning',
           reverseButtons: true,
@@ -250,15 +250,15 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.loading = true
-            areasResource
-              .desactivar(area_id)
+            cargosResource
+              .desactivar(cargo_id)
               .then((response) => {
                 this.$message({
                   type: 'info',
                   message: response.message
                 })
                 this.loading = false
-                this.listaAreas()
+                this.listaCargos()
               })
               .catch((error) => {
                 console.log(error)
@@ -270,10 +270,10 @@ export default {
         })
       }
     },
-    handleEliminarArea(area_id) {
+    handleEliminarCargo(cargo_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la area?',
-        text: 'Realizar esta acción si es estrictamente necesario, si la area está obsoleta solo debe desactivarla',
+        title: '¿Esta seguro de eliminar la Cargo?',
+        text: 'Realizar esta acción si es estrictamente necesario, si la Cargo está obsoleta solo debe desactivarla',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -283,15 +283,15 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          areasResource
-            .destroy(area_id)
+          cargosResource
+            .destroy(cargo_id)
             .then((response) => {
               this.$message({
                 type: 'info',
                 message: response.message
               })
               this.loading = false
-              this.listaAreas()
+              this.listaCargos()
             })
             .catch((error) => {
               console.log(error)
@@ -302,17 +302,17 @@ export default {
         }
       })
     },
-    abrirModalEditar(areaId) {
-      this.tituloModalAgregarEditar = 'EDITAR AREA'
-      this.areaEditar_Id = areaId
+    abrirModalEditar(cargoId) {
+      this.tituloModalAgregarEditar = 'EDITAR CARGO'
+      this.cargoEditar_Id = cargoId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
     },
     closeModalAgregarEditar() {
       this.modalAgregarEditar = false
-      this.areaEditar_Id = -1
-      this.listaAreas()
+      this.cargoEditar_Id = -1
+      this.listaCargos()
     }
   }
 }
