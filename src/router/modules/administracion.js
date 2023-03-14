@@ -31,19 +31,34 @@ const AdministracionRoutes = {
           path: 'permisos',
           component: () => import('@/views/administracion/auth/permisos/index'),
           name: 'Permisos',
-          meta: { title: 'Permisos', icon: 'el-icon-tickets', noCache: true, permissions: ['menu.auth.permisos'] }
+          meta: {
+            title: 'Permisos',
+            icon: 'el-icon-tickets',
+            noCache: true,
+            permissions: ['menu.auth.permisos']
+          }
         },
         {
           path: 'roles',
           component: () => import('@/views/administracion/auth/roles/index'),
           name: 'Roles',
-          meta: { title: 'Roles', icon: 'el-icon-tickets', noCache: true, permissions: ['menu.auth.roles'] }
+          meta: {
+            title: 'Roles',
+            icon: 'el-icon-tickets',
+            noCache: true,
+            permissions: ['menu.auth.roles']
+          }
         },
         {
           path: 'usuarios',
           component: () => import('@/views/administracion/auth/usuarios/index'),
           name: 'Usuarios',
-          meta: { title: 'Usuarios', icon: 'el-icon-s-custom', noCache: true, permissions: ['menu.auth.usuarios'] }
+          meta: {
+            title: 'Usuarios',
+            icon: 'el-icon-s-custom',
+            noCache: true,
+            permissions: ['menu.auth.usuarios']
+          }
         }
       ]
     },
@@ -59,51 +74,94 @@ const AdministracionRoutes = {
       children: [
         {
           path: 'salasoperaciones',
-          component: () => import('@/views/administracion/configs-cirugia/salas-operaciones'),
+          component: () =>
+            import('@/views/administracion/configs-cirugia/salas-operaciones'),
           name: 'SalasOperaciones',
-          meta: { title: 'Salas Operaciones', icon: 'custom-operations-room', noCache: true }
+          meta: {
+            title: 'Salas Operaciones',
+            icon: 'custom-operations-room',
+            noCache: true
+          }
         },
         {
           path: 'nivelesasa',
           component: () => import('@/views/administracion/configs-cirugia/asa'),
           name: 'NivelesASA',
-          meta: { title: 'Niveles ASA', icon: 'custom-list-to-do', noCache: true }
+          meta: {
+            title: 'Niveles ASA',
+            icon: 'custom-list-to-do',
+            noCache: true
+          }
         },
         {
           path: 'categoriascirugia',
-          component: () => import('@/views/administracion/configs-cirugia/categorias-cirugia'),
+          component: () =>
+            import('@/views/administracion/configs-cirugia/categorias-cirugia'),
           name: 'CategoriasCirugia',
-          meta: { title: 'Categorias Cirugia', icon: 'custom-list-to-do', noCache: true }
+          meta: {
+            title: 'Categorias Cirugia',
+            icon: 'custom-list-to-do',
+            noCache: true
+          }
         },
         {
           path: 'tiposcirugia',
-          component: () => import('@/views/administracion/configs-cirugia/tipos-cirugia'),
+          component: () =>
+            import('@/views/administracion/configs-cirugia/tipos-cirugia'),
           name: 'TiposCirugia',
-          meta: { title: 'Tipos Cirugia', icon: 'custom-type-surgery', noCache: true }
+          meta: {
+            title: 'Tipos Cirugia',
+            icon: 'custom-type-surgery',
+            noCache: true
+          }
         },
         {
           path: 'turnoscirugia',
-          component: () => import('@/views/administracion/configs-cirugia/turnos-cirugia'),
+          component: () =>
+            import('@/views/administracion/configs-cirugia/turnos-cirugia'),
           name: 'TurnosCirugia',
-          meta: { title: 'Turnos de cirugia', icon: 'custom-clock-cirugia', noCache: true }
+          meta: {
+            title: 'Turnos de cirugia',
+            icon: 'custom-clock-cirugia',
+            noCache: true
+          }
         },
         {
           path: 'tiposanestesia',
-          component: () => import('@/views/administracion/configs-cirugia/tipos-anestesia'),
+          component: () =>
+            import('@/views/administracion/configs-cirugia/tipos-anestesia'),
           name: 'TiposAnestesia',
-          meta: { title: 'Tipos Anestesia', icon: 'custom-type-anesthesia', noCache: true }
+          meta: {
+            title: 'Tipos Anestesia',
+            icon: 'custom-type-anesthesia',
+            noCache: true
+          }
         },
         {
           path: 'turnosanestesiologo',
-          component: () => import('@/views/administracion/configs-cirugia/turnos-anestesiologo'),
+          component: () =>
+            import(
+              '@/views/administracion/configs-cirugia/turnos-anestesiologo'
+            ),
           name: 'TurnosAnestesiologo',
-          meta: { title: 'Turnos de anestesiologo', icon: 'custom-clock-syringe', noCache: true }
+          meta: {
+            title: 'Turnos de anestesiologo',
+            icon: 'custom-clock-syringe',
+            noCache: true
+          }
         },
         {
           path: 'destinospostcirugia',
-          component: () => import('@/views/administracion/configs-cirugia/destinos-post-cirugia'),
+          component: () =>
+            import(
+              '@/views/administracion/configs-cirugia/destinos-post-cirugia'
+            ),
           name: 'DestinosPostCirugia',
-          meta: { title: 'Destinos Post Cirugia', icon: 'custom-destination-postsurgery', noCache: true }
+          meta: {
+            title: 'Destinos Post Cirugia',
+            icon: 'custom-destination-postsurgery',
+            noCache: true
+          }
         }
       ]
     },
@@ -126,28 +184,53 @@ const AdministracionRoutes = {
       meta: { title: 'Camas', icon: 'el-icon-s-operation', noCache: true }
     },
     {
+      path: 'areas',
+      component: () => import('@/views/administracion/publics/areas'),
+      name: 'Areas',
+      meta: { title: 'Areas', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
       path: 'diagnosticos',
       component: () => import('@/views/administracion/publics/diagnosticos'),
       name: 'Diagnosticos',
-      meta: { title: 'Diagnosticos', icon: 'el-icon-s-operation', noCache: true }
+      meta: {
+        title: 'Diagnosticos',
+        icon: 'el-icon-s-operation',
+        noCache: true
+      }
     },
     {
       path: 'operaciones',
       component: () => import('@/views/administracion/publics/operaciones'),
       name: 'Operaciones',
-      meta: { title: 'Operaciones', icon: 'el-icon-s-operation', noCache: true }
+      meta: {
+        title: 'Operaciones',
+        icon: 'el-icon-s-operation',
+        noCache: true
+      }
     },
     {
       path: 'regiones',
-      component: () => import('@/views/administracion/publics/ubicaciones-geograficas'),
+      component: () =>
+        import('@/views/administracion/publics/ubicaciones-geograficas'),
       name: 'Regiones',
-      meta: { title: 'Ubicaciones geograficas', icon: 'custom-map-peru', noCache: true }
+      meta: {
+        title: 'Ubicaciones geograficas',
+        icon: 'custom-map-peru',
+        noCache: true
+      }
     },
     {
       path: 'profesiones',
       component: () => import('@/views/administracion/publics/profesiones'),
       name: 'Profesiones',
       meta: { title: 'Profesiones', icon: 'el-icon-s-order', noCache: true }
+    },
+    {
+      path: 'especialidades',
+      component: () => import('@/views/administracion/publics/epecialidades'),
+      name: 'Especialidades',
+      meta: { title: 'Especialidades', icon: 'el-icon-s-order', noCache: true }
     }
   ]
 }
