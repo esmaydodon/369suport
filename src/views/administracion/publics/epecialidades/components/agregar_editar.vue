@@ -36,7 +36,7 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import EspecialidadesResource from '@/api/especialidades'
+import EspecialidadesResource from '@/api/espedialidades'
 const especialidadesResource = new EspecialidadesResource()
 export default {
   name: 'AgregarEditarEspecialidad',
@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     especialidadId(newValue, oldValue) {
-      if (newValue > 0) {
+      if (newValue !== oldValue && newValue > 0) {
         this.getEspecialidad()
       }
     }
@@ -97,7 +97,7 @@ export default {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    getProfesion() {
+    getEspecialidad() {
       this.loading = true
       especialidadesResource.get(this.especialidadId)
         .then(
@@ -149,7 +149,6 @@ export default {
     },
     editarEspecialidad() {
       this.loading = true
-      console.log(' edit especialidad' + this.especialidad)
       especialidadesResource.update(this.especialidadId, this.especialidad)
         .then(
           (response) => {
