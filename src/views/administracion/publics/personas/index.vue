@@ -130,7 +130,7 @@ import Paginator from '@/components/Pagination'
 import PersonasResource from '@/api/personas'
 const personasResource = new PersonasResource()
 export default {
-  name: 'Camas',
+  name: 'Personas',
   components: { AgregarEditarPersona, Paginator },
   data() {
     return {
@@ -138,7 +138,7 @@ export default {
       data: [],
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
-      widthModal: '40%',
+      widthModal: '50%',
       listQuery: {
         total: 0,
         page: 1,
@@ -154,7 +154,7 @@ export default {
       if (windowWidth < 768) {
         this.widthModal = '90%'
       } else {
-        this.widthModal = '40%'
+        this.widthModal = '50%'
       }
     })
     window.addEventListener('resize', this.__resizeHandler)

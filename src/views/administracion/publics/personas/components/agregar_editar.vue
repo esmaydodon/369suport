@@ -49,6 +49,62 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="12">
+            <el-form-item label="Madre" prop="madre_persona_id">
+              <el-autocomplete
+                v-model="madreLabel"
+                :fetch-suggestions="buscarApoderado"
+                placeholder="Busque por dni y seleccione la madre"
+                style="width: 100%;"
+                @select="seleccionarApoderado"
+                @focus="tipoRegistroApoderado = 1"
+                @change="persona.madre_persona_id = null"
+              >
+                <el-button slot="append" icon="el-icon-plus" @click="abrirModalAgregarApoderado(1)" />
+                <template slot-scope="{ item }">
+                  <span>{{ item.value }}</span>
+                </template>
+              </el-autocomplete>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Padre" prop="padre_persona_id">
+              <el-autocomplete
+                v-model="padreLabel"
+                :fetch-suggestions="buscarApoderado"
+                placeholder="Busque por dni y seleccione el padre"
+                style="width: 100%;"
+                @select="seleccionarApoderado"
+                @focus="tipoRegistroApoderado = 2"
+                @change="persona.padre_persona_id = null"
+              >
+                <el-button slot="append" icon="el-icon-plus" @click="abrirModalAgregarApoderado(2)" />
+                <template slot-scope="{ item }">
+                  <span>{{ item.value }}</span>
+                </template>
+              </el-autocomplete>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Apoderado" prop="apoderado_persona_id">
+              <el-autocomplete
+                v-model="apoderadoLabel"
+                :fetch-suggestions="buscarApoderado"
+                placeholder="Busque por dni y seleccione el padre"
+                style="width: 100%;"
+                @select="seleccionarApoderado"
+                @focus="tipoRegistroApoderado = 3"
+                @change="persona.padre_persona_id = null"
+              >
+                <el-button slot="append" icon="el-icon-plus" @click="abrirModalAgregarApoderado(3)" />
+                <template slot-scope="{ item }">
+                  <span>{{ item.value }}</span>
+                </template>
+              </el-autocomplete>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="12">
             <el-form-item label="Telefono" prop="telefono">
               <el-input v-model="persona.telefono" />
             </el-form-item>
@@ -90,18 +146,20 @@
         <el-row :gutter="10">
           <el-col :span="24">
             <el-form-item label="Nivel educativo" prop="nivel_educativo_id">
-              <el-autocomplete
-                :fetch-suggestions="buscarProfesion"
-                placeholder="Busque y seleccione la profesión"
-                style="width: 100%;"
-                @select="seleccionarProfesion"
-                @focus="persona.profesion_id = null"
-              />
+              <el-select v-model="persona.nivel_educativo_id" placeholder="Seleccionar">
+                <el-option
+                  v-for="item in opcionesNivelesEducativos"
+                  :key="item.id"
+                  :label="item.nivel_educativo"
+                  :value="item.id"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="Profesion" prop="profesion_id">
               <el-autocomplete
+                v-model="profesionLabel"
                 :fetch-suggestions="buscarProfesion"
                 placeholder="Busque y seleccione la profesión"
                 style="width: 100%;"
@@ -121,6 +179,16 @@
         </el-col>
       </el-row>
     </div>
+    <!-- Dialogo Para registrar al padre o madre -->
+    <el-dialog
+      :title="titleModalApoderado"
+      :visible.sync="modalRegistrarApoderado"
+      top="5vh"
+      :width="widthModal"
+      append-to-body
+    >
+      <registro-persona-apoderado @close="closeModalRegistroApoderado" />
+    </el-dialog>
   </div>
 </template>
 
@@ -136,9 +204,18 @@ import ProvinciasResource from '@/api/provincias'
 const provinciasResource = new ProvinciasResource()
 import DistritosResource from '@/api/distritos'
 const distritosResource = new DistritosResource()
+import NivelesEducativosResource from '@/api/niveles-educativos'
+const nivelesEducativosResource = new NivelesEducativosResource()
+import ProfesionesResource from '@/api/profesiones'
+const profesionesResource = new ProfesionesResource()
+// Components
+// import RegistroPersonaApoderado from './registro-persona-padre'
 
 export default {
   name: 'AgregarEditarPersona',
+  components: {
+    RegistroPersonaApoderado: () => import('./registro-persona-padre')
+  },
   props: {
     personaId: {
       required: true,
@@ -156,11 +233,15 @@ export default {
         apellido_paterno: '',
         apellido_materno: '',
         fecha_nacimiento: '',
+        madre_persona_id: '',
+        padre_persona_id: '',
+        apoderado_persona_id: '',
         sexo: '',
         telefono: '',
         correo: '',
         distrito_id: '',
         direccion: '',
+        nivel_educativo_id: null,
         profesion_id: null
       },
       reglas: {
@@ -205,7 +286,17 @@ export default {
       regionSeleccionada: null,
       opcionesProvincia: [],
       provinciaSeleccionada: null,
-      opcionesDistrito: []
+      opcionesDistrito: [],
+      opcionesNivelesEducativos: [],
+      // variables para modal registrar Padre o Madre
+      modalRegistrarApoderado: false,
+      tipoRegistroApoderado: -1,
+      titleModalApoderado: 'AGREGAR APODERADO',
+      widthModal: '50%',
+      padreLabel: '',
+      madreLabel: '',
+      apoderadoLabel: '',
+      profesionLabel: ''
     }
   },
   watch: {
@@ -219,8 +310,10 @@ export default {
     this.__resizeHandler = debounce(() => {
       const windowWidth = document.documentElement.clientWidth
       if (windowWidth < 768) {
+        this.widthModal = '90%'
         this.rowType = ''
       } else {
+        this.widthModal = '50%'
         this.rowType = 'flex'
       }
     })
@@ -229,6 +322,7 @@ export default {
     if (this.personaId > 0) {
       this.getPersona()
     }
+    this.cargarOpcionesNivelesEducativos()
     this.cargarOpcionesRegion()
   },
   beforeDestroy() {
@@ -289,6 +383,19 @@ export default {
           (error) => {
             console.log(error)
             this.loading = true
+          }
+        )
+    },
+    cargarOpcionesNivelesEducativos() {
+      nivelesEducativosResource.opcionesSeleccion()
+        .then(
+          (response) => {
+            this.opcionesNivelesEducativos = response.data
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
           }
         )
     },
@@ -366,11 +473,94 @@ export default {
         )
     },
     // funciones del autocompletado de profesion
-    seleccionarProfesion() {
-
+    buscarProfesion(queryString, cb) {
+      profesionesResource.opcionesSeleccion({ keyword: queryString })
+        .then(
+          (response) => {
+            const { data } = response
+            cb(data)
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
     },
-    buscarProfesion() {
-
+    seleccionarProfesion(item) {
+      this.persona.profesion_id = item.id
+    },
+    buscarApoderado(queryString, cb) {
+      console.log('buscando: ', queryString)
+      personasResource.opcionesSeleccion({ keyword: queryString })
+        .then(
+          (response) => {
+            const { data } = response
+            cb(data)
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
+    },
+    seleccionarApoderado(item) {
+      if (this.tipoRegistroApoderado === 1) {
+        console.log('Seleccionado madre')
+        this.persona.madre_persona_id = item.id
+      }
+      if (this.tipoRegistroApoderado === 2) {
+        console.log('Seleccionado padre')
+        this.persona.padre_persona_id = item.id
+      }
+      if (this.tipoRegistroApoderado === 3) {
+        console.log('Seleccionado apoderado')
+        this.persona.apoderado_persona_id = item.id
+      }
+      this.tipoRegistroApoderado = -1
+    },
+    abrirModalAgregarApoderado(tipoApoderado) {
+      this.tipoRegistroApoderado = tipoApoderado
+      if (this.tipoRegistroApoderado === 1) {
+        this.titleModalApoderado = 'REGISTRAR MADRE'
+      }
+      if (this.tipoRegistroApoderado === 2) {
+        this.titleModalApoderado = 'REGISTRAR PADRE'
+      }
+      if (this.tipoRegistroApoderado === 3) {
+        this.titleModalApoderado = 'REGISTRAR APODERADO'
+      }
+      this.$nextTick(() => {
+        this.modalRegistrarApoderado = true
+      })
+    },
+    closeModalRegistroApoderado(respuesta) {
+      if (respuesta != null) {
+        const { persona_id, persona_label } = respuesta
+        if (persona_id != null && persona_label != null) {
+          if (this.tipoRegistroApoderado === 1) {
+            console.log(this.tipoRegistroApoderado)
+            this.persona.madre_persona_id = persona_id
+            this.madreLabel = persona_label
+          }
+          if (this.tipoRegistroApoderado === 2) {
+            console.log(this.tipoRegistroApoderado)
+            this.persona.padre_persona_id = persona_id
+            this.padreLabel = persona_label
+          }
+          if (this.tipoRegistroApoderado === 3) {
+            console.log(this.tipoRegistroApoderado)
+            this.persona.apoderado_persona_id = persona_id
+            this.apoderadoLabel = persona_label
+          }
+        }
+      }
+      this.modalRegistrarApoderado = false
+      this.$nextTick(() => {
+        this.tipoRegistroApoderado = -1
+        this.titleModalApoderado = ''
+      })
     },
     close(data) {
       this.persona = {
@@ -381,13 +571,18 @@ export default {
         apellido_paterno: '',
         apellido_materno: '',
         fecha_nacimiento: '',
+        madre_persona_id: '',
+        padre_persona_id: '',
+        apoderado_persona_id: '',
         sexo: '',
         telefono: '',
         correo: '',
         distrito_id: '',
         direccion: '',
+        nivel_educativo_id: null,
         profesion_id: null
       }
+      this.padreRegistro = -1
       this.$refs['formPersona'].resetFields()
       this.$emit('close', { persona_id: data != null ? data.persona_id : null })
     }
