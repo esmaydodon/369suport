@@ -36,7 +36,7 @@
 // Utilidades
 import { debounce } from '@/utils'
 // Resource
-import EspecialidadesResource from '@/api/espedialidades'
+import EspecialidadesResource from '@/api/especialidades'
 const especialidadesResource = new EspecialidadesResource()
 export default {
   name: 'AgregarEditarEspecialidad',

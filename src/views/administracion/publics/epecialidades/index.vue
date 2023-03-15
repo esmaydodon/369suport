@@ -118,7 +118,7 @@ import { debounce } from '@/utils'
 import AgregarEditarEspecialidad from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
-import EspecialidadesResource from '@/api/espedialidades'
+import EspecialidadesResource from '@/api/especialidades'
 import Swal from 'sweetalert2'
 const especialidadesResource = new EspecialidadesResource()
 export default {
