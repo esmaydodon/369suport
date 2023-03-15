@@ -1,18 +1,17 @@
 import Resource from '@/api/resource'
 import request from '@/utils/request'
 
-class PersonasResource extends Resource {
+class NivelesEducativosResource extends Resource {
   constructor() {
-    super('personas')
+    super('niveleseducativos')
   }
 
-  opcionesSeleccion(params) {
+  opcionesSeleccion() {
     return request({
       url: 'opcionesseleccion/' + this.uri,
-      method: 'get',
-      params: params
+      method: 'get'
     })
   }
 }
 
-export { PersonasResource as default }
+export { NivelesEducativosResource as default }

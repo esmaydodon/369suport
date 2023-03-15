@@ -61,6 +61,20 @@
               <el-table-column
                 header-align="center"
                 align="center"
+                label="CAMAS"
+                min-width="80"
+              >
+                <template slot-scope="scope">
+                  <div>
+                    <el-button type="info" plain @click="openModalCamas(scope.row.id,scope.row.nombre)">
+                      <svg-icon :key="scope.row.id" icon-class="custom-lista-camas" class-name="customIcon" />
+                    </el-button>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                header-align="center"
+                align="center"
                 prop="activo"
                 label="ACTIVO"
                 width="150"
@@ -133,6 +147,17 @@
         @close="closeModalAgregarEditar"
       />
     </el-dialog>
+    <!-- Modal vincular camas-->
+    <el-dialog
+      :title="'CAMAS DEL AREA: ' + areaVerCamaNombre"
+      :visible.sync="modalVicularCamaArea"
+      :width="widthModal"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <listar-vincular-camas-area :area-id="areaVerCamas_Id" @close="cerrarModalCamas" />
+    </el-dialog>
   </div>
 </template>
 
@@ -141,6 +166,7 @@
 import { debounce } from '@/utils'
 // Componentes
 import AgregarEditarArea from './components/agregar_editar'
+import ListarVincularCamasArea from './components/vincular_cama'
 import Paginator from '@/components/Pagination'
 // Resource
 import AreasResource from '@/api/areas'
@@ -149,13 +175,15 @@ const areasResource = new AreasResource()
 // const areasResource = new AreasResource()
 export default {
   name: 'Areas',
-  components: { AgregarEditarArea, Paginator },
+  components: { AgregarEditarArea, ListarVincularCamasArea, Paginator },
   data() {
     return {
       loading: false,
       data: [],
       tituloModalAgregarEditar: '',
+      modalVicularCamaArea: false,
       modalAgregarEditar: false,
+      areaVerCamas_Id: -1,
       widthModal: '40%',
       parametros: '',
       listQuery: {
@@ -164,7 +192,8 @@ export default {
         limit: 14,
         keyword: ''
       },
-      areaEditar_Id: -1
+      areaEditar_Id: -1,
+      areaVerCamaNombre: ''
     }
   },
   mounted() {
@@ -240,7 +269,7 @@ export default {
       } else {
         Swal.fire({
           title: '¿Esta seguro de desactivar El Área?',
-          text: 'El Área no podrá volver a usarse, hasta ser activada',
+          text: 'Al desactivar el área, se inhabilita las camas que estén registradas en el mismo y otras funciones en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -313,6 +342,19 @@ export default {
       this.modalAgregarEditar = false
       this.areaEditar_Id = -1
       this.listaAreas()
+    },
+    // Visualizar y vincular camas
+    openModalCamas(id, nombreArea) {
+      this.areaVerCamas_Id = id
+      this.areaVerCamaNombre = nombreArea
+      this.$nextTick(() => {
+        this.modalVicularCamaArea = true
+      })
+    },
+    cerrarModalCamas() {
+      this.modalVicularCamaArea = false
+      this.areaVerCamaNombre = ''
+      this.areaVerCamas_Id = -5
     }
   }
 }

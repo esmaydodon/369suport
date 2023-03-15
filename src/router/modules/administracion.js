@@ -227,10 +227,22 @@ const AdministracionRoutes = {
       }
     },
     {
+      path: 'niveleseducativos',
+      component: () => import('@/views/administracion/publics/niveles-educativos'),
+      name: 'NivelesEducativos',
+      meta: { title: 'Niveles Educativos', icon: 'el-icon-s-order', noCache: true }
+    },
+    {
       path: 'profesiones',
       component: () => import('@/views/administracion/publics/profesiones'),
       name: 'Profesiones',
       meta: { title: 'Profesiones', icon: 'el-icon-s-order', noCache: true }
+    },
+    {
+      path: 'tipopersonal',
+      component: () => import('@/views/administracion/publics/tipo-personal'),
+      name: 'TipoPersonal',
+      meta: { title: 'Tipo Personal', icon: 'el-icon-s-order', noCache: true }
     },
     {
       path: 'especialidades',

@@ -7,6 +7,7 @@
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
           <el-input
+            v-model="listQuery.keyword"
             placeholder="Buscar"
             style="width: 300px"
             class="filter-item"
@@ -109,13 +110,14 @@
 <script>
 // Utilidades
 import { debounce } from '@/utils'
+import Swal from 'sweetalert2'
 // Componentes
 import AgregarEditarProfesion from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
 import ProfesionesResource from '@/api/profesiones'
-import Swal from 'sweetalert2'
 const profesionesResource = new ProfesionesResource()
+
 export default {
   name: 'Servicios',
   components: { AgregarEditarProfesion, Paginator },
@@ -182,7 +184,7 @@ export default {
         console.log(command)
       }
       if (command === 'ELIMINAR') {
-        this.handleEliminarCama(id)
+        this.handleEliminarProfesion(id)
       }
     },
     abrirModalEditar(profesionId) {
@@ -192,7 +194,7 @@ export default {
         this.modalAgregarEditar = true
       })
     },
-    handleEliminarCama(profesionId) {
+    handleEliminarProfesion(profesionId) {
       Swal.fire({
         title: '¿Esta seguro de eliminar el registro de la profesion?',
         text: 'Si no se visualiza información incorrecta se recomienda editar el registro de la profesion',

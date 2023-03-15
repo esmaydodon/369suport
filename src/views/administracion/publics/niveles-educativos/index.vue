@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">ADMINISTRACION DE PERSONAS</h3>
+        <h3 class="card-header">NIVELES EDUCATIVOS</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -12,14 +12,13 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaPersonas"
           />
           <el-button
             class="filter-item"
             type="primary"
             style="margin-left: 10px"
             icon="el-icon-search"
-            @click="listaPersonas"
+            @click="listaNivelesEducativos"
           />
           <!-- v-permission="['permisos.crear']" -->
           <el-button
@@ -27,7 +26,7 @@
             style="margin-left: 10px"
             type="primary"
             icon="el-icon-plus"
-            @click="abrirModalAgregar"
+            @click="AbrirModalAgregar"
           >
             Agregar
           </el-button>
@@ -48,32 +47,14 @@
                 width="100"
               />
               <el-table-column
-                prop="doc_identidad"
-                label="DOC IDENTIDAD"
-                min-width="150"
-              />
-              <el-table-column
-                prop="nombres"
-                label="NOMBRE COMPLETO"
-                min-width="450"
-              >
-                <template slot-scope="scope">
-                  <div>{{ scope.row.nombres+' '+scope.row.apellido_paterno+' '+scope.row.apellido_materno }}</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sexo"
-                label="SEXO"
-                min-width="100"
-              />
-              <el-table-column
-                prop="telefono"
-                label="TELEFONO"
-                min-width="100"
+                prop="nivel_educativo"
+                label="NIVEL EDUCATIVO"
+                min-width="500"
               />
               <el-table-column
                 header-align="center"
                 align="center"
+                prop="activo"
                 label="OPCIONES"
                 width="250"
               >
@@ -97,24 +78,22 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaPersonas"
+              @pagination="listaNivelesEducativos"
             />
           </el-col>
         </el-row>
       </div>
     </el-card>
-    <!-- Dialogo para editar o Crear un servicio -->
+    <!-- Dialogo para editar o Crear -->
     <el-dialog
       :title="tituloModalAgregarEditar"
       :visible.sync="modalAgregarEditar"
       :width="widthModal"
-      top="5vh"
       :show-close="false"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-persona :persona-id="personaEditar_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-nivel-educativo :nievel-educativo-id="nivelEducativoEditar_Id" @close="closeModalAgregarEditar" />
     </el-dialog>
   </div>
 </template>
@@ -124,28 +103,28 @@
 import { debounce } from '@/utils'
 import Swal from 'sweetalert2'
 // Componentes
-import AgregarEditarPersona from './components/agregar_editar'
+import AgregarEditarNivelEducativo from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 // Resource
-import PersonasResource from '@/api/personas'
-const personasResource = new PersonasResource()
+import NivelesEducativosResource from '@/api/niveles-educativos'
+const nivelesEducativosResource = new NivelesEducativosResource()
 export default {
-  name: 'Personas',
-  components: { AgregarEditarPersona, Paginator },
+  name: 'NivelesEducativos',
+  components: { AgregarEditarNivelEducativo, Paginator },
   data() {
     return {
       loading: false,
       data: [],
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
-      widthModal: '50%',
+      widthModal: '40%',
       listQuery: {
         total: 0,
         page: 1,
         limit: 14,
         keyword: ''
       },
-      personaEditar_Id: -1
+      nivelEducativoEditar_Id: -5
     }
   },
   mounted() {
@@ -154,19 +133,19 @@ export default {
       if (windowWidth < 768) {
         this.widthModal = '90%'
       } else {
-        this.widthModal = '50%'
+        this.widthModal = '40%'
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
-    this.listaPersonas()
+    this.listaNivelesEducativos()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaPersonas() {
+    listaNivelesEducativos() {
       this.loading = true
-      personasResource.list(this.listQuery)
+      nivelesEducativosResource.list(this.listQuery)
         .then(
           (response) => {
             const { data, meta } = response
@@ -182,25 +161,26 @@ export default {
           }
         )
     },
-    abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR PERSONA'
-      this.personaEditar_Id = -5
+    handleCommand({ command, id }) {
+      if (command === 'EDITAR') {
+        this.abrirModalEditar(id)
+        console.log(command)
+      }
+      if (command === 'ELIMINAR') {
+        this.handleEliminar(id)
+      }
+    },
+    abrirModalEditar(nivelEducativoId) {
+      this.tituloModalAgregarEditar = 'EDITAR NIVEL EDUCATIVO'
+      this.nivelEducativoEditar_Id = nivelEducativoId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
     },
-    handleCommand({ command, id }) {
-      if (command === 'EDITAR') {
-        this.abrirModalEditar(id)
-      }
-      if (command === 'ELIMINAR') {
-        this.handleEliminarPersona(id)
-      }
-    },
-    handleEliminarPersona(peronsa_id) {
+    handleEliminar(nivelEducativoId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el registro de la persona?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el registro de la persona',
+        title: '¿Esta seguro de eliminar el registro del nivel educativo?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el registro del nivel educativo',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -210,7 +190,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          personasResource.destroy(peronsa_id)
+          nivelesEducativosResource.destroy(nivelEducativoId)
             .then(
               (response) => {
                 this.$message({
@@ -218,7 +198,7 @@ export default {
                   message: response.message
                 })
                 this.loading = false
-                this.listaPersonas()
+                this.listaNivelesEducativos()
               }
             )
             .catch(
@@ -232,17 +212,16 @@ export default {
         }
       })
     },
-    abrirModalEditar(personaId) {
-      this.tituloModalAgregarEditar = 'EDITAR PERSONA'
-      this.personaEditar_Id = personaId
+    AbrirModalAgregar() {
+      this.tituloModalAgregarEditar = 'REGISTRAR NIVEL EDUCATIVO'
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
     },
     closeModalAgregarEditar() {
       this.modalAgregarEditar = false
-      this.personaEditar_Id = -1
-      this.listaPersonas()
+      this.nivelEducativoEditar_Id = -5
+      this.listaNivelesEducativos()
     }
   }
 }
