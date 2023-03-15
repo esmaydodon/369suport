@@ -237,6 +237,12 @@ const AdministracionRoutes = {
       component: () => import('@/views/administracion/publics/epecialidades'),
       name: 'Especialidades',
       meta: { title: 'Especialidades', icon: 'el-icon-s-order', noCache: true }
+    },
+    {
+      path: 'tipopersonal',
+      component: () => import('@/views/administracion/publics/tipo_personal'),
+      name: 'TipoPersonal',
+      meta: { title: 'Tipo de Personal', icon: 'el-icon-s-order', noCache: true }
     }
   ]
 }
