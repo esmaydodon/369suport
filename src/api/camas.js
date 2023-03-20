@@ -37,6 +37,14 @@ class CamasResource extends Resource {
       data: data
     })
   }
+
+  opcionesSeleccion(params) {
+    return request({
+      url: 'opcionesseleccion/' + this.uri,
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { CamasResource as default }

@@ -11,6 +11,13 @@ class OperacionesResource extends Resource {
       method: 'post'
     })
   }
+  opcionesSeleccion(params) {
+    return request({
+      url: 'opcionesseleccion/' + this.uri,
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { OperacionesResource as default }

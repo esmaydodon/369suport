@@ -35,6 +35,11 @@ service.interceptors.response.use(
     return res
   },
   error => {
+    // Captura error 400 Bad request
+    if (error.response.status === 400) {
+      console.log(error.response)
+    }
+
     if (error.response.status === 401 && getToken() !== null) {
       // to re-login
       MessageBox.confirm(

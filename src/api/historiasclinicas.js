@@ -12,6 +12,14 @@ class HistoriasClinicasResource extends Resource {
       method: 'get'
     })
   }
+
+  opcionesSeleccion(params) {
+    return request({
+      url: 'opcionesseleccion/' + this.uri,
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { HistoriasClinicasResource as default }

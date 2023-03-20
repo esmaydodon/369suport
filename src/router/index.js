@@ -7,6 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 import AdministracionRoutes from './modules/administracion'
 import DesarrolloRoutes from './modules/desarrollo'
+import CentroQuirurgicoRoutes from './modules/centro-quirurgico'
 
 /* Router Modules */
 // import componentsRouter from './modules/components'
@@ -110,6 +111,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   AdministracionRoutes,
   DesarrolloRoutes,
+  CentroQuirurgicoRoutes,
   {
     path: '/historiasclinicas',
     component: Layout,
