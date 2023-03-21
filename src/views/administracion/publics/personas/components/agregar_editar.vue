@@ -583,6 +583,8 @@ export default {
         profesion_id: null
       }
       this.padreRegistro = -1
+      this.regionSeleccionada = null
+      this.provinciaSeleccionada = null
       this.$refs['formPersona'].resetFields()
       this.$emit('close', { persona_id: data != null ? data.persona_id : null })
     }

@@ -13,6 +13,13 @@ class PersonasResource extends Resource {
       params: params
     })
   }
+
+  getPersonaDocumento(dni) {
+    return request({
+      url: '/' + this.uri + '/getPersonaDocumento/' + dni,
+      method: 'get'
+    })
+  }
 }
 
 export { PersonasResource as default }
