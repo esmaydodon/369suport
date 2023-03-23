@@ -14,6 +14,7 @@
               class="filter-item"
               clearable
               @clear="listaVinculoLaboral"
+              @keyup.enter.native="listaVinculoLaboral"
             />
           </el-col>
           <el-col :xs="24" :sm="24" :md="4" :lg="2">
@@ -106,13 +107,13 @@
                 width="250"
               >
                 <template slot-scope="scope">
-                  <el-dropdown v-if="scope.row.historiaclinica" trigger="click" @command="handleCommand">
+                  <el-dropdown v-if="scope.row.vinculolaboral" trigger="click" @command="handleCommand">
                     <el-button type="text" size="mini">
                       OPCIONES<i class="el-icon-arrow-down el-icon--right" />
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item :command="{command:'EDITAR',id:scope.row.historiaclinica}" icon="el-icon-edit">Editar</el-dropdown-item>
-                      <el-dropdown-item :command="{command:'ELIMINAR',id:scope.row.historiaclinica}" icon="el-icon-delete-solid">Eliminar</el-dropdown-item>
+                      <el-dropdown-item :command="{command:'EDITAR',id:scope.row.vinculolaboral}" icon="el-icon-edit">Editar</el-dropdown-item>
+                      <el-dropdown-item :command="{command:'ELIMINAR',id:scope.row.vinculolaboral}" icon="el-icon-delete-solid">Eliminar</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -144,7 +145,7 @@
     </el-dialog>
     <!-- Modal Agregar Persona + Vinculo LAboral -->
     <el-dialog
-      title="AGREGAR PERSONA + VINCULO LABORAL"
+      title="REGISTRAR VINCULO LABORAL"
       :visible.sync="modalAgregarPersonaVinculoLaboral"
       :width="widthModal"
       top="2vh"
@@ -152,7 +153,8 @@
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <agregar-persona-vinculo-laboral @click="cerrarModalAgregarPersonaVinculoLaboral" @close="cerrarModalAgregarPersonaVinculoLaboral" />
+      <!-- <agregar-persona-vinculo-laboral :vinculo-laboral-id="VinculoLaboralEditar_id" @click="cerrarModalAgregarPersonaVinculoLaboral" @close="cerrarModalAgregarPersonaVinculoLaboral" /> -->
+      <seleccionar-persona :vinculo-laboral-id="VinculoLaboralEditar_id" @close="vinculocancelado" />
     </el-dialog>
     <!-- Modal detalle historia clinica -->
     <el-dialog
@@ -176,16 +178,18 @@ import Swal from 'sweetalert2'
 import VinculoLaboralResource from '@/api/vinculolaboral'
 const vinculoLaboralResource = new VinculoLaboralResource()
 // @note components
-import AgregarEditarVinculoLaboral from './components/agregar_editar'
-import AgregarPersonaVinculoLaboral from './components/agregar_persona_historiaclinica'
+// import AgregarEditarVinculoLaboral from './components/agregar_editar'
+import SeleccionarPersona from './components/seleccionar_persona'
+// import AgregarPersonaVinculoLaboral from './components/agregar_persona_Vinculo_laboral'
 import DetalleVinculoLaboral from './components/detalle_vinculolaboral'
 import Paginator from '@/components/Pagination'
 
 export default {
   name: 'HistoriasClinicas',
-  components: { AgregarEditarVinculoLaboral, AgregarPersonaVinculoLaboral, DetalleVinculoLaboral, Paginator },
+  components: { DetalleVinculoLaboral, SeleccionarPersona, Paginator },
   data() {
     return {
+      defaulValue: -5,
       loading: false,
       widthModal: '40%',
       data: [],
@@ -259,14 +263,14 @@ export default {
         this.handleEliminarHistoriaClinica(id)
       }
     },
-    abrirModalEditar(historiaClinica_id) {
-      this.tituloModalAgregarEditar = 'EDITAR HISTORIA CLINICA'
-      this.VinculoLaboralEditar_id = historiaClinica_id
+    abrirModalEditar(vinculo_laboral_id) {
+      this.tituloModalAgregarEditar = 'EDITAR VINCULO LABORAL'
+      this.VinculoLaboralEditar_id = vinculo_laboral_id
       this.$nextTick(() => {
-        this.modalAgregarEditar = true
+        this.modalAgregarPersonaVinculoLaboral = true
       })
     },
-    handleEliminarHistoriaClinica(historiaClinica_id) {
+    handleEliminarHistoriaClinica(vinculo_laboral_id) {
       Swal.fire({
         title: '¿Esta seguro de eliminar la historia clinica?',
         text: 'Si se visualiza información incorrecta se recomienda editar la historia clinica',
@@ -279,7 +283,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.loading = true
-          vinculoLaboralResource.destroy(historiaClinica_id)
+          vinculoLaboralResource.destroy(vinculo_laboral_id)
             .then(
               (response) => {
                 this.$message({
@@ -313,6 +317,7 @@ export default {
     },
     cerrarModalAgregarPersonaVinculoLaboral() {
       this.modalAgregarPersonaVinculoLaboral = false
+      this.listaVinculoLaboral()
     },
     abrirModalDetalleVinculoLaboral({ vinculolaboral }) {
       this.vinculoLaboralVerDetalleId = vinculolaboral
@@ -325,6 +330,10 @@ export default {
       this.$nextTick(() => {
         this.vinculoLaboralVerDetalleId = -5
       })
+    },
+    vinculocancelado() {
+      this.modalAgregarPersonaVinculoLaboral = false
+      this.listaVinculoLaboral()
     }
   }
 }

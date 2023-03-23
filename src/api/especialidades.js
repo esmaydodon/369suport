@@ -11,6 +11,13 @@ class EspecialidadesResource extends Resource {
       method: 'post'
     })
   }
+  opcionesSeleccion(params) {
+    return request({
+      url: 'opcionesseleccion/' + this.uri,
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { EspecialidadesResource as default }

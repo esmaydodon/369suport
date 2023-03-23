@@ -18,6 +18,13 @@ class CargosResource extends Resource {
       params: query
     })
   }
+  opcionesSeleccion(params) {
+    return request({
+      url: 'opcionesseleccion/' + this.uri,
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { CargosResource as default }
