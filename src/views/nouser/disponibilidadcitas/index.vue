@@ -246,6 +246,14 @@ export default {
       this.loading = true
       this.cargarData()
     },
+    // unirServiciosPorEspecialidadNodisponibles(tempNoDisponible) {
+    //   const lista = []
+    //   tempNoDisponible.forEach(element => {
+    //     const result = lista.find(({ especialidad }) => especialidad === element.especialidad)
+    //     if
+    //   })
+    //   return lista
+    // },
     compare(a, b) {
       return b.cuposDisponibles - a.cuposDisponibles
     }
