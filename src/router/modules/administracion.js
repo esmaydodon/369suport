@@ -190,6 +190,12 @@ const AdministracionRoutes = {
       meta: { title: 'Areas', icon: 'el-icon-s-operation', noCache: true }
     },
     {
+      path: 'Vinculo',
+      component: () => import('@/views/administracion/publics/vinculo-laboral'),
+      name: 'Vinculo',
+      meta: { title: 'Vinculo Laboral', icon: 'el-icon-s-operation', noCache: true }
+    },
+    {
       path: 'cargos',
       component: () => import('@/views/administracion/publics/cargos'),
       name: 'Cargos',
