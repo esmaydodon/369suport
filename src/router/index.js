@@ -101,6 +101,11 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
+  },
+  {
+    path: '/disponibilidadcitas',
+    component: () => import('@/views/nouser/disponibilidadcitas'),
+    hidden: true
   }
 ]
 
