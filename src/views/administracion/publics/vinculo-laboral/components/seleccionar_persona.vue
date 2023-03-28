@@ -53,7 +53,7 @@
         <el-row :gutter="10">
           <el-col :span="12">
             <el-form-item label="TIPO PERSONAL" prop="tipo_personal_id">
-              <el-select v-model="vinculoLaboralObject.tipo_personal_id" placeholder="Seleccione">
+              <el-select v-model="vinculoLaboralObject.tipo_personal_id" placeholder="Seleccione" @change="handleConsultaTipoPersonal(vinculoLaboralObject.tipo_personal_id)">
                 <el-option v-for="item in opcionesTipoPersonal" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
             </el-form-item>
@@ -103,6 +103,17 @@
     >
       <!-- <agregar-editar-persona :persona-id="personaEditar_Id" @close="closeModalAgregarEditar" /> -->
     </el-dialog>
+    <el-dialog
+      :title="'ESPECIALIDADES '"
+      :visible.sync="modalVicularEspecialidades"
+      :width="widthModal"
+      append-to-body
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <listar-especialidades :persona-id="personaVerEspecialidad_Id" @close="cerrarModalEspecialidades" />
+    </el-dialog>
   </div>
 </template>
 
@@ -124,14 +135,14 @@ import TipoPersonalResource from '@/api/tipo_personal'
 const tipoPersonalResource = new TipoPersonalResource()
 import EspecialidadesResource from '@/api/especialidades'
 const especialidadesResource = new EspecialidadesResource()
+import ListarEspecialidades from './vincular_especialidades.vue'
+
 // import AgregarEditarPersona from '../../personas/components/agregar_editar'
 
 export default {
   name: 'SeleccionarPersona',
-  components: {
-    // AgregarEditarPersona
-    // RegistroPersonaApoderado: () => import('../personas/components/registro-persona-padre')
-  },
+  components: { ListarEspecialidades },
+  // components: { ListarEspecialidades: () => import('./vincular_especialidades.vue') },
   props: {
     vinculoLaboralId: {
       required: true,
@@ -140,6 +151,7 @@ export default {
   },
   data() {
     return {
+      modalVicularEspecialidades: false,
       personaEditar_Id: -1,
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
@@ -188,6 +200,9 @@ export default {
       dniLoading: false,
       rowType: 'flex',
       opcionesAreas: [],
+      TipoPersonalSeleccionado: [],
+      personaVerEspecialidad_Id: -3,
+      tipoPersonalAsistencial: false,
       areaSeleccionada: null,
       opcionesCargo: [],
       opcionesTipoPersonal: [],
@@ -245,6 +260,24 @@ export default {
   methods: {
     handleConsultaDniService(dnisolicitante, flag) {
       this.consultaDocumento(dnisolicitante)
+    },
+    handleConsultaTipoPersonal(tipopersonalId) {
+      console.log(tipopersonalId)
+      this.consultaTipoPersonal(tipopersonalId)
+    },
+    // Visualizar y vincular camas
+    openModalCamas(id, nombrePersona) {
+      this.personaVerEspecialidad_Id = id
+      this.areaVerCamaNombre = null
+      // console.log(this.personaVerEspecialidad_Id)
+      this.$nextTick(() => {
+        this.modalVicularEspecialidades = true
+      })
+    },
+    cerrarModalEspecialidades() {
+      this.modalVicularEspecialidades = false
+      this.areaVerCamaNombre = ''
+      this.personaVerEspecialidad_Id = -5
     },
     async consultaDocumento(dnisolicitante) {
       this.dniLoading = true
@@ -327,6 +360,30 @@ export default {
         .then(
           (response) => {
             this.opcionesTipoPersonal = response.data
+            this.loading = false
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+            this.loading = true
+          }
+        )
+    },
+    async consultaTipoPersonal(id) {
+      this.loading = true
+      await tipoPersonalResource.get(id)
+        .then(
+          (response) => {
+            this.TipoPersonalSeleccionado = response.data
+            if (this.TipoPersonalSeleccionado.nombre === 'ASISTNECIAL') {
+              // console.log(this.TipoPersonalSeleccionado.nombre)
+              this.tipoPersonalAsistencial = true
+              this.openModalCamas(this.vinculoLaboralObject.persona_id, null)
+            } else {
+              this.tipoPersonalAsistencial = false
+              // console.log('otro tipo' + this.TipoPersonalSeleccionado.nombre)
+            }
             this.loading = false
           }
         )
@@ -442,7 +499,7 @@ export default {
         tipo_personal_id: undefined,
         especialidad_principal: undefined
       }
-      this.vinculoLaboralId = -1
+      this.tipoPersonalAsistencial = false
       this.$refs['formPersona'].resetFields()
       this.$emit('close')
     },
@@ -456,6 +513,7 @@ export default {
         apellido_paterno: '',
         apellido_materno: ''
       }
+      this.tipoPersonalAsistencial = false
       this.$refs['formPersona'].resetFields()
     }
   }

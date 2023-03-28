@@ -18,6 +18,25 @@ class EspecialidadesResource extends Resource {
       params: params
     })
   }
+  listaEspecialidades() {
+    return request({
+      url: '/' + this.uri + '/listaEspecialidades',
+      method: 'post'
+    })
+  }
+  vincularEspecialidadPersona(data) {
+    return request({
+      url: '/' + this.uri + '/vincularEspecialidadPersona',
+      method: 'post',
+      data: data
+    })
+  }
+  especialidadesPorPersona(personaId) {
+    return request({
+      url: '/' + this.uri + '/' + personaId + '/especialidadesPorPersona',
+      method: 'get'
+    })
+  }
 }
 
 export { EspecialidadesResource as default }
