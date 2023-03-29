@@ -406,8 +406,12 @@ export default {
         this.vinculoLaboralVerDetalleId = -5
       })
     },
+    // para que cuando edite nuevamente el mismo registro setee a id negativo
     vinculocancelado() {
       this.modalAgregarPersonaVinculoLaboral = false
+      this.$nextTick(() => {
+        this.VinculoLaboralEditar_id = -3
+      })
       this.listaVinculoLaboral()
     },
     // Visualizar y vincular camas
