@@ -82,14 +82,14 @@
                         </div>
                       </el-row>
                     </el-col>
-                    <el-col :span="24" style="background-color: #FFFFFF; padding: 10px; border-radius: 15px; margin-top: 15px;">
-                      <el-row>
-                        <strong>RESTANTES</strong>
-                      </el-row>
-                      <el-row type="flex" justify="center" align="middle" style="color: #13ce66; font-size: 20; font-weight: 900;">
-                        {{ item.cuposDisponibles }}
-                      </el-row>
-                    </el-col>
+                    <!-- <el-col :span="24" style="background-color: #FFFFFF; padding: 10px; border-radius: 15px; margin-top: 15px;">
+                        <el-row>
+                          <strong>RESTANTES</strong>
+                        </el-row>
+                        <el-row type="flex" justify="center" align="middle" style="color: #13ce66; font-size: 20; font-weight: 900;">
+                          {{ item.cuposDisponibles }}
+                        </el-row>
+                      </el-col> -->
                   </el-row>
                 </el-card>
               </div>
