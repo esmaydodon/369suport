@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">TURNOS ANESTECIOLOGO</h3>
+        <h3 class="card-header">TURNOS ANESTESIOLOGO</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -126,7 +126,7 @@
       :close-on-press-escape="false"
     >
       <!-- :before-close="dialogBeforeClose" -->
-      <agregar-editar-turnos-anesteciologo :turno-anesteciologo-id="turnoAnesteciologo_Id" @close="closeModalAgregarEditar" />
+      <agregar-editar-turnos-anestesiologo :turno-anestesiologo-id="turnoAnestesiologo_Id" @close="closeModalAgregarEditar" />
     </el-dialog>
   </div>
 </template>
@@ -138,13 +138,13 @@ import { debounce } from '@/utils'
 import TurnosAnesteciologoResource from '@/api/turnos-anestesiologo'
 const turnosAnesteciologoResource = new TurnosAnesteciologoResource()
 // Componentes
-import AgregarEditarTurnosAnesteciologo from './components/agregar_editar'
+import AgregarEditarTurnosAnestesiologo from './components/agregar_editar'
 import Paginator from '@/components/Pagination'
 import Swal from 'sweetalert2'
 // Resource
 export default {
   name: 'ConfigTurnosAnesteciologo',
-  components: { AgregarEditarTurnosAnesteciologo, Paginator },
+  components: { AgregarEditarTurnosAnestesiologo, Paginator },
   data() {
     return {
       data: [],
@@ -158,7 +158,7 @@ export default {
         keyword: ''
       },
       loading: false,
-      turnoAnesteciologo_Id: -1
+      turnoAnestesiologo_Id: -1
     }
   },
   mounted() {
@@ -198,7 +198,7 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR TURNO DE ANESTECIOLOGO'
+      this.tituloModalAgregarEditar = 'REGISTRAR TURNO DE ANESTESIOLOGO'
       this.turnoAnesteciologo_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -241,8 +241,8 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el turno de anesteciologo?',
-          text: 'El turno de anesteciologo no podrá volver a usarse, hasta ser activado',
+          title: '¿Esta seguro de desactivar el turno de anestesiologo?',
+          text: 'El turno de anestesiologo no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
@@ -277,8 +277,8 @@ export default {
     },
     handleEliminarTurnoAnesteciologo(turnoAnesteciologoId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el turno de anesteciologo?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el turno de anesteciologo, o desactivarlo.',
+        title: '¿Esta seguro de eliminar el turno de anestesiologo?',
+        text: 'Si no se visualiza información incorrecta se recomienda editar el turno de Anestesiologo, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
@@ -311,7 +311,7 @@ export default {
       })
     },
     abrirModalEditar(turnoAnesteciologoId) {
-      this.tituloModalAgregarEditar = 'EDITAR TURNO DE ANESTECIOLOGO'
+      this.tituloModalAgregarEditar = 'EDITAR TURNO DE ANESTESIOLOGO'
       this.turnoAnesteciologo_Id = turnoAnesteciologoId
       this.$nextTick(() => {
         this.modalAgregarEditar = true

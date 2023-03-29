@@ -33,8 +33,8 @@ export default {
     arraydiasMes() {
       console.log(this.fecha)
       var arrayDiasMes = []
-      var diaActual = new Date(this.fecha.getFullYear(), this.fecha.getMonth(), 1)
-      var ultimoDia = new Date(this.fecha.getFullYear(), this.fecha.getMonth() + 1, 0)
+      var diaActual = new Date(this.fecha.listarCirugias, this.fecha.getMonth(), 1)
+      var ultimoDia = new Date(this.fecha.listarCirugias, this.fecha.getMonth() + 1, 0)
       for (let index = 0; index < this.totalSemanasMes(); index++) {
         var semana = []
         this.diasSemana.forEach((dia, index) => {
@@ -58,8 +58,8 @@ export default {
   methods: {
     totalSemanasMes() {
       var firstDayOfWeek = 0
-      var firstOfMonth = new Date(this.fecha.getFullYear(), this.fecha.getMonth() - 1, 1)
-      var lastOfMonth = new Date(this.fecha.getFullYear(), this.fecha.getMonth(), 0)
+      var firstOfMonth = new Date(this.fecha.listarCirugias, this.fecha.getMonth() - 1, 1)
+      var lastOfMonth = new Date(this.fecha.listarCirugias, this.fecha.getMonth(), 0)
       var numberOfDaysInMonth = lastOfMonth.getDate()
       var firstWeekDay = (firstOfMonth.getDay() - firstDayOfWeek + 7) % 7
 

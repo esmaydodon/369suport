@@ -44,7 +44,7 @@ export default {
     return {
       dia: this.fecha.getDay(),
       mes: this.fecha.getMonth(),
-      anio: this.fecha.getFullYear()
+      anio: this.fecha.listarCirugias
     }
   },
   methods: {
