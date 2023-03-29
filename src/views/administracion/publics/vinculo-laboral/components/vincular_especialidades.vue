@@ -6,11 +6,15 @@
           <el-table
             v-loading="loadingtab1"
             :data="listaEspPersona"
-            empty-text="Área no cuenta con camas vinculadas"
+            empty-text="Persona no cuenta con Especialidades Vinculadas"
             style="height: calc(60vh - 80px);"
           >
             <el-table-column label="#" type="index" />
-            <el-table-column label="Especialidad" prop="nombre" />
+            <el-table-column label="Especialidad">
+              <template slot-scope="scope">
+                {{ scope.row.especialidad.nombre }}
+              </template>
+            </el-table-column>
             <el-table-column label="Estado" prop="activo">
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.activo" type="primary">Activo</el-tag>
@@ -19,7 +23,7 @@
             </el-table-column>
             <el-table-column label="Acciones" prop="activo">
               <template slot-scope="scope">
-                <el-button type="danger" @click="eliminarVinculoCamasArea(scope.row.id)">Desvincuar</el-button>
+                <el-button type="danger" @click="eliminarVinculoEspecialidadPersona(scope.row.especialidad_id,scope.row.persona_id)">Desvincuar</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -47,13 +51,13 @@
             <el-tree
               ref="tree"
               v-loading="loadingtab2"
-              :data="listaCamasSinArea"
+              :data="listaEspecialidadSinPersona"
               node-key="id"
               :props="{label:'nombre'}"
               show-checkbox
               check-on-click-node
               :filter-node-method="filterNode"
-              empty-text="No hay camas para vincular"
+              empty-text="No hay Especlidades para vincular"
             />
           </div>
         </el-tab-pane>
@@ -70,8 +74,8 @@
 <script>
 import { debounce } from '@/utils'
 // Resource
-import CamasResource from '@/api/camas'
-const camasResource = new CamasResource()
+// import CamasResource from '@/api/camas'
+// const camasResource = new CamasResource()
 import EspecialidadesResource from '@/api/especialidades'
 const especialidadesResource = new EspecialidadesResource()
 export default {
@@ -87,7 +91,7 @@ export default {
       rowType: 'flex',
       activeName: 'lista',
       listaEspPersona: [],
-      listaCamasSinArea: [],
+      listaEspecialidadSinPersona: [],
       //
       loadingtab1: false,
       loadingtab2: false,
@@ -129,7 +133,7 @@ export default {
         this.getListEspecialidades()
       }
       if (parseInt(index) === 1) {
-        this.getCamasParaVicular()
+        this.getEspecialidadParaVicular()
       }
     },
     async getListEspecialidades() {
@@ -145,28 +149,12 @@ export default {
         this.loadingtab1 = false
       }
     },
-    // getListEspecialidades() {
-    //   this.loadingtab1 = true
-    //   camasResource.camasPorArea(this.personaId)
-    //     .then(
-    //       (response) => {
-    //         this.listaEspPersona = response.data
-    //         this.loadingtab1 = false
-    //       }
-    //     )
-    //     .catch(
-    //       (error) => {
-    //         console.log(error)
-    //         this.loadingtab1 = false
-    //       }
-    //     )
-    // },
-    getCamasParaVicular() {
+    getEspecialidadParaVicular() {
       this.loadingtab2 = true
       especialidadesResource.listaEspecialidades()
         .then(
           (response) => {
-            this.listaCamasSinArea = response.data
+            this.listaEspecialidadSinPersona = response.data
             this.loadingtab2 = false
           }
         )
@@ -177,9 +165,9 @@ export default {
           }
         )
     },
-    eliminarVinculoCamasArea(id) {
+    eliminarVinculoEspecialidadPersona(especialidad_id, persona_id) {
       this.loadingtab1 = true
-      camasResource.eliminarVinculoCamaArea({ cama_id: id })
+      especialidadesResource.eliminarVinculoEspecialidadPersona({ especialidad_id: especialidad_id, persona_id: persona_id })
         .then(
           (response) => {
             this.$message({
@@ -216,7 +204,7 @@ export default {
                 message: response.message
               })
               this.loadingtab2 = false
-              this.getCamasParaVicular()
+              this.getEspecialidadParaVicular()
             }
           )
           .catch(

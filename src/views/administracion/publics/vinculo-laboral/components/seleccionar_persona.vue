@@ -36,7 +36,7 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="12">
-            <el-form-item label="AREA" prop="area_id">
+            <el-form-item ref="formvinculoLaboralObject" label="AREA" prop="area_id">
               <el-select v-model="vinculoLaboralObject.area_id" placeholder="Seleccione">
                 <el-option v-for="item in opcionesAreas" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
@@ -53,23 +53,23 @@
         <el-row :gutter="10">
           <el-col :span="12">
             <el-form-item label="TIPO PERSONAL" prop="tipo_personal_id">
-              <el-select v-model="vinculoLaboralObject.tipo_personal_id" placeholder="Seleccione" @change="handleConsultaTipoPersonal(vinculoLaboralObject.tipo_personal_id)">
+              <el-select v-model="vinculoLaboralObject.tipo_personal_id" placeholder="Seleccione" :disabled="flagCampoaEditarBloqueado" @change="handleConsultaTipoPersonal(vinculoLaboralObject.tipo_personal_id)">
                 <el-option v-for="item in opcionesTipoPersonal" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="ESPECIALIDAD" prop="especialidad_principal">
               <el-select v-model="vinculoLaboralObject.especialidad_principal" placeholder="Seleccione">
                 <el-option v-for="item in opcionesEspecialidades" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row :gutter="10">
           <el-col :span="8">
             <el-form-item label="FECHA INICIO" prop="fecha_inicio">
-              <el-date-picker v-model="vinculoLaboralObject.fecha_inicio" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" />
+              <el-date-picker v-model="vinculoLaboralObject.fecha_inicio" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" :disabled="flagCampoaEditarBloqueado" />
             </el-form-item>
           </el-col>
           <!-- <el-col :span="8">
@@ -77,7 +77,7 @@
           </el-col> -->
           <el-col :span="8">
             <el-form-item label="FECHA FIN">
-              <el-date-picker v-model="vinculoLaboralObject.fecha_fin" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" />
+              <el-date-picker v-model="vinculoLaboralObject.fecha_fin" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" :disabled="flagCampoaEditarBloqueado" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -191,7 +191,7 @@ export default {
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
           { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres.', trigger: 'blur' }
         ]
-        // area_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
+        // area_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }]
         // cargo_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
         // tipo_personal_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
         // especialidad_principal: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
@@ -203,6 +203,7 @@ export default {
       TipoPersonalSeleccionado: [],
       personaVerEspecialidad_Id: -3,
       tipoPersonalAsistencial: false,
+      flagCampoaEditarBloqueado: false,
       areaSeleccionada: null,
       opcionesCargo: [],
       opcionesTipoPersonal: [],
@@ -227,7 +228,11 @@ export default {
   watch: {
     vinculoLaboralId(newValue, oldValue) {
       if (newValue > 0) {
+        // si es para edicion entonces bloquear campos
+        this.flagCampoaEditarBloqueado = true
         this.getDetalleVinculoLaboral()
+      } else {
+        this.flagCampoaEditarBloqueado = false
       }
     }
   },

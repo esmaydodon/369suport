@@ -37,6 +37,13 @@ class EspecialidadesResource extends Resource {
       method: 'get'
     })
   }
+  eliminarVinculoEspecialidadPersona(data) {
+    return request({
+      url: '/' + this.uri + '/eliminarEspecialidadPersona',
+      method: 'post',
+      data: data
+    })
+  }
 }
 
 export { EspecialidadesResource as default }
