@@ -13,7 +13,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="Nro. doc. identidad" prop="doc_identidad">
-              <el-input v-model="persona.doc_identidad" />
+              <el-input v-model="persona.doc_identidad" maxlength="20" @keyup="persona.doc_identidad=persona.doc_identidad.replace()" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -241,44 +241,44 @@ export default {
         correo: '',
         distrito_id: '',
         direccion: '',
-        nivel_educativo_id: null,
-        profesion_id: null
+        nivel_educativo_id: '',
+        profesion_id: ''
       },
       reglas: {
         tipo_doc_identidad: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
         doc_identidad: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 20, message: 'El campo debe tener máximo 20 caracteres.', trigger: 'blur' }
+          { require: true, message: 'El campo debe contener solo números', trigger: 'blur' }
         ],
         nombres: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 200, message: 'El campo debe tener máximo 200 caracteres.', trigger: 'blur' }
+          { require: true, max: 200, message: 'El campo debe tener máximo 200 caracteres', trigger: 'blur' }
         ],
         apellido_paterno: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres.', trigger: 'blur' }
+          { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres', trigger: 'blur' }
         ],
         apellido_materno: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres.', trigger: 'blur' }
+          { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres', trigger: 'blur' }
         ],
         fecha_nacimiento: [{ required: true, message: 'El campo es obligatorio', trigger: 'blur' }],
         sexo: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 1, message: 'El campo debe tener máximo 1 caracteres.', trigger: 'blur' }
+          { require: true, max: 1, message: 'El campo debe tener máximo 1 caracteres', trigger: 'blur' }
         ],
         telefono: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 9, message: 'El campo debe tener máximo 9 caracteres.', trigger: 'blur' }
+          { require: true, max: 9, message: 'El campo debe tener máximo 9 caracteres', trigger: 'blur' }
         ],
         correo: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 70, message: 'El campo debe tener máximo 70 caracteres.', trigger: 'blur' }
+          { require: true, max: 70, message: 'El campo debe tener máximo 70 caracteres', trigger: 'blur' }
         ],
         distrito_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
         direccion: [
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
-          { require: true, max: 255, message: 'El campo debe tener máximo 255 caracteres.', trigger: 'blur' }
+          { require: true, max: 255, message: 'El campo debe tener máximo 255 caracteres', trigger: 'blur' }
         ]
       },
       rowType: 'flex',

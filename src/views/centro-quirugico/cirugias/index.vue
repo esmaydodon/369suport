@@ -8,10 +8,12 @@
         <el-row :gutter="10">
           <el-col :xs="24" :md="6">
             <el-input
+              v-model="listQuery.keyword"
               placeholder="Buscar"
               style="width: 100%; margin-bottom: 5px;"
               class="filter-item"
               clearable
+              @clear="listarCirugias"
             />
           </el-col>
           <el-col :xs="24" :md="3">
@@ -23,8 +25,10 @@
               type="primary"
               style="width: 100%; margin-bottom: 5px;"
               icon="el-icon-search"
+              @clear="listarCirugias"
             />
           </el-col>
+          <!-- v-permission="['permisos.crear']" -->
           <el-col :xs="24" :md="6">
             <el-button
               class="filter-item"
@@ -36,11 +40,11 @@
               Agregar
             </el-button>
           </el-col>
-          <!-- v-permission="['permisos.crear']" -->
         </el-row>
         <el-row :gutter="10">
           <el-col :span="24">
             <el-table
+              v-loading="loading"
               :data="data"
               height="calc(calc(100vh - 380px))"
               style="width: 100%"
@@ -73,7 +77,13 @@
                 width="250"
               >
                 <template slot-scope="scope">
-                  <el-button type="primary" :class="scope.id">PRUEBA</el-button>
+                  <el-dropdown trigger="click" @command="handleCommand">
+                    <el-button type="text" size="mini">OPCIONES <i class="el-icon-arrow-down el-icon--right" /></el-button>
+                    <el-dropdown-menu>
+                      <el-dropdown-item icon="el-icon-edit" :command="{command: 'EDITAR',id: scope.row.id}">EDITAR</el-dropdown-item>
+                      <el-dropdown-item icon="el-icon-remove" :command="{command: 'ELIMINAR',id: scope.row.id}">ELIMINAR</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
                 </template>
               </el-table-column>
             </el-table>
@@ -84,7 +94,7 @@
               :page.sync="listQuery.page"
               :limit.sync="listQuery.limit"
               layout="total, prev, pager, next"
-              @pagination="listaCirgugias"
+              @pagination="listarCirugias"
             />
           </el-col>
         </el-row>
@@ -112,11 +122,15 @@ import { debounce } from '@/utils'
 import AgregarEditarProgramacionCirugia from './components/agregar_editar_programacion'
 import Paginator from '@/components/Pagination'
 // Resource
+import ProgramacionCirugiaResource from '@/api/programacion-cirugia'
+const programacionCirugiaResource = new ProgramacionCirugiaResource()
+import Swal from 'sweetalert2'
 export default {
   name: 'Cirugias',
   components: { AgregarEditarProgramacionCirugia, Paginator },
   data() {
     return {
+      loading: false,
       data: [],
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
@@ -141,16 +155,40 @@ export default {
       }
     })
     window.addEventListener('resize', this.__resizeHandler)
+
+    this.listarCirugias()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    listaCirgugias() {
-
+    listarCirugias() {
+      this.loading = true
+      programacionCirugiaResource.list(this.listQuery)
+        .then(
+          (response) => {
+            const { data, meta } = response
+            this.data = data
+            this.listQuery.total = meta.total
+            this.loading = false
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+            this.loading = false
+          }
+        )
     },
     abrirModalAgregar() {
       this.tituloModalAgregarEditar = 'REGISTRAR PROGRAMACION DE CIRUGIA'
+      this.$nextTick(() => {
+        this.modalAgregarEditar = true
+      })
+    },
+    abrirModalEditar(programacionCirugiaId) {
+      this.tituloModalAgregarEditar = 'EDITAR CIRUGIA'
+      this.programacionCirugiaEditarId = programacionCirugiaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
@@ -161,6 +199,49 @@ export default {
         this.tituloModalAgregarEditar = ''
         this.programacionCirugiaEditarId = -5
       })
+    },
+    eliminarProgramacionCirugia(programacionCirugiaEditarId) {
+      Swal.fire({
+        title: '¿Esta seguro de eliminar el tipo de personal?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el tipo de personal, amenos que el tipo de personal nunca haya sido parte del HRDC',
+        icon: 'error',
+        reverseButtons: true,
+        showCancelButton: true,
+        confirmButtonColor: '#1e88e5',
+        confirmButtonText: 'Si, estoy seguro',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.loading = true
+          programacionCirugiaResource.destroy(programacionCirugiaEditarId)
+            .then(
+              (response) => {
+                this.$message({
+                  type: 'info',
+                  message: response.message
+                })
+                this.loading = false
+                this.listarTipoPersonal()
+              }
+            )
+            .catch(
+              (error) => {
+                console.log(error)
+                this.loading = false
+              }
+            )
+        } else {
+          this.loading = false
+        }
+      })
+    },
+    handleCommand({ command, id }) {
+      if (command === 'EDITAR') {
+        this.abrirModalEditar(id)
+      }
+      if (command === 'ELIMINAR') {
+        this.eliminarProgramacionCirugia(id)
+      }
     }
   }
 }

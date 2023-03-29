@@ -187,7 +187,7 @@ const AdministracionRoutes = {
       path: 'areas',
       component: () => import('@/views/administracion/publics/areas'),
       name: 'Areas',
-      meta: { title: 'Areas', icon: 'el-icon-s-operation', noCache: true }
+      meta: { title: 'Áreas', icon: 'el-icon-s-operation', noCache: true }
     },
     {
       path: 'Vinculo',
@@ -206,7 +206,7 @@ const AdministracionRoutes = {
       component: () => import('@/views/administracion/publics/diagnosticos'),
       name: 'Diagnosticos',
       meta: {
-        title: 'Diagnosticos',
+        title: 'Diagnósticos',
         icon: 'el-icon-s-operation',
         noCache: true
       }
@@ -227,7 +227,7 @@ const AdministracionRoutes = {
         import('@/views/administracion/publics/ubicaciones-geograficas'),
       name: 'Regiones',
       meta: {
-        title: 'Ubicaciones geograficas',
+        title: 'Regiones',
         icon: 'custom-map-peru',
         noCache: true
       }
@@ -236,7 +236,7 @@ const AdministracionRoutes = {
       path: 'niveleseducativos',
       component: () => import('@/views/administracion/publics/niveles-educativos'),
       name: 'NivelesEducativos',
-      meta: { title: 'Niveles Educativos', icon: 'el-icon-s-order', noCache: true }
+      meta: { title: 'Nivel Educativo', icon: 'el-icon-s-order', noCache: true }
     },
     {
       path: 'profesiones',

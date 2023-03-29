@@ -49,7 +49,7 @@
               />
               <el-table-column
                 prop="doc_identidad"
-                label="DOC IDENTIDAD"
+                label="N° DOC DE IDENTIDAD"
                 min-width="150"
               />
               <el-table-column

@@ -36,7 +36,7 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="12">
-            <el-form-item label="AREA" prop="area_id">
+            <el-form-item ref="formvinculoLaboralObject" label="AREA" prop="area_id">
               <el-select v-model="vinculoLaboralObject.area_id" placeholder="Seleccione">
                 <el-option v-for="item in opcionesAreas" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
@@ -53,23 +53,23 @@
         <el-row :gutter="10">
           <el-col :span="12">
             <el-form-item label="TIPO PERSONAL" prop="tipo_personal_id">
-              <el-select v-model="vinculoLaboralObject.tipo_personal_id" placeholder="Seleccione">
+              <el-select v-model="vinculoLaboralObject.tipo_personal_id" placeholder="Seleccione" :disabled="flagCampoaEditarBloqueado" @change="handleConsultaTipoPersonal(vinculoLaboralObject.tipo_personal_id)">
                 <el-option v-for="item in opcionesTipoPersonal" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="ESPECIALIDAD" prop="especialidad_principal">
               <el-select v-model="vinculoLaboralObject.especialidad_principal" placeholder="Seleccione">
                 <el-option v-for="item in opcionesEspecialidades" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row :gutter="10">
           <el-col :span="8">
             <el-form-item label="FECHA INICIO" prop="fecha_inicio">
-              <el-date-picker v-model="vinculoLaboralObject.fecha_inicio" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" />
+              <el-date-picker v-model="vinculoLaboralObject.fecha_inicio" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" :disabled="flagCampoaEditarBloqueado" />
             </el-form-item>
           </el-col>
           <!-- <el-col :span="8">
@@ -77,7 +77,7 @@
           </el-col> -->
           <el-col :span="8">
             <el-form-item label="FECHA FIN">
-              <el-date-picker v-model="vinculoLaboralObject.fecha_fin" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" />
+              <el-date-picker v-model="vinculoLaboralObject.fecha_fin" placeholder="Seleccionar o ingresar" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" :disabled="flagCampoaEditarBloqueado" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -103,6 +103,17 @@
     >
       <!-- <agregar-editar-persona :persona-id="personaEditar_Id" @close="closeModalAgregarEditar" /> -->
     </el-dialog>
+    <el-dialog
+      :title="'ESPECIALIDADES '"
+      :visible.sync="modalVicularEspecialidades"
+      :width="widthModal"
+      append-to-body
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <listar-especialidades :persona-id="personaVerEspecialidad_Id" @close="cerrarModalEspecialidades" />
+    </el-dialog>
   </div>
 </template>
 
@@ -124,14 +135,14 @@ import TipoPersonalResource from '@/api/tipo_personal'
 const tipoPersonalResource = new TipoPersonalResource()
 import EspecialidadesResource from '@/api/especialidades'
 const especialidadesResource = new EspecialidadesResource()
+import ListarEspecialidades from './vincular_especialidades.vue'
+
 // import AgregarEditarPersona from '../../personas/components/agregar_editar'
 
 export default {
   name: 'SeleccionarPersona',
-  components: {
-    // AgregarEditarPersona
-    // RegistroPersonaApoderado: () => import('../personas/components/registro-persona-padre')
-  },
+  components: { ListarEspecialidades },
+  // components: { ListarEspecialidades: () => import('./vincular_especialidades.vue') },
   props: {
     vinculoLaboralId: {
       required: true,
@@ -140,6 +151,7 @@ export default {
   },
   data() {
     return {
+      modalVicularEspecialidades: false,
       personaEditar_Id: -1,
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
@@ -179,7 +191,7 @@ export default {
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' },
           { require: true, max: 50, message: 'El campo debe tener máximo 50 caracteres.', trigger: 'blur' }
         ]
-        // area_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
+        // area_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }]
         // cargo_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
         // tipo_personal_id: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
         // especialidad_principal: [{ required: true, message: 'El campo es obligatorio', trigger: 'change' }],
@@ -188,6 +200,10 @@ export default {
       dniLoading: false,
       rowType: 'flex',
       opcionesAreas: [],
+      TipoPersonalSeleccionado: [],
+      personaVerEspecialidad_Id: -3,
+      tipoPersonalAsistencial: false,
+      flagCampoaEditarBloqueado: false,
       areaSeleccionada: null,
       opcionesCargo: [],
       opcionesTipoPersonal: [],
@@ -212,7 +228,11 @@ export default {
   watch: {
     vinculoLaboralId(newValue, oldValue) {
       if (newValue > 0) {
+        // si es para edicion entonces bloquear campos
+        this.flagCampoaEditarBloqueado = true
         this.getDetalleVinculoLaboral()
+      } else {
+        this.flagCampoaEditarBloqueado = false
       }
     }
   },
@@ -245,6 +265,24 @@ export default {
   methods: {
     handleConsultaDniService(dnisolicitante, flag) {
       this.consultaDocumento(dnisolicitante)
+    },
+    handleConsultaTipoPersonal(tipopersonalId) {
+      console.log(tipopersonalId)
+      this.consultaTipoPersonal(tipopersonalId)
+    },
+    // Visualizar y vincular camas
+    openModalCamas(id, nombrePersona) {
+      this.personaVerEspecialidad_Id = id
+      this.areaVerCamaNombre = null
+      // console.log(this.personaVerEspecialidad_Id)
+      this.$nextTick(() => {
+        this.modalVicularEspecialidades = true
+      })
+    },
+    cerrarModalEspecialidades() {
+      this.modalVicularEspecialidades = false
+      this.areaVerCamaNombre = ''
+      this.personaVerEspecialidad_Id = -5
     },
     async consultaDocumento(dnisolicitante) {
       this.dniLoading = true
@@ -327,6 +365,30 @@ export default {
         .then(
           (response) => {
             this.opcionesTipoPersonal = response.data
+            this.loading = false
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+            this.loading = true
+          }
+        )
+    },
+    async consultaTipoPersonal(id) {
+      this.loading = true
+      await tipoPersonalResource.get(id)
+        .then(
+          (response) => {
+            this.TipoPersonalSeleccionado = response.data
+            if (this.TipoPersonalSeleccionado.nombre === 'ASISTNECIAL') {
+              // console.log(this.TipoPersonalSeleccionado.nombre)
+              this.tipoPersonalAsistencial = true
+              this.openModalCamas(this.vinculoLaboralObject.persona_id, null)
+            } else {
+              this.tipoPersonalAsistencial = false
+              // console.log('otro tipo' + this.TipoPersonalSeleccionado.nombre)
+            }
             this.loading = false
           }
         )
@@ -442,7 +504,7 @@ export default {
         tipo_personal_id: undefined,
         especialidad_principal: undefined
       }
-      this.vinculoLaboralId = -1
+      this.tipoPersonalAsistencial = false
       this.$refs['formPersona'].resetFields()
       this.$emit('close')
     },
@@ -456,6 +518,7 @@ export default {
         apellido_paterno: '',
         apellido_materno: ''
       }
+      this.tipoPersonalAsistencial = false
       this.$refs['formPersona'].resetFields()
     }
   }

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">Profesiones</h3>
+        <h3 class="card-header">PROFESIONES</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">

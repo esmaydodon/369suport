@@ -17,7 +17,7 @@ const DesarrolloRoutes = {
       path: 'calendario',
       component: () => import('@/views/desarrollo/calendario'),
       name: 'Calendario',
-      meta: { title: 'Clendario', icon: 'table', noCache: true }
+      meta: { title: 'Calendario', icon: 'table', noCache: true }
     }
   ]
 }

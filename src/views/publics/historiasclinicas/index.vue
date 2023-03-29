@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">HISTORIAS CLINICAS</h3>
+        <h3 class="card-header">HISTORIAS CLÍNICAS</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -83,7 +83,7 @@
                 <template slot-scope="scope">
                   <el-dropdown v-if="scope.row.historiaclinica" trigger="click" @command="handleCommand">
                     <el-button type="text" size="mini">
-                      OPCIONES<i class="el-icon-arrow-down el-icon--right" />
+                      OPCIONES <i class="el-icon-arrow-down el-icon--right" />
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item :command="{command:'EDITAR',id:scope.row.historiaclinica}" icon="el-icon-edit">Editar</el-dropdown-item>

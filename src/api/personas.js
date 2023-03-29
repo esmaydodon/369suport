@@ -20,6 +20,14 @@ class PersonasResource extends Resource {
       method: 'get'
     })
   }
+
+  opcionesSeleccionTrabajadores(params) {
+    return request({
+      url: 'opcionesseleccion/' + this.uri,
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { PersonasResource as default }
