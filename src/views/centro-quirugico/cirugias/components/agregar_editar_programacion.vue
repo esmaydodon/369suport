@@ -330,7 +330,7 @@ export default {
       },
       reglas: {
         fecha_cirugia: [
-          { type: 'date', required: true, message: 'El campo es obligatorio', trigger: 'blur' }
+          { required: true, message: 'El campo es obligatorio', trigger: 'blur' }
         ],
         sala_operaciones_id: [
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
@@ -349,7 +349,7 @@ export default {
         ],
         duracion_programada: [
           { required: true, message: 'El campo es obligatorio' },
-          { type: 'number', min: 0, message: 'Duración Minima 1 hora' },
+          { type: 'number', min: 0.1, message: 'Duración Minima 0.1 hora' },
           { type: 'number', max: 120, message: 'Duración maxima 120 horas' }
         ],
         Observaciones: [

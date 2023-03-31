@@ -381,7 +381,7 @@ export default {
         .then(
           (response) => {
             this.TipoPersonalSeleccionado = response.data
-            if (this.TipoPersonalSeleccionado.nombre === 'ASISTNECIAL') {
+            if (this.TipoPersonalSeleccionado.nombre === 'ASISTENCIAL') {
               // console.log(this.TipoPersonalSeleccionado.nombre)
               this.tipoPersonalAsistencial = true
               this.openModalCamas(this.vinculoLaboralObject.persona_id, null)

@@ -6,12 +6,12 @@
           <img src="@/assets/img/logo_landscape.png" alt="Hospital Regional Docente Cajamarca">
         </el-col>
         <el-col :xs="22" :sm="4" style="margin: 5px 20px; display: flex; align-items: center; height: 100%;">
-          <el-select v-model="query.especialidad" placeholder="Buscar especialidad" clearable filterable>
+          <el-select v-model="query.especialidad" placeholder="Buscar especialidad" clearable filterable @change="buscarDatos">
             <el-option v-for="item in opciones" :key="item.label" :value="item.value" :label="item.label" />
           </el-select>
         </el-col>
         <el-col :xs="22" :sm="4" style="margin: 5px 20px;">
-          <el-date-picker v-model="query.fecha" placeholder="" :picker-options="pickerOptions" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" />
+          <el-date-picker v-model="query.fecha" placeholder="" :picker-options="pickerOptions" format="dd/MM/yyyy" value-format="yyyy-MM-dd H:mm:ss" @change="buscarDatos" />
         </el-col>
         <el-col :xs="22" :sm="3" style="margin: 5px 20px;">
           <el-button type="primary" plain icon="el-icon-search" style="width: 100%;" @click="buscarDatos" />
@@ -172,7 +172,7 @@ export default {
         disabledDate(time) {
           const ahora = new Date()
           const ayer = ahora.setDate(ahora.getDate() - 1)
-          const ultimodia = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0)
+          const ultimodia = new Date(ahora.getFullYear(), ahora.getMonth() + 2, 0)
           let disable = false
 
           if (time.getTime() < ayer) {

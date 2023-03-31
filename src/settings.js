@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Plantilla',
+  title: 'PROGRAMACION HRDC',
 
   /**
    * @type {boolean} true | false

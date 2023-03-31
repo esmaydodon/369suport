@@ -23,7 +23,7 @@ class PersonasResource extends Resource {
 
   opcionesSeleccionTrabajadores(params) {
     return request({
-      url: 'opcionesseleccion/' + this.uri,
+      url: 'opcionesseleccion/' + this.uri + '/trabajadores',
       method: 'get',
       params: params
     })

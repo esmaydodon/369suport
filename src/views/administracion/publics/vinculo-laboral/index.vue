@@ -26,7 +26,7 @@
               @click="listaVinculoLaboral"
             />
           </el-col>
-          <el-col :xs="24" :sm="24" :md="6" :lg="6">
+          <el-col :xs="24" :sm="24" :md="8" :lg="8">
             <el-button
               class="filter-item"
               style="margin: 5px 0px; width: 100%"
@@ -79,7 +79,7 @@
                 <template slot-scope="scope">
                   <div>
                     <el-button
-                      v-if="scope.row.tipopersonal == 'ASISTNECIAL'"
+                      v-if="scope.row.tipopersonal == 'ASISTENCIAL'"
                       type="info"
                       plain
                       @click="
