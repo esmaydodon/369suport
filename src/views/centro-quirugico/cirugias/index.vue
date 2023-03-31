@@ -25,7 +25,7 @@
               type="primary"
               style="width: 100%; margin-bottom: 5px;"
               icon="el-icon-search"
-              @clear="listarCirugias"
+              @click="listarCirugias"
             />
           </el-col>
           <!-- v-permission="['permisos.crear']" -->
@@ -53,22 +53,57 @@
                 header-align="center"
                 type="index"
                 label="#"
-                width="100"
+                width="30"
               />
               <el-table-column
                 header-align="center"
                 align="center"
-                prop="nombre"
-                label="NOMBRE DEL SERVICIO"
-                min-width="500"
+                prop="paciente"
+                label="PACIENTE"
+                min-width="300"
               />
               <el-table-column
+                header-align="center"
+                align="center"
+                prop="fecha_cirugia"
+                label="FECHA SIRUGIA"
+                min-width="124"
+              />
+              <el-table-column
+                header-align="center"
+                align="center"
+                prop="turno"
+                label="TURNO"
+                min-width="120"
+              />
+              <el-table-column
+                header-align="center"
+                align="center"
+                prop="cama_origen"
+                label="CAMA ORIGEN"
+                min-width="210"
+              />
+              <el-table-column
+                header-align="center"
+                align="center"
+                prop="sala_operacion"
+                label="SALA OPERACIONES"
+                min-width="210"
+              />
+              <el-table-column
+                header-align="center"
+                align="center"
+                prop="nro_historia_clinica"
+                label="N° HOSTORIA CLINICA"
+                min-width="210"
+              />
+              <!-- <el-table-column
                 header-align="center"
                 align="center"
                 prop="activo"
                 label="ACTIVO"
                 width="150"
-              />
+              /> -->
               <el-table-column
                 header-align="center"
                 align="center"
