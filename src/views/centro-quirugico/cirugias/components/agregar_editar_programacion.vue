@@ -330,7 +330,7 @@ export default {
       },
       reglas: {
         fecha_cirugia: [
-          { type: 'date', required: true, message: 'El campo es obligatorio', trigger: 'blur' }
+          { required: true, message: 'El campo es obligatorio', trigger: 'blur' }
         ],
         sala_operaciones_id: [
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
