@@ -233,6 +233,7 @@ export default {
       this.$nextTick(() => {
         this.tituloModalAgregarEditar = ''
         this.programacionCirugiaEditarId = -5
+        this.listarCirugias()
       })
     },
     eliminarProgramacionCirugia(programacionCirugiaEditarId) {

@@ -402,6 +402,13 @@ export default {
       licenciadaCirculante: -1
     }
   },
+  watch: {
+    programacionCirugiaId(newValue, oldValue) {
+      if (newValue > 0) {
+        this.getProgramacionCirugia()
+      }
+    }
+  },
   mounted() {
     this.__resizeHandler = debounce(() => {
       const windowWidth = document.documentElement.clientWidth
@@ -413,8 +420,8 @@ export default {
     })
 
     window.addEventListener('resize', this.__resizeHandler)
-    if (this.camaId > 0) {
-      this.getCama()
+    if (this.programacionCirugiaId > 0) {
+      this.getProgramacionCirugia()
     }
     this.cargarSalasOperaciones()
   },
@@ -422,6 +429,58 @@ export default {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
+    async getProgramacionCirugia() {
+      this.loading = true
+      await programacionCirugiaResource.get(this.programacionCirugiaId)
+        .then(
+          (response) => {
+            const { data } = response
+            this.programacionCirugia = data
+            this.programacionCirugia.equipo_quirurgico_id = data.equipoquirurgico_id
+            this.programacionCirugia.equipoQuirurgico = {
+              anestesiologo_1_id: data.anestesiologo_1_id,
+              anestesiologo_2_id: data.anestesiologo_2_id,
+              cirujano_1_id: data.cirujano_1_id,
+              cirujano_2_id: data.cirujano_2_id,
+              cirujano_3_id: data.cirujano_3_id,
+              medico_residente_anestesiologo_1_id: data.medico_residente_anestesiologo_1_id,
+              medico_residente_anestesiologo_2_id: data.medico_residente_anestesiologo_2_id,
+              medico_residente_cirugia_1_id: data.medico_residente_cirugia_1_id,
+              medico_residente_cirugia_2_id: data.medico_residente_cirugia_2_id,
+              licenciada_instrumentista_1_id: data.licenciada_instrumentista_1_id,
+              licenciada_instrumentista_2_id: data.licenciada_instrumentista_2_id,
+              licenciada_circulante_1_id: data.licenciada_circulante_1_id,
+              licenciada_circulante_2_id: data.licenciada_circulante_2_id
+            }
+            this.historia_clinica_paciente_id_label = data.nro_historia_clinica + '-' + data.paciente
+            this.programacionCirugia.historia_clinica_paciente_id = data.historia_clinica_paciente_id
+            this.cama_id_label = data.cama_origen
+            this.programacionCirugia.cama_id = data.cama_id
+            this.diagnostico_id_label = data.diagnostico
+            this.operacion_programada_id_label = data.operacion_programada_id_label
+            this.programacionCirugia.operacion_programada_id = data.operacion_programada_id
+            this.anestesiologo_1_id_label = data.anestesiologo_1_id_label
+            this.anestesiologo_2_id_label = data.anestesiologo_2_id_label
+            this.cirujano_1_id_label = data.cirujano_1_id_label
+            this.cirujano_2_id_label = data.cirujano_2_id_label
+            this.cirujano_3_id_label = data.cirujano_3_id_label
+            this.medico_residente_anestesiologo_1_id_label = data.medico_residente_anestesiologo_1_id_label
+            this.medico_residente_anestesiologo_2_id_label = data.medico_residente_anestesiologo_2_id_label
+            this.medico_residente_cirugia_1_id_label = data.medico_residente_cirugia_1_id_label
+            this.medico_residente_cirugia_2_id_label = data.medico_residente_cirugia_2_id_label
+            this.licenciada_instrumentista_1_id_label = data.licenciada_instrumentista_1_id_label
+            this.licenciada_instrumentista_2_id_label = data.licenciada_instrumentista_2_id_label
+            this.licenciada_circulante_1_id_label = data.licenciada_circulante_1_id_label
+            this.licenciada_circulante_2_id_label = data.licenciada_circulante_2_id_label
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+            this.loading = false
+          }
+        )
+    },
     cargarSalasOperaciones() {
       this.loading = true
       salasOperacionesResource.opcionesSeleccion()
@@ -704,7 +763,7 @@ export default {
     },
     editarProgramaCirugia() {
       this.loading = true
-      personasResource.update(this.programacionCirugiaId, this.programacionCirugia)
+      programacionCirugiaResource.update(this.programacionCirugiaId, this.programacionCirugia)
         .then(
           (response) => {
             this.$message({
@@ -712,12 +771,14 @@ export default {
               message: response.message
             })
             this.loading = false
-            this.close = false
+            // this.close = false
+            this.close(null)
           }
         )
         .catch(
-          () => {
-
+          (error) => {
+            console.log(error)
+            this.loading = false
           }
         )
     },
