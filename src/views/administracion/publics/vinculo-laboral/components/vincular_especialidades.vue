@@ -17,7 +17,7 @@
             </el-table-column>
             <el-table-column label="Estado" prop="activo">
               <template slot-scope="scope">
-                <el-tag v-if="scope.row.activo" type="primary">Activo</el-tag>
+                <el-tag v-if="scope.row.especialidad.activo" type="primary">Activo</el-tag>
                 <el-tag v-else type="warning">Inactivo</el-tag>
               </template>
             </el-table-column>

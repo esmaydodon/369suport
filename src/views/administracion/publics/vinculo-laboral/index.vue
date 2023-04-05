@@ -63,8 +63,8 @@
                 label="NOMBRE COMPLETO"
                 min-width="250"
               />
-              <el-table-column prop="area" label="AREA" min-width="150" />
-              <el-table-column prop="cargo" label="CARGO" min-width="150" />
+              <!-- <el-table-column prop="area" label="AREA" min-width="150" />
+              <el-table-column prop="cargo" label="CARGO" min-width="150" /> -->
               <el-table-column
                 prop="tipopersonal"
                 label="TIPO PERSONAL"
@@ -79,7 +79,7 @@
                 <template slot-scope="scope">
                   <div>
                     <el-button
-                      v-if="scope.row.tipopersonal == 'ASISTENCIAL'"
+                      v-if="scope.row.tipopersonal === 'ASISTENCIAL'"
                       type="info"
                       plain
                       @click="
@@ -98,7 +98,7 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
+              <!-- <el-table-column
                 prop="fecha_inicio"
                 label="FECHA INICIO"
                 min-width="250"
@@ -107,7 +107,7 @@
                 prop="fecha_fin"
                 label="FECHA FIN"
                 min-width="250"
-              />
+              /> -->
               <el-table-column
                 header-align="center"
                 align="center"
@@ -197,7 +197,7 @@
     </el-dialog>
     <!-- Modal Agregar Persona + Vinculo LAboral -->
     <el-dialog
-      title="REGISTRAR VINCULO LABORAL"
+      :title="tituloModalAgregarEditar"
       :visible.sync="modalAgregarPersonaVinculoLaboral"
       :width="widthModal"
       top="2vh"
@@ -389,6 +389,7 @@ export default {
     abrirModalAgregarPersonaVinculoLaboral() {
       this.VinculoLaboralEditar_id = -3
       this.modalAgregarPersonaVinculoLaboral = true
+      this.tituloModalAgregarEditar = 'AGREGAR VINCULO LABORAL'
     },
     cerrarModalAgregarPersonaVinculoLaboral() {
       this.modalAgregarPersonaVinculoLaboral = false
@@ -409,6 +410,7 @@ export default {
     // para que cuando edite nuevamente el mismo registro setee a id negativo
     vinculocancelado() {
       this.modalAgregarPersonaVinculoLaboral = false
+      this.tituloModalAgregarEditar = ''
       this.$nextTick(() => {
         this.VinculoLaboralEditar_id = -3
       })
