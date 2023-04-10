@@ -58,27 +58,29 @@
             </el-descriptions-item>
           </el-descriptions>
           <el-divider />
-          <el-descriptions title="Especialidades" direction="vertical" :column="4" border>
-            <el-descriptions-item label="Especialidades" :span="4">
-              <el-table
-                :data="data.especialdadpeersona"
-                style="height: calc(60vh - 80px);"
-              >
-                <el-table-column label="#" type="index" />
-                <el-table-column label="Especialidad">
-                  <template slot-scope="scope">
-                    {{ scope.row.especialidad.nombre }}
-                  </template>
-                </el-table-column>
-                <el-table-column label="Estado" prop="activo">
-                  <template slot-scope="scope">
-                    <el-tag v-if="scope.row.especialidad.activo" type="primary">Activo</el-tag>
-                    <el-tag v-else type="warning">Inactivo</el-tag>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-descriptions-item>
-          </el-descriptions>
+          <div style="width: 100%;height: calc(60vh - 80px);overflow: auto; padding-top: 20px;">
+            <el-descriptions title="Especialidades" direction="vertical" :column="4" border>
+              <el-descriptions-item label="Especialidades" :span="4">
+                <el-table
+                  :data="data.especialdadpeersona"
+                  style="height: calc(60vh - 80px);"
+                >
+                  <el-table-column label="#" type="index" />
+                  <el-table-column label="Especialidad">
+                    <template slot-scope="scope">
+                      {{ scope.row.especialidad.nombre }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Estado" prop="activo">
+                    <template slot-scope="scope">
+                      <el-tag v-if="scope.row.especialidad.activo" type="primary">Activo</el-tag>
+                      <el-tag v-else type="warning">Inactivo</el-tag>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-descriptions-item>
+            </el-descriptions>
+          </div>
           <el-divider />
         </div>
       </el-col>

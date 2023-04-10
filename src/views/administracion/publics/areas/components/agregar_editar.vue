@@ -10,6 +10,9 @@
             <el-form-item label="Abreviatura" prop="abreviatura">
               <el-input v-model="area.abreviatura" @keyup.native="area.abreviatura = upperModel(area.abreviatura)" />
             </el-form-item>
+            <el-form-item label="Servicio" prop="servicio">
+              <el-switch v-model="area.servicio" />
+            </el-form-item>
             <el-form-item label="'Area" prop="area">
               <!-- <el-input v-model="area.area" /> -->
               <el-select
@@ -70,6 +73,7 @@ export default {
       loading: false,
       area: {
         id: undefined,
+        servicio: null,
         abreviatura: '',
         nombre: ''
       },
