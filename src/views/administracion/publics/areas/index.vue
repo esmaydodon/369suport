@@ -76,7 +76,7 @@
                 label="SERVICIO"
               >
                 <template slot-scope="scope">
-                  <el-switch v-model="scope.row.servicio" />
+                  <el-switch v-model="scope.row.servicio" @change="actualizarServicio(scope.row.id,scope.row.servicio)" />
                 </template>
               </el-table-column>
               <el-table-column
@@ -250,6 +250,23 @@ export default {
           console.log(error)
           this.loading = false
         })
+    },
+    actualizarServicio(id, servicio) {
+      areasResource.actualizarServicio(id, servicio)
+        .then(
+          (response) => {
+            this.$message({
+              type: 'success',
+              message: response.message
+            })
+            this.listaAreas()
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
     },
     abrirModalAgregar() {
       this.tituloModalAgregarEditar = 'REGISTRAR AREA'
