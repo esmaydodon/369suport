@@ -13,8 +13,8 @@
             <el-form-item label="Servicio" prop="servicio">
               <el-switch v-model="area.servicio" />
             </el-form-item>
-            <el-form-item label="'Area" prop="area">
-              <!-- <el-input v-model="area.area" /> -->
+            <el-form-item label="'Area" prop="area_padre_id">
+              <!-- <el-input v-model="area.area_padre_id" /> -->
               <el-select
                 v-show="showSelectArea"
                 ref="refareaId"
@@ -74,6 +74,7 @@ export default {
       area: {
         id: undefined,
         servicio: null,
+        area_padre_id: null,
         abreviatura: '',
         nombre: ''
       },
@@ -224,6 +225,8 @@ export default {
       this.area = {
         id: undefined,
         abreviatura: '',
+        servicio: null,
+        area_padre_id: null,
         nombre: ''
       }
       this.$refs['aformArea'].resetFields()

@@ -76,7 +76,7 @@
                 label="SERVICIO"
               >
                 <template slot-scope="scope">
-                  <el-switch v-model="scope.row.servicio" @change="actualizarServicio(scope.row.id,scope.row.servicio)" />
+                  <el-switch v-model="scope.row.servicio" active-color="#13ce66" inactive-color="#ff4949" @change="actualizarServicio(scope.row.id,scope.row.servicio)" />
                 </template>
               </el-table-column>
               <el-table-column
