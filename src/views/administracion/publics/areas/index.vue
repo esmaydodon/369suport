@@ -73,6 +73,13 @@
                 </template>
               </el-table-column>
               <el-table-column
+                label="SERVICIO"
+              >
+                <template slot-scope="scope">
+                  <el-switch v-model="scope.row.servicio" active-color="#13ce66" inactive-color="#ff4949" @change="actualizarServicio(scope.row.id,scope.row.servicio)" />
+                </template>
+              </el-table-column>
+              <el-table-column
                 header-align="center"
                 align="center"
                 prop="activo"
@@ -179,7 +186,16 @@ export default {
   data() {
     return {
       loading: false,
-      data: [],
+      data: [
+        {
+          id: null,
+          nombre: '',
+          servicio: null,
+          abreviatura: '',
+          activo:	true,
+          area_padre_id: null
+        }
+      ],
       tituloModalAgregarEditar: '',
       modalVicularCamaArea: false,
       modalAgregarEditar: false,
@@ -219,6 +235,14 @@ export default {
         .then((response) => {
           const { data, meta } = response
           this.data = data
+          // if (this.data.servicio === 0) {
+          //   this.data.servicio = false
+          //   console.log(this.data.servicio)
+          // } else {
+          //   this.data.servicio = true
+          //   console.log(this.data.servicio)
+          // }
+          // // console.log(this.data)
           this.listQuery.total = meta.total
           this.loading = false
         })
@@ -226,6 +250,23 @@ export default {
           console.log(error)
           this.loading = false
         })
+    },
+    actualizarServicio(id, servicio) {
+      areasResource.actualizarServicio(id, servicio)
+        .then(
+          (response) => {
+            this.$message({
+              type: 'success',
+              message: response.message
+            })
+            this.listaAreas()
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
     },
     abrirModalAgregar() {
       this.tituloModalAgregarEditar = 'REGISTRAR ÁREA'
