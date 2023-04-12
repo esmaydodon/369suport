@@ -38,7 +38,7 @@
           </el-descriptions>
           <el-divider />
           <el-descriptions title="Información de contacto" direction="vertical" :column="4" border>
-            <el-descriptions-item label="Telefono" :span="4">
+            <el-descriptions-item label="Teléfono" :span="4">
               {{ data.persona.telefono }}
             </el-descriptions-item>
             <el-descriptions-item label="Correo electronico" :span="4">
@@ -47,7 +47,7 @@
           </el-descriptions>
           <el-divider />
           <el-descriptions title="Información geografica" direction="vertical" :column="4" border>
-            <el-descriptions-item label="REGION" :span="4">
+            <el-descriptions-item label="REGIÓN" :span="4">
               {{ data.region }}
             </el-descriptions-item>
             <el-descriptions-item label="PROVINCIA" :span="4">

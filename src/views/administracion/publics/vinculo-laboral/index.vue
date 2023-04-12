@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">VINCULO LABORAL</h3>
+        <h3 class="card-header">VÍNCULO LABORAL</h3>
       </div>
       <div style="position: relative; height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -34,7 +34,7 @@
               icon="el-icon-plus"
               @click="abrirModalAgregarPersonaVinculoLaboral"
             >
-              Agregar Persona + Vinculo Laboral + Esp
+              Agregar Persona + Vínculo Laboral + Esp
             </el-button>
           </el-col>
         </el-row>
@@ -63,12 +63,20 @@
                 label="NOMBRE COMPLETO"
                 min-width="250"
               />
-              <el-table-column prop="area" label="AREA" min-width="150" />
-              <el-table-column prop="cargo" label="CARGO" min-width="150" />
+              <el-table-column
+                prop="area"
+                label="ÁREA"
+                min-width="150"
+              />
+              <el-table-column
+                prop="cargo"
+                label="CARGO"
+                min-width="150"
+              />
               <el-table-column
                 prop="tipopersonal"
                 label="TIPO PERSONAL"
-                min-width="141"
+                min-width="150"
               />
               <el-table-column
                 header-align="center"
@@ -99,19 +107,23 @@
                 </template>
               </el-table-column>
               <el-table-column
+                header-align="center"
+                align="center"
                 prop="fecha_inicio"
                 label="FECHA INICIO"
-                min-width="250"
-              />
-              <el-table-column
-                prop="fecha_fin"
-                label="FECHA FIN"
-                min-width="250"
+                min-width="150"
               />
               <el-table-column
                 header-align="center"
                 align="center"
-                label="VINCULO LABORAL"
+                prop="fecha_fin"
+                label="FECHA FIN"
+                min-width="150"
+              />
+              <el-table-column
+                header-align="center"
+                align="center"
+                label="VÍNCULO LABORAL"
                 min-width="150"
               >
                 <template slot-scope="scope">
@@ -136,7 +148,7 @@
                 align="center"
                 prop="activo"
                 label="OPCIONES"
-                width="250"
+                width="150"
               >
                 <template slot-scope="scope">
                   <el-dropdown
@@ -197,7 +209,7 @@
     </el-dialog>
     <!-- Modal Agregar Persona + Vinculo LAboral -->
     <el-dialog
-      title="REGISTRAR VINCULO LABORAL"
+      title="REGISTRAR VÍNCULO LABORAL"
       :visible.sync="modalAgregarPersonaVinculoLaboral"
       :width="widthModal"
       top="2vh"
@@ -213,7 +225,7 @@
     </el-dialog>
     <!-- Modal detalle historia clinica -->
     <el-dialog
-      title="VINCULO LABORAL"
+      title="VÍNCULO LABORAL"
       :visible.sync="modalVerDetalleVinculoLaboral"
       fullscreen
     >
@@ -325,7 +337,7 @@ export default {
         })
     },
     abriModalAgregarVinculoLaboral({ persona_id }) {
-      this.tituloModalAgregarEditar = 'AGREGAR VINCULO LABORAL'
+      this.tituloModalAgregarEditar = 'AGREGAR VÍNCULO LABORAL'
       this.personaCrearVinculo_Id = persona_id
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -341,7 +353,7 @@ export default {
       }
     },
     abrirModalEditar(vinculo_laboral_id) {
-      this.tituloModalAgregarEditar = 'EDITAR VINCULO LABORAL'
+      this.tituloModalAgregarEditar = 'EDITAR VÍNCULO LABORAL'
       this.VinculoLaboralEditar_id = vinculo_laboral_id
       this.$nextTick(() => {
         this.modalAgregarPersonaVinculoLaboral = true
@@ -349,13 +361,13 @@ export default {
     },
     handleEliminarVinculoLaboral(vinculo_laboral_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar Vinculo Laboral?',
-        text: 'Si se visualiza información incorrecta se recomienda editar Vinculo Laboral',
+        title: '¿Está seguro de eliminar vínculo laboral?',
+        text: 'Si se visualiza información incorrecta se recomienda editar vínculo laboral',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

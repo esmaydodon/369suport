@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="24">
         <el-form ref="formOperaciones" :model="operacion" :rules="reglas" label-position="top">
-          <el-form-item label="Operacion" prop="nombre">
+          <el-form-item label="Operación" prop="nombre">
             <el-input v-model="operacion.nombre" />
           </el-form-item>
         </el-form>

@@ -49,7 +49,7 @@
               />
               <el-table-column
                 prop="nombre"
-                label="REGION"
+                label="REGIÓN"
                 min-width="500"
               />
               <el-table-column
@@ -199,7 +199,7 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR REGION'
+      this.tituloModalAgregarEditar = 'REGISTRAR REGIÓN'
       this.regionEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -215,13 +215,13 @@ export default {
     },
     handleEliminarRegion(regionId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la region?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la region, o desactivarla.',
+        title: '¿Está seguro de eliminar la región?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la Región, o desactivarla.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -249,7 +249,7 @@ export default {
       })
     },
     abrirModalEditar(regionId) {
-      this.tituloModalAgregarEditar = 'EDITAR REGION'
+      this.tituloModalAgregarEditar = 'EDITAR REGIÓN'
       this.regionEditar_Id = regionId
       this.$nextTick(() => {
         this.modalAgregarEditar = true

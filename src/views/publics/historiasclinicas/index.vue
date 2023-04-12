@@ -33,7 +33,7 @@
               icon="el-icon-plus"
               @click="abrirModalAgregarPersonaHisoriaClinica"
             >
-              Agregar Persona + Historia Clinica
+              Agregar Persona + Historia Clínica
             </el-button>
           </el-col>
         </el-row>
@@ -65,7 +65,7 @@
               <el-table-column
                 header-align="center"
                 align="center"
-                label="HISTORIA CLINICA"
+                label="HISTORIA CLÍNICA"
                 min-width="150"
               >
                 <template slot-scope="scope">
@@ -119,7 +119,7 @@
     </el-dialog>
     <!-- Modal Agregar Persona + Historia Clinica -->
     <el-dialog
-      title="AGREGAR PERSONA + HISTORIA CLINICA"
+      title="AGREGAR PERSONA + HISTORIA CLÍNICA"
       :visible.sync="modalAgregarPersonaHisoriaClinica"
       :width="widthModal"
       top="2vh"
@@ -131,7 +131,7 @@
     </el-dialog>
     <!-- Modal detalle historia clinica -->
     <el-dialog
-      title="HISTORIA CLINICA"
+      title="HISTORIA CLÍNICA"
       :visible.sync="modalVerDetalleHisoriaClinica"
       fullscreen
     >
@@ -216,7 +216,7 @@ export default {
         )
     },
     abriModalAgregarHistoriaClinica({ persona_id }) {
-      this.tituloModalAgregarEditar = 'AGREGAR HISTORIA CLINICA'
+      this.tituloModalAgregarEditar = 'AGREGAR HISTORIA CLÍNICA'
       this.personaCrearHistoria_Id = persona_id
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -232,7 +232,7 @@ export default {
       }
     },
     abrirModalEditar(historiaClinica_id) {
-      this.tituloModalAgregarEditar = 'EDITAR HISTORIA CLINICA'
+      this.tituloModalAgregarEditar = 'EDITAR HISTORIA CLÍNICA'
       this.historiaClinicaEditar_id = historiaClinica_id
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -240,13 +240,13 @@ export default {
     },
     handleEliminarHistoriaClinica(historiaClinica_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la historia clinica?',
-        text: 'Si se visualiza información incorrecta se recomienda editar la historia clinica',
+        title: '¿Está seguro de eliminar la historia clínica?',
+        text: 'Si se visualiza información incorrecta se recomienda editar la historia clínica',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

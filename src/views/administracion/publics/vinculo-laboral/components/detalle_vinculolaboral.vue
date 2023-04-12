@@ -1,9 +1,9 @@
 <template>
-  <div v-loading="loading" style="height: calc(100vh - 75px);">
+  <div v-loading="loading">
     <el-row :gutter="10">
       <el-col :xs="24" :md="8">
         <div style="width: 100%;height: calc(100vh - 165px);overflow: auto; padding-top: 20px;">
-          <el-descriptions title="Informacion personal" direction="vertical" :column="4" border>
+          <el-descriptions title="Información personal" direction="vertical" :column="4" border>
             <!-- <el-descriptions-item label="Nro. historia clinica" :span="2">
               {{ data.nro_historia_clinica }}
             </el-descriptions-item>
@@ -37,8 +37,8 @@
             </el-descriptions-item>
           </el-descriptions>
           <el-divider />
-          <el-descriptions title="Informacion de contacto" direction="vertical" :column="4" border>
-            <el-descriptions-item label="Telefono" :span="4">
+          <el-descriptions title="Información de contacto" direction="vertical" :column="4" border>
+            <el-descriptions-item label="Teléfono" :span="4">
               {{ data.persona.telefono }}
             </el-descriptions-item>
             <el-descriptions-item label="Correo electronico" :span="4">
@@ -46,8 +46,8 @@
             </el-descriptions-item>
           </el-descriptions>
           <el-divider />
-          <el-descriptions title="Informacion geografica" direction="vertical" :column="4" border>
-            <el-descriptions-item label="REGION" :span="4">
+          <el-descriptions title="Información geográfica" direction="vertical" :column="4" border>
+            <el-descriptions-item label="REGIÓN" :span="4">
               {{ data.region }}
             </el-descriptions-item>
             <el-descriptions-item label="PROVINCIA" :span="4">
@@ -62,8 +62,8 @@
       </el-col>
       <el-col :xs="24" :md="16">
         <div style="width: 100%;height: calc(100vh - 165px);overflow: auto;">
-          <el-descriptions title="AREA - CARGO" direction="vertical" :column="4" border>
-            <el-descriptions-item label="AREA" :span="1">
+          <el-descriptions title="ÁREA - CARGO" direction="vertical" :column="4" border>
+            <el-descriptions-item label="ÁREA" :span="1">
               {{ data.area.nombre }}
             </el-descriptions-item>
             <el-descriptions-item label="CARGO" :span="1">
@@ -75,7 +75,7 @@
             <el-descriptions-item label="FECHA INICIO" :span="2">
               {{ data.fecha_inicio }}
             </el-descriptions-item>
-            <el-descriptions-item label="FECHA FIN" :span="4">
+            <el-descriptions-item label="FECHA FIN" :span="2">
               {{ data.fecha_fin }}
             </el-descriptions-item>
             <el-descriptions-item label="FECHA BAJA" :span="2">

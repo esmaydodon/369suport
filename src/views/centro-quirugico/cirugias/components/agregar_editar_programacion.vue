@@ -45,7 +45,7 @@
               <el-autocomplete
                 v-model="diagnostico_id_label"
                 :fetch-suggestions="buscarDiagnostico"
-                placeholder="Buscar diagnostico"
+                placeholder="Buscar diagnóstico"
                 style="width: 100%;"
                 @select="seleccionarDiagnostico"
                 @change="programacionCirugia.diagnostico_id = null"
@@ -55,7 +55,7 @@
               <el-autocomplete
                 v-model="operacion_programada_id_label"
                 :fetch-suggestions="buscarOperacion"
-                placeholder="Buscar operacion"
+                placeholder="Buscar operación"
                 style="width: 100%;"
                 @select="seleccionarOperacion"
                 @change="programacionCirugia.operacion_programada_id = null"

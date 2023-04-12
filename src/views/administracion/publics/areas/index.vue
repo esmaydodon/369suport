@@ -50,7 +50,7 @@
               />
               <el-table-column
                 prop="nombre"
-                label="NOMBRE AREA"
+                label="NOMBRE ÁREA"
                 min-width="150"
               />
               <el-table-column
@@ -149,7 +149,7 @@
     </el-dialog>
     <!-- Modal vincular camas-->
     <el-dialog
-      :title="'CAMAS DEL AREA: ' + areaVerCamaNombre"
+      :title="'CAMAS DEL ÁREA: ' + areaVerCamaNombre"
       :visible.sync="modalVicularCamaArea"
       :width="widthModal"
       :show-close="false"
@@ -228,7 +228,7 @@ export default {
         })
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR AREA'
+      this.tituloModalAgregarEditar = 'REGISTRAR ÁREA'
       this.areaEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -268,13 +268,13 @@ export default {
           })
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar El Área?',
+          title: '¿Está seguro de desactivar El Área?',
           text: 'Al desactivar el área, se inhabilita las camas que estén registradas en el mismo y otras funciones en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -301,13 +301,13 @@ export default {
     },
     handleEliminarArea(area_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la area?',
-        text: 'Realizar esta acción si es estrictamente necesario, si la area está obsoleta solo debe desactivarla',
+        title: '¿Está seguro de eliminar la área?',
+        text: 'Realizar esta acción si es estrictamente necesario, si la área está obsoleta solo debe desactivarla',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -332,7 +332,7 @@ export default {
       })
     },
     abrirModalEditar(areaId) {
-      this.tituloModalAgregarEditar = 'EDITAR AREA'
+      this.tituloModalAgregarEditar = 'EDITAR ÁREA'
       this.areaEditar_Id = areaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true

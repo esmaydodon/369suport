@@ -36,7 +36,7 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="12">
-            <el-form-item ref="formvinculoLaboralObject" label="AREA" prop="area_id">
+            <el-form-item ref="formvinculoLaboralObject" label="ÁREA" prop="area_id">
               <el-select v-model="vinculoLaboralObject.area_id" placeholder="Seleccione">
                 <el-option v-for="item in opcionesAreas" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>

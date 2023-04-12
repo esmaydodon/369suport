@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">DIAGNOSTICOS</h3>
+        <h3 class="card-header">DIAGNÓSTICOS</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -53,7 +53,7 @@
               />
               <el-table-column
                 prop="nombre"
-                label="DIAGNOSTICO"
+                label="DIAGNÓSTICO"
                 min-width="500"
               />
               <el-table-column
@@ -184,7 +184,7 @@ export default {
         )
     },
     abriModalAgregarDiagnostico() {
-      this.tituloModalAgregarEditar = 'AGREGAR DIAGNOSTICO'
+      this.tituloModalAgregarEditar = 'AGREGAR DIAGNÓSTICO'
       this.diagnosticoEditar_id = -5
       this.$nextTick(() => {
         this.modalAgregarEditarDiagnostico = true
@@ -206,7 +206,7 @@ export default {
       }
     },
     abrirModalEditar(diagnostico_id) {
-      this.tituloModalAgregarEditar = 'EDITAR DIAGNOSTICO'
+      this.tituloModalAgregarEditar = 'EDITAR DIAGNÓSTICO'
       this.diagnosticoEditar_id = diagnostico_id
       this.$nextTick(() => {
         this.modalAgregarEditarDiagnostico = true
@@ -234,13 +234,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el diagnostico?',
-          text: 'Al desactivar el diagnostico, no podra ser usado en el sistema.',
+          title: '¿Está seguro de desactivar el diagnóstico?',
+          text: 'Al desactivar el diagnóstico, no podra ser usado en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -270,13 +270,13 @@ export default {
     },
     handleEliminarDiagnostico(diagnostico_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el diagnostico?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el diagnostico, o desactivarlo.',
+        title: '¿Está seguro de eliminar el diagnóstico?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el diagnóstico, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

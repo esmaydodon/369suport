@@ -67,9 +67,9 @@
                   :header-row-class-name="tableHeaderRowClassName"
                   empty-text="No se han encontrado registros"
                 >
-                  <el-table-column align="center" label="Nro" width="55" prop="index" />
-                  <el-table-column label="Usuario" width="130" prop="name" />
-                  <el-table-column label="Rol">
+                  <el-table-column align="center" label="NRO" width="55" prop="index" />
+                  <el-table-column label="USUARIO" width="130" prop="name" />
+                  <el-table-column label="ROL">
                     <template slot-scope="scope">
                       <span>{{ scope.row.rol_name }}</span>
                       <br>
@@ -77,7 +77,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column align="center" label="Acciones" width="90">
+                  <el-table-column align="center" label="ACCIONES" width="90">
                     <template slot-scope="scope">
                       <i
                         v-permission="['usuarios.editar']"

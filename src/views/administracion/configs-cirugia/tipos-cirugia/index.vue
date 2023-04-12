@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">TIPOS DE CIRUGIA</h3>
+        <h3 class="card-header">TIPOS DE CIRUGÍA</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -41,9 +41,9 @@
               style="width: 100%"
             >
               <el-table-column
-                header-align="center"
+                align="center"
                 type="index"
-                label="#"
+                label="Nro"
                 width="100"
               />
               <el-table-column
@@ -178,7 +178,7 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR TIPO DE CIRUGIA'
+      this.tituloModalAgregarEditar = 'REGISTRAR TIPO DE CIRUGÍA'
       this.tipoCirugiaEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -221,13 +221,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar tipo de cirugia?',
-          text: 'El tipo de cirugia no podrá volver a usarse, hasta ser activada',
+          title: '¿Está seguro de desactivar tipo de cirugía?',
+          text: 'El tipo de cirugía no podrá volver a usarse, hasta ser activada',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -257,13 +257,13 @@ export default {
     },
     handleEliminarTipoCirugia(tipoCirugiaId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar tipo de cirugia?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la tipo de cirugia, o desactivarlo.',
+        title: '¿Está seguro de eliminar tipo de cirugía?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la tipo de cirugia, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -291,7 +291,7 @@ export default {
       })
     },
     abrirModalEditar(tipoCirugiaId) {
-      this.tituloModalAgregarEditar = 'EDITAR TIPO DE CIRUGIA'
+      this.tituloModalAgregarEditar = 'EDITAR TIPO DE CIRUGÍA'
       this.tipoCirugiaEditar_Id = tipoCirugiaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true

@@ -41,19 +41,20 @@
               style="width: 100%"
             >
               <el-table-column
-                header-align="center"
+                align="center"
                 type="index"
                 label="#"
                 width="100"
               />
               <el-table-column
                 prop="nombre"
-                label="Nivel ASA"
+                label="NIVEL ASA"
                 min-width="500"
               />
               <el-table-column
+                align="center"
                 prop="abreviatura"
-                label="Abreviatura"
+                label="ABREVIATURA"
                 min-width="200"
               />
               <el-table-column
@@ -226,13 +227,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el nivel ASA?',
+          title: '¿Está seguro de desactivar el nivel ASA?',
           text: 'El nivel ASA no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -262,13 +263,13 @@ export default {
     },
     handleEliminarASA(salaOperacionesId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el nivel ASA?',
+        title: '¿Está seguro de eliminar el nivel ASA?',
         text: 'Si no se visualiza información incorrecta se recomienda editar el nivel ASA, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

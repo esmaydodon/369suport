@@ -105,7 +105,7 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="12">
-            <el-form-item label="Telefono" prop="telefono">
+            <el-form-item label="Teléfono" prop="telefono">
               <el-input v-model="persona.telefono" />
             </el-form-item>
           </el-col>
@@ -117,7 +117,7 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="8">
-            <el-form-item label="REGION">
+            <el-form-item label="Región">
               <el-select v-model="regionSeleccionada" placeholder="Seleccione" @change="cargarOpcionesProvincia">
                 <el-option v-for="item in opcionesRegiones" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
@@ -138,7 +138,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="Direccion" prop="direccion">
+            <el-form-item label="Dirección" prop="direccion">
               <el-input v-model="persona.direccion" />
             </el-form-item>
           </el-col>
@@ -157,7 +157,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="Profesion" prop="profesion_id">
+            <el-form-item label="Profesión" prop="profesion_id">
               <el-autocomplete
                 v-model="profesionLabel"
                 :fetch-suggestions="buscarProfesion"

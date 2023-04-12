@@ -25,7 +25,7 @@
               type="primary"
               style="width: 100%; margin-bottom: 5px;"
               icon="el-icon-search"
-              @click="listarCirugias"
+              @clear="listarCirugias"
             />
           </el-col>
           <!-- v-permission="['permisos.crear']" -->
@@ -53,57 +53,29 @@
                 header-align="center"
                 type="index"
                 label="#"
-                width="30"
+                width="100"
               />
               <el-table-column
                 header-align="center"
                 align="center"
-                prop="paciente"
-                label="PACIENTE"
-                min-width="300"
+                prop="nombre"
+                label="NOMBRE DEL PACIENTE"
+                min-width="450"
               />
               <el-table-column
                 header-align="center"
                 align="center"
-                prop="fecha_cirugia"
-                label="FECHA SIRUGIA"
-                min-width="124"
+                prop="operacion"
+                label="OPERACIÓN"
+                width="200"
               />
               <el-table-column
                 header-align="center"
                 align="center"
-                prop="turno"
-                label="TURNO"
-                min-width="120"
-              />
-              <el-table-column
-                header-align="center"
-                align="center"
-                prop="cama_origen"
-                label="CAMA ORIGEN"
-                min-width="210"
-              />
-              <el-table-column
-                header-align="center"
-                align="center"
-                prop="sala_operacion"
-                label="SALA OPERACIONES"
-                min-width="210"
-              />
-              <el-table-column
-                header-align="center"
-                align="center"
-                prop="nro_historia_clinica"
-                label="N° HOSTORIA CLINICA"
-                min-width="210"
-              />
-              <!-- <el-table-column
-                header-align="center"
-                align="center"
-                prop="activo"
-                label="ACTIVO"
+                prop="fecha"
+                label="FECHA"
                 width="150"
-              /> -->
+              />
               <el-table-column
                 header-align="center"
                 align="center"
@@ -237,13 +209,13 @@ export default {
     },
     eliminarProgramacionCirugia(programacionCirugiaEditarId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el tipo de personal?',
+        title: '¿Está seguro de eliminar el tipo de personal?',
         text: 'Si no se visualiza la información correcta se recomienda editar el tipo de personal, amenos que el tipo de personal nunca haya sido parte del HRDC',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

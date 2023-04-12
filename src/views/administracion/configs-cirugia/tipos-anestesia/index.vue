@@ -42,6 +42,7 @@
             >
               <el-table-column
                 header-align="center"
+                align="center"
                 type="index"
                 label="#"
                 width="100"
@@ -221,13 +222,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar tipo de anestesia?',
+          title: '¿Está seguro de desactivar tipo de anestesia?',
           text: 'El tipo de anestesia no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -257,13 +258,13 @@ export default {
     },
     handleEliminarTipoAnestesia(tipoAnestesiaId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar tipo de anestesia?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la tipo de anestesia, o desactivarlo.',
+        title: '¿Está seguro de eliminar tipo de anestesia?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la tipo de anestesia, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

@@ -267,13 +267,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el servicio?',
+          title: '¿Está seguro de desactivar el servicio?',
           text: 'Al desactivar el servicio, se inhabilita las camas que estén registradas en el mismo y otras funciones en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -303,13 +303,13 @@ export default {
     },
     handleEliminarServicio(servicio_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el servicio?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el servicio, o desactivarlo, amenos que el servicio nunca haya sido parte del HRDC',
+        title: '¿Está seguro de eliminar el servicio?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el servicio, o desactivarlo, amenos que el servicio nunca haya sido parte del HRDC',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

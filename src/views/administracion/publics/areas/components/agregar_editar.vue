@@ -10,7 +10,7 @@
             <el-form-item label="Abreviatura" prop="abreviatura">
               <el-input v-model="area.abreviatura" @keyup.native="area.abreviatura = upperModel(area.abreviatura)" />
             </el-form-item>
-            <el-form-item label="'Area" prop="area">
+            <el-form-item label="Área" prop="area">
               <!-- <el-input v-model="area.area" /> -->
               <el-select
                 v-show="showSelectArea"

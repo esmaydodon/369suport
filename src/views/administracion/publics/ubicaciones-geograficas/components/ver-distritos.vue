@@ -206,13 +206,13 @@ export default {
     },
     handleEliminarDistrito(distritoId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el distrito?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el distrito, o desactivarlo.',
+        title: '¿Está seguro de eliminar el distrito?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el distrito, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

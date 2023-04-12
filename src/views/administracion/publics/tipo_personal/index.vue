@@ -185,13 +185,13 @@ export default {
     },
     eliminarTipoPersonal(tipoPersonalId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el tipo de personal?',
+        title: '¿Está seguro de eliminar el tipo de personal?',
         text: 'Si no se visualiza la información correcta se recomienda editar el tipo de personal, amenos que el tipo de personal nunca haya sido parte del HRDC',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
