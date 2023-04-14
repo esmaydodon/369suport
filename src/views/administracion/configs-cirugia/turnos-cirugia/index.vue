@@ -12,7 +12,7 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaTurnosCirugia"
+            @click="listarCirugias"
           />
           <el-button
             class="filter-item"
