@@ -514,6 +514,7 @@ export default {
             this.licenciada_instrumentista_2_id_label = data.licenciada_instrumentista_2_id_label
             this.licenciada_circulante_1_id_label = data.licenciada_circulante_1_id_label
             this.licenciada_circulante_2_id_label = data.licenciada_circulante_2_id_label
+            this.loading = false
           }
         )
         .catch(
