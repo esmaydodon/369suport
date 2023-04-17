@@ -398,7 +398,7 @@ export default {
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
         ],
         medico_residente_anestesiologo_1_id: [
-          { required: true, message: 'El campo es obligatorio', trigger: 'change' }
+          { required: true, message: 'El campo es  obligatorio', trigger: 'change' }
         ],
         medico_residente_cirugia_1_id: [
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
