@@ -137,6 +137,15 @@ export default {
             this.loading = false
           }
         )
+        // .then(response => {
+        //   const { data, meta } = response
+        //   this.list = data
+        //   this.list.forEach((element, index) => {
+        //     element['index'] = (page - 1) * limit + index + 1
+        //   })
+        //   this.total = meta.total
+        //   this.listLoading = false
+        // })
         .catch(
           (error) => {
             console.log(error)
