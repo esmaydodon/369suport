@@ -11,6 +11,13 @@ class AsaResource extends Resource {
       method: 'post'
     })
   }
+  opciones(params) {
+    return request({
+      url: 'opcionesseleccion/asa',
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { AsaResource as default }

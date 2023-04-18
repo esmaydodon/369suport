@@ -11,6 +11,13 @@ class CategoriasCirugiaResource extends Resource {
       method: 'post'
     })
   }
+  opciones(params) {
+    return request({
+      url: 'opcionesseleccion/categoriacirugia',
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { CategoriasCirugiaResource as default }

@@ -11,6 +11,13 @@ class DestinoPostCirugiaResource extends Resource {
       method: 'post'
     })
   }
+  opciones(params) {
+    return request({
+      url: 'opcionesseleccion/destinopostcirugia',
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { DestinoPostCirugiaResource as default }

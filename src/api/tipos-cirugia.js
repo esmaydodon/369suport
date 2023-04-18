@@ -11,6 +11,13 @@ class TiposCirugiaResource extends Resource {
       method: 'post'
     })
   }
+  opciones(params) {
+    return request({
+      url: 'opcionesseleccion/tipocirugia',
+      method: 'get',
+      params: params
+    })
+  }
 }
 
 export { TiposCirugiaResource as default }

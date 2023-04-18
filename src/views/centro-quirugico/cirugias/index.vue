@@ -116,6 +116,8 @@
                     <el-button type="text" size="mini">OPCIONES <i class="el-icon-arrow-down el-icon--right" /></el-button>
                     <el-dropdown-menu>
                       <el-dropdown-item icon="el-icon-edit" :command="{command: 'EDITAR',id: scope.row.id}">EDITAR</el-dropdown-item>
+                      <el-dropdown-item icon="el-icon-edit" :command="{command: 'VER',id: scope.row.id}">Ver detalles</el-dropdown-item>
+                      <el-dropdown-item icon="el-icon-edit" :command="{command: 'REGISTRODETALLE',id: scope.row.id}">Registrar Detalle</el-dropdown-item>
                       <el-dropdown-item icon="el-icon-remove" :command="{command: 'ELIMINAR',id: scope.row.id}">ELIMINAR</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -147,6 +149,19 @@
     >
       <agregar-editar-programacion-cirugia :programacion-cirugia-id="programacionCirugiaEditarId" @close="cerrarModalAgregarEditar" />
     </el-dialog>
+    <!-- Dialogo para Registro de detalle cirugia -->
+
+    <el-dialog
+      title="Detalle Cirugia"
+      top="1vh"
+      :visible.sync="modalRegistroDetalleCirugia"
+      :width="widthModal"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <registro-detalle-cirugia :programacion-cirugia="programacionRegistroDetalle_Id" @close="cerrarModalRegistroDetalle" />
+    </el-dialog>
   </div>
 </template>
 
@@ -155,6 +170,7 @@
 import { debounce } from '@/utils'
 // Componentes
 import AgregarEditarProgramacionCirugia from './components/agregar_editar_programacion'
+import RegistroDetalleCirugia from './components/registro_detalle_cirugia'
 import Paginator from '@/components/Pagination'
 // Resource
 import ProgramacionCirugiaResource from '@/api/programacion-cirugia'
@@ -162,7 +178,7 @@ const programacionCirugiaResource = new ProgramacionCirugiaResource()
 import Swal from 'sweetalert2'
 export default {
   name: 'Cirugias',
-  components: { AgregarEditarProgramacionCirugia, Paginator },
+  components: { AgregarEditarProgramacionCirugia, RegistroDetalleCirugia, Paginator },
   data() {
     return {
       loading: false,
@@ -177,7 +193,10 @@ export default {
         keyword: '',
         fechaProgramacion: new Date()
       },
-      programacionCirugiaEditarId: -5
+      programacionCirugiaEditarId: -5,
+      // variables para el registro del detalle de la cirugia
+      modalRegistroDetalleCirugia: false,
+      programacionRegistroDetalle_Id: -5
     }
   },
   mounted() {
@@ -277,6 +296,21 @@ export default {
       if (command === 'ELIMINAR') {
         this.eliminarProgramacionCirugia(id)
       }
+      if (command === 'REGISTRODETALLE') {
+        this.abrirModalRegistroDetalle(id)
+      }
+    },
+    abrirModalRegistroDetalle(programacion_id) {
+      this.programacionRegistroDetalle_Id = programacion_id
+      this.$nextTick(() => {
+        this.modalRegistroDetalleCirugia = true
+      })
+    },
+    cerrarModalRegistroDetalle() {
+      this.modalRegistroDetalleCirugia = false
+      this.$nextTick(() => {
+        this.programacionRegistroDetalle_Id = -5
+      })
     }
   }
 }
