@@ -3,14 +3,14 @@
     <div v-loading="loading">
       <el-form ref="formPersona" :model="persona" :rules="reglas" label-position="top">
         <el-row :gutter="10">
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="Tipo doc. identidad" prop="tipo_doc_identidad">
               <el-select v-model="persona.tipo_doc_identidad" placeholder="Seleccionar">
                 <el-option label="DNI" :value="1" />
                 <el-option label="CARNET EXTRANGERIA." :value="2" />
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="12">
             <el-form-item label="Nro. doc. identidad" prop="doc_identidad">
               <el-input v-model="persona.doc_identidad" v-loading="dniLoading" style="width: 130px;" @change="handleConsultaDniService(persona.doc_identidad,1)" />
@@ -36,7 +36,7 @@
         </el-row>
         <el-row :gutter="10">
           <el-col :span="12">
-            <el-form-item ref="formvinculoLaboralObject" label="AREA" prop="area_id">
+            <el-form-item ref="formvinculoLaboralObject" label="ÁREA" prop="area_id">
               <el-select v-model="vinculoLaboralObject.area_id" placeholder="Seleccione">
                 <el-option v-for="item in opcionesAreas" :key="item.id" :label="item.nombre" :value="item.id" />
               </el-select>
@@ -96,12 +96,12 @@
       :title="tituloModalAgregarEditar"
       :visible.sync="modalAgregarEditar"
       :width="widthModal"
-      top="5vh"
+      append-to-body
       :show-close="false"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <!-- <agregar-editar-persona :persona-id="personaEditar_Id" @close="closeModalAgregarEditar" /> -->
+      <agregar-editar-persona :persona-id="personaEditar_Id" @close="closeModalAgregarEditar" />
     </el-dialog>
     <el-dialog
       :title="'ESPECIALIDADES '"
@@ -124,6 +124,7 @@ import { debounce } from '@/utils'
 
 import PersonasResource from '@/api/personas'
 const personasResource = new PersonasResource()
+import AgregarEditarPersona from '../../personas/components/agregar_editar.vue'
 import VinculoLaboralResource from '@/api/vinculolaboral'
 const vinculoLaboralResource = new VinculoLaboralResource()
 import AreasResource from '@/api/areas'
@@ -141,7 +142,7 @@ import ListarEspecialidades from './vincular_especialidades.vue'
 
 export default {
   name: 'SeleccionarPersona',
-  components: { ListarEspecialidades },
+  components: { ListarEspecialidades, AgregarEditarPersona },
   // components: { ListarEspecialidades: () => import('./vincular_especialidades.vue') },
   props: {
     vinculoLaboralId: {
@@ -168,6 +169,7 @@ export default {
       persona: {
         id: undefined,
         tipo_doc_identidad: '',
+        nombre_completo: '',
         doc_identidad: '',
         nombres: '',
         apellido_paterno: '',
@@ -295,7 +297,8 @@ export default {
             if (data === undefined) {
               this.flagPersonaExhistente = false
               this.vinculoLaboralObject.persona_id = null
-              this.resetPersonaModel()
+              this.abrirModalAgregar()
+              // this.resetPersonaModel()
             } else {
               this.flagPersonaExhistente = true
               this.persona = data
@@ -323,7 +326,7 @@ export default {
             this.persona = response.data.persona
             // this.data = response.data
             this.loading = false
-            console.log(this.vinculoLaboralObject)
+            console.log(this.persona)
           }
         )
         .catch(
@@ -483,14 +486,15 @@ export default {
     //
     closeModalAgregarEditar() {
       this.modalAgregarEditar = false
+      this.resetPersonaModel()
       this.personaEditar_Id = -1
-      // this.listaPersonas()
     },
     close(data) {
       this.persona = {
         id: undefined,
         tipo_doc_identidad: '',
         doc_identidad: '',
+        nombre_completo: '',
         nombres: '',
         apellido_paterno: '',
         apellido_materno: ''
@@ -514,6 +518,7 @@ export default {
         id: undefined,
         tipo_doc_identidad: '',
         doc_identidad: '',
+        nombre_completo: '',
         nombres: '',
         apellido_paterno: '',
         apellido_materno: ''

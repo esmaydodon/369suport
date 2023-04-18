@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :span="24">
           <el-form ref="formDestinoPostCirugia" :model="destinoPostCirugia" :rules="reglas" label-position="top">
-            <el-form-item label="Destino post-cirugia" prop="nombre">
+            <el-form-item label="Destino post-cirugía" prop="nombre">
               <el-input v-model="destinoPostCirugia.nombre" />
             </el-form-item>
           </el-form>

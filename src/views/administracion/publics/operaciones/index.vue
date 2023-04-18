@@ -53,7 +53,7 @@
               />
               <el-table-column
                 prop="nombre"
-                label="Operacion"
+                label="Operación"
                 min-width="500"
               />
               <el-table-column
@@ -184,7 +184,7 @@ export default {
         )
     },
     abriModalAgregarOperacion() {
-      this.tituloModalAgregarEditar = 'AGREGAR OPERACION'
+      this.tituloModalAgregarEditar = 'AGREGAR OPERACIÓN'
       this.operacionEditar_id = -5
       this.$nextTick(() => {
         this.modalAgregarEditarOperacion = true
@@ -206,7 +206,7 @@ export default {
       }
     },
     abrirModalEditar(operacion_id) {
-      this.tituloModalAgregarEditar = 'EDITAR OPERACION'
+      this.tituloModalAgregarEditar = 'EDITAR OPERACIÓN'
       this.operacionEditar_id = operacion_id
       this.$nextTick(() => {
         this.modalAgregarEditarOperacion = true
@@ -234,13 +234,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar la operacion?',
-          text: 'Al desactivar la operacion, no podra ser usado en el sistema.',
+          title: '¿Está seguro de desactivar la operación?',
+          text: 'Al desactivar la operación, no podra ser usado en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -270,13 +270,13 @@ export default {
     },
     handleEliminarOperacion(operacion_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la operacion?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la operacion, o desactivarla.',
+        title: '¿Está seguro de eliminar la operación?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la operación, o desactivarla.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

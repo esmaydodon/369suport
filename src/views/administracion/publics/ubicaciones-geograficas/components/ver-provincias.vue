@@ -238,13 +238,13 @@ export default {
     },
     handleEliminarProvincia(regionId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la provincia?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la provincia, o desactivarla.',
+        title: '¿Está seguro de eliminar la provincia?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la provincia, o desactivarla.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

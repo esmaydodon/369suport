@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">ADMINISTRACION DE PERSONAS</h3>
+        <h3 class="card-header">ADMINISTRACIÓN DE PERSONAS</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -49,8 +49,8 @@
               />
               <el-table-column
                 prop="doc_identidad"
-                label="N° DOC DE IDENTIDAD"
-                min-width="150"
+                label="NRO DOC DE IDENTIDAD"
+                min-width="200"
               />
               <el-table-column
                 prop="nombres"
@@ -68,7 +68,7 @@
               />
               <el-table-column
                 prop="telefono"
-                label="TELEFONO"
+                label="TELÉFONO"
                 min-width="100"
               />
               <el-table-column
@@ -199,13 +199,13 @@ export default {
     },
     handleEliminarPersona(peronsa_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el registro de la persona?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el registro de la persona',
+        title: '¿Está seguro de eliminar el registro de la persona?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el registro de la persona',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

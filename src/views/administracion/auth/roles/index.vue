@@ -46,25 +46,25 @@
                   :row-class-name="tableRowClassName"
                   :header-row-class-name="tableHeaderRowClassName"
                 >
-                  <el-table-column align="center" label="Nro" width="80">
+                  <el-table-column align="center" label="NRO" width="80">
                     <template slot-scope="scope">
                       <span>{{ scope.row.index }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="Nombre">
+                  <el-table-column label="NOMBRE">
                     <template slot-scope="scope">
                       <span>{{ scope.row.name }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="Tipo" align="center" width="110">
+                  <el-table-column label="TIPO" align="center" width="110">
                     <template slot-scope="scope">
                       <span>{{ scope.row.guard_name }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column align="center" label="Permisos" width="90">
+                  <el-table-column align="center" label="PERMISOS" width="90">
                     <template slot-scope="scope">
                       <i
                         v-permission="['roles.asignarpermisos']"
@@ -74,7 +74,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column align="center" label="Acciones" width="100">
+                  <el-table-column align="center" label="ACCIONES" width="100">
                     <template slot-scope="scope">
                       <i
                         v-show="scope.row.name == 'Administrador'"

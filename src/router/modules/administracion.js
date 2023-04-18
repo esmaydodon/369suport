@@ -8,7 +8,7 @@ const AdministracionRoutes = {
   component: Layout,
   name: 'Administracion',
   meta: {
-    title: 'Administracion',
+    title: 'Administración',
     icon: 'skill'
   },
   children: [
@@ -68,7 +68,7 @@ const AdministracionRoutes = {
       name: 'cirugia',
       redirect: '/cirugia/salasoperaciones',
       meta: {
-        title: 'Cirugia',
+        title: 'Cirugía',
         icon: 'custom-config-cirugia'
       },
       children: [
@@ -99,7 +99,7 @@ const AdministracionRoutes = {
             import('@/views/administracion/configs-cirugia/categorias-cirugia'),
           name: 'CategoriasCirugia',
           meta: {
-            title: 'Categorias Cirugia',
+            title: 'Categorías Cirugía',
             icon: 'custom-list-to-do',
             noCache: true
           }
@@ -110,22 +110,22 @@ const AdministracionRoutes = {
             import('@/views/administracion/configs-cirugia/tipos-cirugia'),
           name: 'TiposCirugia',
           meta: {
-            title: 'Tipos Cirugia',
+            title: 'Tipos Cirugía',
             icon: 'custom-type-surgery',
             noCache: true
           }
         },
-        {
-          path: 'turnoscirugia',
-          component: () =>
-            import('@/views/administracion/configs-cirugia/turnos-cirugia'),
-          name: 'TurnosCirugia',
-          meta: {
-            title: 'Turnos de cirugia',
-            icon: 'custom-clock-cirugia',
-            noCache: true
-          }
-        },
+        // {
+        //   path: 'turnoscirugia',
+        //   component: () =>
+        //     import('@/views/administracion/configs-cirugia/turnos-cirugia'),
+        //   name: 'TurnosCirugia',
+        //   meta: {
+        //     title: 'Turnos de cirugía',
+        //     icon: 'custom-clock-cirugia',
+        //     noCache: true
+        //   }
+        // },
         {
           path: 'tiposanestesia',
           component: () =>
@@ -137,19 +137,19 @@ const AdministracionRoutes = {
             noCache: true
           }
         },
-        {
-          path: 'turnosanestesiologo',
-          component: () =>
-            import(
-              '@/views/administracion/configs-cirugia/turnos-anestesiologo'
-            ),
-          name: 'TurnosAnestesiologo',
-          meta: {
-            title: 'Turnos de anestesiologo',
-            icon: 'custom-clock-syringe',
-            noCache: true
-          }
-        },
+        // {
+        //   path: 'turnosanestesiologo',
+        //   component: () =>
+        //     import(
+        //       '@/views/administracion/configs-cirugia/turnos-anestesiologo'
+        //     ),
+        //   name: 'TurnosAnestesiologo',
+        //   meta: {
+        //     title: 'Turnos de Anestesiólogo',
+        //     icon: 'custom-clock-syringe',
+        //     noCache: true
+        //   }
+        // },
         {
           path: 'destinospostcirugia',
           component: () =>
@@ -158,7 +158,7 @@ const AdministracionRoutes = {
             ),
           name: 'DestinosPostCirugia',
           meta: {
-            title: 'Destinos Post Cirugia',
+            title: 'Destinos Post Cirugía',
             icon: 'custom-destination-postsurgery',
             noCache: true
           }
@@ -171,12 +171,12 @@ const AdministracionRoutes = {
       name: 'Personas',
       meta: { title: 'Personas', icon: 'people', noCache: true }
     },
-    {
-      path: 'servicios',
-      component: () => import('@/views/administracion/publics/servicios'),
-      name: 'Servicios',
-      meta: { title: 'Servicios', icon: 'el-icon-s-operation', noCache: true }
-    },
+    // {
+    //   path: 'servicios',
+    //   component: () => import('@/views/administracion/publics/servicios'),
+    //   name: 'Servicios',
+    //   meta: { title: 'Servicios', icon: 'el-icon-s-operation', noCache: true }
+    // },
     {
       path: 'camas',
       component: () => import('@/views/administracion/publics/camas'),

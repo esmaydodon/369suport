@@ -53,12 +53,13 @@
               />
               <el-table-column
                 prop="nombre"
-                label="PROFESION"
+                label="PROFESIÓN"
                 min-width="500"
               />
               <el-table-column
                 prop="abreviatura"
                 label="ABREVIATURA"
+                width="250"
               />
               <el-table-column
                 header-align="center"
@@ -172,7 +173,7 @@ export default {
         )
     },
     AbrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR PROFESION'
+      this.tituloModalAgregarEditar = 'REGISTRAR PROFESIÓN'
       this.profesionEditarId = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -188,7 +189,7 @@ export default {
       }
     },
     abrirModalEditar(profesionId) {
-      this.tituloModalAgregarEditar = 'EDITAR PROFESION'
+      this.tituloModalAgregarEditar = 'EDITAR PROFESIÓN'
       this.profesionEditarId = profesionId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -196,13 +197,13 @@ export default {
     },
     handleEliminarProfesion(profesionId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el registro de la profesion?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el registro de la profesion',
+        title: '¿Está seguro de eliminar el registro de la Profesión?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el registro de la Profesión',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

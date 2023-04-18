@@ -50,7 +50,7 @@
               />
               <el-table-column
                 prop="nombre"
-                label="NOMBRE AREA"
+                label="NOMBRE ÁREA"
                 min-width="150"
               />
               <el-table-column
@@ -70,6 +70,13 @@
                       <svg-icon :key="scope.row.id" icon-class="custom-lista-camas" class-name="customIcon" />
                     </el-button>
                   </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="SERVICIO"
+              >
+                <template slot-scope="scope">
+                  <el-switch v-model="scope.row.servicio" active-color="#13ce66" inactive-color="#ff4949" @change="actualizarServicio(scope.row.id,scope.row.servicio)" />
                 </template>
               </el-table-column>
               <el-table-column
@@ -149,7 +156,7 @@
     </el-dialog>
     <!-- Modal vincular camas-->
     <el-dialog
-      :title="'CAMAS DEL AREA: ' + areaVerCamaNombre"
+      :title="'CAMAS DEL ÁREA: ' + areaVerCamaNombre"
       :visible.sync="modalVicularCamaArea"
       :width="widthModal"
       :show-close="false"
@@ -179,7 +186,16 @@ export default {
   data() {
     return {
       loading: false,
-      data: [],
+      data: [
+        {
+          id: null,
+          nombre: '',
+          servicio: null,
+          abreviatura: '',
+          activo:	true,
+          area_padre_id: null
+        }
+      ],
       tituloModalAgregarEditar: '',
       modalVicularCamaArea: false,
       modalAgregarEditar: false,
@@ -219,6 +235,14 @@ export default {
         .then((response) => {
           const { data, meta } = response
           this.data = data
+          // if (this.data.servicio === 0) {
+          //   this.data.servicio = false
+          //   console.log(this.data.servicio)
+          // } else {
+          //   this.data.servicio = true
+          //   console.log(this.data.servicio)
+          // }
+          // // console.log(this.data)
           this.listQuery.total = meta.total
           this.loading = false
         })
@@ -227,8 +251,25 @@ export default {
           this.loading = false
         })
     },
+    actualizarServicio(id, servicio) {
+      areasResource.actualizarServicio(id, servicio)
+        .then(
+          (response) => {
+            this.$message({
+              type: 'success',
+              message: response.message
+            })
+            this.listaAreas()
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
+    },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR AREA'
+      this.tituloModalAgregarEditar = 'REGISTRAR ÁREA'
       this.areaEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -268,13 +309,13 @@ export default {
           })
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar El Área?',
+          title: '¿Está seguro de desactivar El Área?',
           text: 'Al desactivar el área, se inhabilita las camas que estén registradas en el mismo y otras funciones en el sistema.',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -301,13 +342,13 @@ export default {
     },
     handleEliminarArea(area_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la area?',
-        text: 'Realizar esta acción si es estrictamente necesario, si la area está obsoleta solo debe desactivarla',
+        title: '¿Está seguro de eliminar la área?',
+        text: 'Realizar esta acción si es estrictamente necesario, si la área está obsoleta solo debe desactivarla',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -332,7 +373,7 @@ export default {
       })
     },
     abrirModalEditar(areaId) {
-      this.tituloModalAgregarEditar = 'EDITAR AREA'
+      this.tituloModalAgregarEditar = 'EDITAR ÁREA'
       this.areaEditar_Id = areaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true

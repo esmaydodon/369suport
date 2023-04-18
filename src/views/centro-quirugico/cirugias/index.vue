@@ -66,7 +66,7 @@
                 header-align="center"
                 align="center"
                 prop="fecha_cirugia"
-                label="FECHA SIRUGIA"
+                label="FECHA CIRUGIA"
                 min-width="124"
               />
               <el-table-column
@@ -94,16 +94,9 @@
                 header-align="center"
                 align="center"
                 prop="nro_historia_clinica"
-                label="N° HOSTORIA CLINICA"
+                label="N° HISTORIA CLINICA"
                 min-width="210"
-              />
-              <!-- <el-table-column
-                header-align="center"
-                align="center"
-                prop="activo"
-                label="ACTIVO"
-                width="150"
-              /> -->
+              />}
               <el-table-column
                 header-align="center"
                 align="center"
@@ -235,13 +228,13 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR PROGRAMACION DE CIRUGIA'
+      this.tituloModalAgregarEditar = 'REGISTRAR PROGRAMACIÓN DE CIRUGÍA'
       this.$nextTick(() => {
         this.modalAgregarEditar = true
       })
     },
     abrirModalEditar(programacionCirugiaId) {
-      this.tituloModalAgregarEditar = 'EDITAR CIRUGIA'
+      this.tituloModalAgregarEditar = 'EDITAR CIRUGÍA'
       this.programacionCirugiaEditarId = programacionCirugiaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -252,17 +245,18 @@ export default {
       this.$nextTick(() => {
         this.tituloModalAgregarEditar = ''
         this.programacionCirugiaEditarId = -5
+        this.listarCirugias()
       })
     },
     eliminarProgramacionCirugia(programacionCirugiaEditarId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el tipo de personal?',
-        text: 'Si no se visualiza la información correcta se recomienda editar el tipo de personal, amenos que el tipo de personal nunca haya sido parte del HRDC',
+        title: '¿Está seguro de eliminar el tipo de personal?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el tipo de personal, a menos que el tipo de personal nunca haya sido parte del HRDC',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

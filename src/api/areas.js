@@ -18,12 +18,12 @@ class AreasResource extends Resource {
       params: query
     })
   }
-  // camasPorServicio(servicioId) {
-  //   return request({
-  //     url: '/' + this.uri + '/' + servicioId + '/listacamas',
-  //     method: 'get'
-  //   })
-  // }
+  actualizarServicio(id, servicio) {
+    return request({
+      url: '/' + this.uri + '/' + id + '/' + servicio + '/actualizarServicio',
+      method: 'post'
+    })
+  }
   // camasSinServicio() {
   //   return request({
   //     url: '/' + this.uri + '/sinservicio',

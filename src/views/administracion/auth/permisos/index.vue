@@ -45,19 +45,19 @@
                   :row-class-name="tableRowClassName"
                   :header-row-class-name="tableHeaderRowClassName"
                 >
-                  <el-table-column align="center" label="Nro" width="80">
+                  <el-table-column align="center" label="NRO" width="80">
                     <template slot-scope="scope">
                       <span>{{ scope.row.index }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="Nombre">
+                  <el-table-column label="NOMBRE">
                     <template slot-scope="scope">
                       <span>{{ scope.row.name }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="Tipo" width="130">
+                  <el-table-column label="TIPO" width="130">
                     <template slot-scope="scope">
                       <span>{{ scope.row.guard_name }}</span>
                     </template>

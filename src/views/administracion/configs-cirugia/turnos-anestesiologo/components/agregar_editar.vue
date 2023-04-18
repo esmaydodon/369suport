@@ -35,7 +35,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="Finaliza al siguiente dia" prop="finaliza_dia_siguiente">
+                <el-form-item label="Finaliza al siguiente día" prop="finaliza_dia_siguiente">
                   <el-switch v-model="turnoanestesiologo.finaliza_dia_siguiente" inactive-text="No" active-text="Si" />
                 </el-form-item>
               </el-col>

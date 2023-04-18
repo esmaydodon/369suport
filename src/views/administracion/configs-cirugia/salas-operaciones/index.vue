@@ -42,6 +42,7 @@
             >
               <el-table-column
                 header-align="center"
+                align="center"
                 type="index"
                 label="#"
                 width="100"
@@ -53,7 +54,7 @@
               />
               <el-table-column
                 prop="especialidad"
-                label="Especialidad"
+                label="ESPECIALIDAD"
                 min-width="500"
               />
               <el-table-column
@@ -77,7 +78,7 @@
               >
                 <template slot-scope="scope">
                   <el-dropdown trigger="click" @command="handleCommand">
-                    <el-button type="text" size="mini">
+                    <el-button type="text" align="center" size="mini">
                       OPCIONES<i class="el-icon-arrow-down el-icon--right" />
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
@@ -226,13 +227,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar la sala de operaciones?',
+          title: '¿Está seguro de desactivar la sala de operaciones?',
           text: 'La sala de operaciones no podrá volver a usarse, hasta ser activada',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -262,13 +263,13 @@ export default {
     },
     handleEliminarSalaOperaciones(salaOperacionesId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la sala de operaciones?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la sala de operaciones, o desactivarla.',
+        title: '¿Está seguro de eliminar la sala de operaciones?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la sala de operaciones, o desactivarla.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

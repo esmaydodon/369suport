@@ -9,7 +9,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="Profesion" prop="nombre">
+            <el-form-item label="Profesión" prop="nombre">
               <el-input v-model="profesion.nombre" />
             </el-form-item>
           </el-col>

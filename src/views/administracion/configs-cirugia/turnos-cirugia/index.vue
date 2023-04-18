@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">TURNOS DE CIRUGIA</h3>
+        <h3 class="card-header">TURNOS DE CIRUGÍA</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -12,7 +12,7 @@
             style="width: 300px"
             class="filter-item"
             clearable
-            @clear="listaTurnosCirugia"
+            @click="listarCirugias"
           />
           <el-button
             class="filter-item"
@@ -42,6 +42,7 @@
             >
               <el-table-column
                 header-align="center"
+                align="center"
                 type="index"
                 label="#"
                 width="100"
@@ -52,17 +53,20 @@
                 min-width="500"
               />
               <el-table-column
+                align="center"
                 prop="hora_inicio"
                 label="HORA INICIO"
                 min-width="150"
               />
               <el-table-column
+                align="center"
                 prop="hora_fin"
                 label="HORA FIN"
                 min-width="150"
               />
               <el-table-column
-                label="TERMINA SIGUIENTE DIA"
+                align="center"
+                label="TERMINA SIGUIENTE DÍA"
                 min-width="200"
               >
                 <template slot-scope="scope">
@@ -198,7 +202,7 @@ export default {
         )
     },
     abrirModalAgregar() {
-      this.tituloModalAgregarEditar = 'REGISTRAR TURNO DE CIRUGIA'
+      this.tituloModalAgregarEditar = 'REGISTRAR TURNO DE CIRUGÍA'
       this.turnoCirugiaEditar_Id = -5
       this.$nextTick(() => {
         this.modalAgregarEditar = true
@@ -241,13 +245,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar el turno de cirugia?',
-          text: 'El turno de cirugia no podrá volver a usarse, hasta ser activado',
+          title: '¿Está seguro de desactivar el turno de cirugía?',
+          text: 'El turno de cirugía no podrá volver a usarse, hasta ser activado',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -277,13 +281,13 @@ export default {
     },
     handleEliminarTurnoCirugia(turnoCirugiaId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar el turno de cirugia?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar el turno de cirugia, o desactivarlo.',
+        title: '¿Está seguro de eliminar el turno de cirugía?',
+        text: 'Si no se visualiza la información correcta se recomienda editar el turno de cirugía, o desactivarlo.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -311,7 +315,7 @@ export default {
       })
     },
     abrirModalEditar(turnoCirugiaId) {
-      this.tituloModalAgregarEditar = 'EDITAR TURNO DE CIRUGIA'
+      this.tituloModalAgregarEditar = 'EDITAR TURNO DE CIRUGÍA'
       this.turnoCirugiaEditar_Id = turnoCirugiaId
       this.$nextTick(() => {
         this.modalAgregarEditar = true

@@ -224,13 +224,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar la especialidad?',
+          title: '¿Está seguro de desactivar la especialidad?',
           text: 'La especialidad no podrá volver a usarse, hasta ser activada',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -260,13 +260,13 @@ export default {
     },
     handleEliminarEspecialidad(especialidad_id) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la especialidad?',
+        title: '¿Está seguro de eliminar la especialidad?',
         text: 'Realizar esta acción si es estrictamente necesario, si la especialidad es usada solo debe desactivarla',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

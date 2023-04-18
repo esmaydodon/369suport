@@ -18,20 +18,36 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item label="Turno" prop="turno">
-              <span v-if="programacionCirugiaId > 0 ">{{ programacionCirugia.turno }}</span>
-              <span v-else style="font-style: italic;">El turno es generado automáticamente</span>
-            </el-form-item>
-            <el-form-item label="Paciente" prop="historia_clinica_paciente_id">
-              <el-autocomplete
-                v-model="historia_clinica_paciente_id_label"
-                :fetch-suggestions="buscarPaciente"
-                placeholder="Buscar por nombre o DNI"
-                style="width: 100% "
-                @select="seleccionarPaciente"
-                @change="programacionCirugia.historia_clinica_paciente_id = null"
-              />
-            </el-form-item>
+            <el-col :xs="24" :md="12">
+              <el-form-item label="Turno" prop="turno">
+                <span v-if="programacionCirugiaId > 0 ">{{ programacionCirugia.turno }}</span>
+                <span v-else style="font-style: italic;">El turno es generado automáticamente</span>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :md="12">
+              <el-form-item label="Turno Anestesiologo" prop="turno_anestesiologo">
+                <span v-if="programacionCirugiaId > 0 ">{{ programacionCirugia.turno_anestesiologo }}</span>
+                <span v-else style="font-style: italic;">El turno es generado automáticamente</span>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :md="12">
+              <el-form-item label="Paciente" prop="historia_clinica_paciente_id">
+                <el-autocomplete
+                  v-model="historia_clinica_paciente_id_label"
+                  :fetch-suggestions="buscarPaciente"
+                  placeholder="Buscar por nombre o DNI"
+                  style="width: 100% "
+                  clearable
+                  @select="seleccionarPaciente"
+                  @change="programacionCirugia.historia_clinica_paciente_id = null"
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :md="12">
+              <el-form-item label="SIS" prop="sis">
+                <el-switch v-model="programacionCirugia.sis" />
+              </el-form-item>
+            </el-col>
             <el-form-item label="Cama" prop="cama_id">
               <el-autocomplete
                 v-model="cama_id_label"
@@ -45,7 +61,7 @@
               <el-autocomplete
                 v-model="diagnostico_id_label"
                 :fetch-suggestions="buscarDiagnostico"
-                placeholder="Buscar diagnostico"
+                placeholder="Buscar diagnóstico"
                 style="width: 100%;"
                 @select="seleccionarDiagnostico"
                 @change="programacionCirugia.diagnostico_id = null"
@@ -55,11 +71,17 @@
               <el-autocomplete
                 v-model="operacion_programada_id_label"
                 :fetch-suggestions="buscarOperacion"
-                placeholder="Buscar operacion"
+                placeholder="Buscar operación"
                 style="width: 100%;"
+                clearable
                 @select="seleccionarOperacion"
                 @change="programacionCirugia.operacion_programada_id = null"
               />
+            </el-form-item>
+            <el-form-item label="Tipo de Anestecia" prop="tipo_anestesia_id">
+              <el-select v-model="programacionCirugia.tipo_anestesia_id" placeholder="">
+                <el-option v-for="opcion in opcionesTipoAnestecia" :key="opcion.id" :label="opcion.nombre" :value="opcion.id" />
+              </el-select>
             </el-form-item>
             <el-form-item label="Duración programada" prop="duracion_programada">
               <el-input v-model.number="programacionCirugia.duracion_programada" type="number" placeholder="Horas totales">
@@ -250,6 +272,9 @@
                       />
                     </el-form-item>
                   </el-col>
+                  <el-form-item label="CONDICIONAL" prop="condicional">
+                    <el-switch v-model="programacionCirugia.condicional" />
+                  </el-form-item>
                 </el-row>
               </el-card>
             </el-row>
@@ -277,6 +302,8 @@ import { debounce } from '@/utils'
 // Resource
 import SalasOperacionesResource from '@/api/salas-operaciones'
 const salasOperacionesResource = new SalasOperacionesResource()
+import TipoAnesteciaResource from '@/api/tipo_anestecia'
+const tipoAnesteciaResource = new TipoAnesteciaResource()
 import HistoriasClinicasResource from '@/api/historiasclinicas'
 const historiasClinicasResource = new HistoriasClinicasResource()
 import CamasResource from '@/api/camas'
@@ -305,6 +332,10 @@ export default {
         fecha_cirugia: '',
         sala_operaciones_id: '',
         turno: '',
+        turno_anestesiologo: '',
+        sis: null,
+        condicional: null,
+        tipo_anestesia_id: null,
         historia_clinica_paciente_id: '',
         cama_id: '',
         equipo_quirurgico_id: '',
@@ -333,6 +364,9 @@ export default {
           { required: true, message: 'El campo es obligatorio', trigger: 'blur' }
         ],
         sala_operaciones_id: [
+          { required: true, message: 'El campo es obligatorio', trigger: 'change' }
+        ],
+        tipo_anestesia_id: [
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
         ],
         historia_clinica_paciente_id: [
@@ -364,7 +398,7 @@ export default {
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
         ],
         medico_residente_anestesiologo_1_id: [
-          { required: true, message: 'El campo es obligatorio', trigger: 'change' }
+          { required: true, message: 'El campo es  obligatorio', trigger: 'change' }
         ],
         medico_residente_cirugia_1_id: [
           { required: true, message: 'El campo es obligatorio', trigger: 'change' }
@@ -377,10 +411,12 @@ export default {
         ]
       },
       historia_clinica_paciente_id_label: '',
+      tipo_anestesia_id_label: '',
       cama_id_label: '',
       diagnostico_id_label: '',
       operacion_programada_id_label: '',
       opcionesSalasOperaciones: [],
+      opcionesTipoAnestecia: [],
       anestesiologo_1_id_label: '',
       anestesiologo_2_id_label: '',
       anestesiologo: -1,
@@ -402,6 +438,13 @@ export default {
       licenciadaCirculante: -1
     }
   },
+  watch: {
+    programacionCirugiaId(newValue, oldValue) {
+      if (newValue > 0) {
+        this.getProgramacionCirugia()
+      }
+    }
+  },
   mounted() {
     this.__resizeHandler = debounce(() => {
       const windowWidth = document.documentElement.clientWidth
@@ -413,21 +456,96 @@ export default {
     })
 
     window.addEventListener('resize', this.__resizeHandler)
-    if (this.camaId > 0) {
-      this.getCama()
+    if (this.programacionCirugiaId > 0) {
+      this.getProgramacionCirugia()
     }
     this.cargarSalasOperaciones()
+    this.cargarTipoAnestecia()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
+    async getProgramacionCirugia() {
+      this.loading = true
+      await programacionCirugiaResource.get(this.programacionCirugiaId)
+        .then(
+          (response) => {
+            const { data } = response
+            this.programacionCirugia = data
+            this.programacionCirugia.equipo_quirurgico_id = data.equipoquirurgico_id
+            this.programacionCirugia.equipoQuirurgico = {
+              anestesiologo_1_id: data.anestesiologo_1_id,
+              anestesiologo_2_id: data.anestesiologo_2_id,
+              cirujano_1_id: data.cirujano_1_id,
+              cirujano_2_id: data.cirujano_2_id,
+              cirujano_3_id: data.cirujano_3_id,
+              medico_residente_anestesiologo_1_id: data.medico_residente_anestesiologo_1_id,
+              medico_residente_anestesiologo_2_id: data.medico_residente_anestesiologo_2_id,
+              medico_residente_cirugia_1_id: data.medico_residente_cirugia_1_id,
+              medico_residente_cirugia_2_id: data.medico_residente_cirugia_2_id,
+              licenciada_instrumentista_1_id: data.licenciada_instrumentista_1_id,
+              licenciada_instrumentista_2_id: data.licenciada_instrumentista_2_id,
+              licenciada_circulante_1_id: data.licenciada_circulante_1_id,
+              licenciada_circulante_2_id: data.licenciada_circulante_2_id
+            }
+            this.historia_clinica_paciente_id_label = data.nro_historia_clinica + '-' + data.paciente
+            this.programacionCirugia.historia_clinica_paciente_id = data.historia_clinica_paciente_id
+            this.cama_id_label = data.cama_origen
+            this.programacionCirugia.sis = data.sis
+            this.programacionCirugia.tipo_anestesia_id = data.tipo_anestesia_id
+            this.tipo_anestesia_id_label = data.tipo_anestesia_id_label
+            this.programacionCirugia.condicional = data.condicional
+            this.programacionCirugia.turno_anestesiologo = data.turno_anestesiologo
+            this.programacionCirugia.cama_id = data.cama_id
+            this.diagnostico_id_label = data.diagnostico
+            this.operacion_programada_id_label = data.operacion_programada_id_label
+            this.programacionCirugia.operacion_programada_id = data.operacion_programada_id
+            this.anestesiologo_1_id_label = data.anestesiologo_1_id_label
+            this.anestesiologo_2_id_label = data.anestesiologo_2_id_label
+            this.cirujano_1_id_label = data.cirujano_1_id_label
+            this.cirujano_2_id_label = data.cirujano_2_id_label
+            this.cirujano_3_id_label = data.cirujano_3_id_label
+            this.medico_residente_anestesiologo_1_id_label = data.medico_residente_anestesiologo_1_id_label
+            this.medico_residente_anestesiologo_2_id_label = data.medico_residente_anestesiologo_2_id_label
+            this.medico_residente_cirugia_1_id_label = data.medico_residente_cirugia_1_id_label
+            this.medico_residente_cirugia_2_id_label = data.medico_residente_cirugia_2_id_label
+            this.licenciada_instrumentista_1_id_label = data.licenciada_instrumentista_1_id_label
+            this.licenciada_instrumentista_2_id_label = data.licenciada_instrumentista_2_id_label
+            this.licenciada_circulante_1_id_label = data.licenciada_circulante_1_id_label
+            this.licenciada_circulante_2_id_label = data.licenciada_circulante_2_id_label
+            this.loading = false
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+            this.loading = false
+          }
+        )
+    },
     cargarSalasOperaciones() {
       this.loading = true
       salasOperacionesResource.opcionesSeleccion()
         .then(
           (response) => {
             this.opcionesSalasOperaciones = response.data
+            this.loading = false
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+            this.loading = false
+          }
+        )
+    },
+    cargarTipoAnestecia() {
+      this.loading = true
+      tipoAnesteciaResource.opcionesSeleccion()
+        .then(
+          (response) => {
+            this.opcionesTipoAnestecia = response.data
             this.loading = false
           }
         )
@@ -704,7 +822,7 @@ export default {
     },
     editarProgramaCirugia() {
       this.loading = true
-      personasResource.update(this.programacionCirugiaId, this.programacionCirugia)
+      programacionCirugiaResource.update(this.programacionCirugiaId, this.programacionCirugia)
         .then(
           (response) => {
             this.$message({
@@ -712,12 +830,14 @@ export default {
               message: response.message
             })
             this.loading = false
-            this.close = false
+            // this.close = false
+            this.close(null)
           }
         )
         .catch(
-          () => {
-
+          (error) => {
+            console.log(error)
+            this.loading = false
           }
         )
     },
@@ -767,6 +887,10 @@ export default {
       this.licenciada_instrumentista_2_id_label = ''
       this.licenciada_circulante_1_id_label = ''
       this.licenciada_circulante_2_id_label = ''
+      this.sis = null
+      this.tipo_anestesia_id = ''
+      this.tipo_anestesia_id_label = ''
+      this.condicional = null
       this.$refs['formProgramacionCirugia'].resetFields()
       this.$refs['formEquipoQuirurgico'].resetFields()
       this.$emit('close')
@@ -818,6 +942,10 @@ export default {
       this.licenciada_instrumentista_2_id_label = ''
       this.licenciada_circulante_1_id_label = ''
       this.licenciada_circulante_2_id_label = ''
+      this.sis = null
+      this.tipo_anestesia_id = ''
+      this.tipo_anestesia_id_label = ''
+      this.condicional = null
       this.$refs['formProgramacionCirugia'].resetFields()
       this.$refs['formEquipoQuirurgico'].resetFields()
     }

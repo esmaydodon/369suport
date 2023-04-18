@@ -19,10 +19,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="Nro historia clinica" prop="nro_historia_clinica">
+          <el-form-item label="Nro historia clínica" prop="nro_historia_clinica">
             <el-input v-model="historiaClinica.nro_historia_clinica" disabled />
           </el-form-item>
-          <el-form-item label="Nro historia clinica fisica" prop="nro_historia_clinica_fisica">
+          <el-form-item label="Nro historia clínica física" prop="nro_historia_clinica_fisica">
             <el-input v-model="historiaClinica.nro_historia_clinica_fisica" />
           </el-form-item>
         </el-col>

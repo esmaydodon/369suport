@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header">
-        <h3 class="card-header">CATEGORIAS DE CIRUGIA</h3>
+        <h3 class="card-header">CATEGORÍAS DE CIRUGÍA</h3>
       </div>
       <div style="position: relative;height: calc(100vh - 210px)">
         <el-row :gutter="10">
@@ -41,14 +41,14 @@
               style="width: 100%"
             >
               <el-table-column
-                header-align="center"
+                align="center"
                 type="index"
                 label="#"
                 width="100"
               />
               <el-table-column
                 prop="nombre"
-                label="CATEGORIA"
+                label="CATEGORÍA"
                 min-width="500"
               />
               <el-table-column
@@ -221,13 +221,13 @@ export default {
           )
       } else {
         Swal.fire({
-          title: '¿Esta seguro de desactivar categoria de cirugia?',
+          title: '¿Está seguro de desactivar categoria de cirugia?',
           text: 'La categoria de cirugia no podrá volver a usarse, hasta ser activada',
           icon: 'warning',
           reverseButtons: true,
           showCancelButton: true,
           confirmButtonColor: '#1e88e5',
-          confirmButtonText: 'Si, estoy seguro',
+          confirmButtonText: 'Sí, estoy seguro',
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -257,13 +257,13 @@ export default {
     },
     handleEliminarCategoriaCirugia(salaOperacionesId) {
       Swal.fire({
-        title: '¿Esta seguro de eliminar la categoria de cirugia?',
-        text: 'Si no se visualiza información incorrecta se recomienda editar la categoria de cirugia, o desactivarla.',
+        title: '¿Está seguro de eliminar la categoria de cirugia?',
+        text: 'Si no se visualiza la información correcta se recomienda editar la categoria de cirugia, o desactivarla.',
         icon: 'error',
         reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#1e88e5',
-        confirmButtonText: 'Si, estoy seguro',
+        confirmButtonText: 'Sí, estoy seguro',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {

@@ -1,9 +1,9 @@
 <template>
-  <div v-loading="loading" style="height: calc(100vh - 75px);">
+  <div v-loading="loading">
     <el-row :gutter="10">
       <el-col :xs="24" :md="8">
         <div style="width: 100%;height: calc(100vh - 165px);overflow: auto; padding-top: 20px;">
-          <el-descriptions title="Informacion personal" direction="vertical" :column="4" border>
+          <el-descriptions title="Información personal" direction="vertical" :column="4" border>
             <!-- <el-descriptions-item label="Nro. historia clinica" :span="2">
               {{ data.nro_historia_clinica }}
             </el-descriptions-item>
@@ -37,8 +37,8 @@
             </el-descriptions-item>
           </el-descriptions>
           <el-divider />
-          <el-descriptions title="Informacion de contacto" direction="vertical" :column="4" border>
-            <el-descriptions-item label="Telefono" :span="4">
+          <el-descriptions title="Información de contacto" direction="vertical" :column="4" border>
+            <el-descriptions-item label="Teléfono" :span="4">
               {{ data.persona.telefono }}
             </el-descriptions-item>
             <el-descriptions-item label="Correo electronico" :span="4">
@@ -46,8 +46,8 @@
             </el-descriptions-item>
           </el-descriptions>
           <el-divider />
-          <el-descriptions title="Informacion geografica" direction="vertical" :column="4" border>
-            <el-descriptions-item label="REGION" :span="4">
+          <el-descriptions title="Información geográfica" direction="vertical" :column="4" border>
+            <el-descriptions-item label="REGIÓN" :span="4">
               {{ data.region }}
             </el-descriptions-item>
             <el-descriptions-item label="PROVINCIA" :span="4">
@@ -58,12 +58,36 @@
             </el-descriptions-item>
           </el-descriptions>
           <el-divider />
+          <div style="width: 100%;height: calc(60vh - 80px);overflow: auto; padding-top: 20px;">
+            <el-descriptions title="Especialidades" direction="vertical" :column="4" border>
+              <el-descriptions-item label="Especialidades" :span="4">
+                <el-table
+                  :data="data.especialdadpeersona"
+                  style="height: calc(60vh - 80px);"
+                >
+                  <el-table-column label="#" type="index" />
+                  <el-table-column label="Especialidad">
+                    <template slot-scope="scope">
+                      {{ scope.row.especialidad.nombre }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Estado" prop="activo">
+                    <template slot-scope="scope">
+                      <el-tag v-if="scope.row.especialidad.activo" type="primary">Activo</el-tag>
+                      <el-tag v-else type="warning">Inactivo</el-tag>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-descriptions-item>
+            </el-descriptions>
+          </div>
+          <el-divider />
         </div>
       </el-col>
       <el-col :xs="24" :md="16">
         <div style="width: 100%;height: calc(100vh - 165px);overflow: auto;">
-          <el-descriptions title="AREA - CARGO" direction="vertical" :column="4" border>
-            <el-descriptions-item label="AREA" :span="1">
+          <el-descriptions title="ÁREA - CARGO" direction="vertical" :column="4" border>
+            <el-descriptions-item label="ÁREA" :span="1">
               {{ data.area.nombre }}
             </el-descriptions-item>
             <el-descriptions-item label="CARGO" :span="1">
@@ -75,7 +99,7 @@
             <el-descriptions-item label="FECHA INICIO" :span="2">
               {{ data.fecha_inicio }}
             </el-descriptions-item>
-            <el-descriptions-item label="FECHA FIN" :span="4">
+            <el-descriptions-item label="FECHA FIN" :span="2">
               {{ data.fecha_fin }}
             </el-descriptions-item>
             <el-descriptions-item label="FECHA BAJA" :span="2">
@@ -104,6 +128,8 @@
 // Resource
 import VinculoLaboralResource from '@/api/vinculolaboral'
 const vinculoLaboralResource = new VinculoLaboralResource()
+import EspecialidadesResource from '@/api/especialidades'
+const especialidadesResource = new EspecialidadesResource()
 export default {
   name: 'DetalleVinculoLaboral',
   props: {
@@ -115,6 +141,7 @@ export default {
   data() {
     return {
       loading: false,
+      listaEspPersona: [],
       data: {
         id: null,
         persona_id: null,
@@ -140,6 +167,20 @@ export default {
           provincia: null,
           region: null
         },
+        especialdadpeersona: [
+          {
+            id: null,
+            persona_id: null,
+            especialidad_id: null,
+            especialidad: {
+              id: null,
+              codigo: null,
+              nombre: null,
+              abreviatura: null,
+              activo: null
+            }
+          }
+        ],
         area: {
           id: null,
           abreviatura: '',
@@ -170,6 +211,19 @@ export default {
     }
   },
   methods: {
+    async getListEspecialidades() {
+      try {
+        this.loadingtab1 = true
+        const { data } = await especialidadesResource.especialidadesPorPersona(this.personaId)
+        this.listaEspPersona = await data
+        this.loadingtab1 = false
+        // const datos = await resultado.json();
+        // console.log(datos);
+      } catch (error) {
+        console.log(error)
+        this.loadingtab1 = false
+      }
+    },
     getDetalleVinculoLaboral() {
       this.loading = true
       vinculoLaboralResource.detalle(this.vinculoLaboralId)

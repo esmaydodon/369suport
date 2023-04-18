@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :span="24">
           <el-form ref="formRegion" :model="region" :rules="reglas" label-position="top">
-            <el-form-item label="Region" prop="nombre">
+            <el-form-item label="Región" prop="nombre">
               <el-input v-model="region.nombre" />
             </el-form-item>
           </el-form>
