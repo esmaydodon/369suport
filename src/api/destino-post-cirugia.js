@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class DestinoPostCirugiaResource extends Resource {
   constructor() {
-    super('destinopostcirugia')
+    super('destinos_postcirugia')
   }
   cambiarEstado(id) {
     return request({

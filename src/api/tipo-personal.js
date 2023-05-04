@@ -3,7 +3,7 @@ import Resource from '@/api/resource'
 
 class TipoPersonalResource extends Resource {
   constructor() {
-    super('tipopersonal')
+    super('tipo_personal')
   }
 }
 

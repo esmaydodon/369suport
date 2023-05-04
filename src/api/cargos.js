@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class CargosResource extends Resource {
   constructor() {
-    super('cargos')
+    super('cargo')
   }
   desactivar(id) {
     return request({

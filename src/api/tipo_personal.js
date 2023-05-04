@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class TipoPersonalResource extends Resource {
   constructor() {
-    super('tipopersonal')
+    super('tipo_personal')
   }
   opcionesSeleccion(params) {
     return request({
