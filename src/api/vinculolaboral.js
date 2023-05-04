@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class VinculoLaboralResource extends Resource {
   constructor() {
-    super('vinculolaboral')
+    super('vinculo_laboral')
   }
 
   detalle(vinculo_laboral_id) {

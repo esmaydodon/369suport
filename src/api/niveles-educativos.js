@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class NivelesEducativosResource extends Resource {
   constructor() {
-    super('niveleseducativos')
+    super('nivel_educativo')
   }
 
   opcionesSeleccion() {

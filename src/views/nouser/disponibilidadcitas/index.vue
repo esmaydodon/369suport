@@ -22,7 +22,7 @@
       <el-col :xs="24" :sm="sedesconoce.length > 0 ? 8 :12">
         <div class="app-container">
           <el-card header="CITAS DISPONIBLE">
-            <div style="max-height: 72vh; overflow-y: auto;">
+            <div v-if="disponibles.length > 0" style="max-height: 72vh; overflow-y: auto;">
               <div v-for="item in disponibles" :key="item.idServicio + '-' + item.especialidad" style="margin: 10px 0px;">
                 <el-card v-if="item.cuposDisponibles < 25" style="background-color: #ffc340a8;">
                   <el-row>
@@ -93,6 +93,9 @@
                   </el-row>
                 </el-card>
               </div>
+            </div>
+            <div v-else style="text-align: center; padding: 15px;">
+              <p>No quedan citas disponibles.</p>
             </div>
           </el-card>
         </div>

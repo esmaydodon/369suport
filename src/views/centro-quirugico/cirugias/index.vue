@@ -111,6 +111,8 @@
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item icon="el-icon-edit" :command="{command: 'EDITAR',id: scope.row.id}">EDITAR</el-dropdown-item>
                       <el-dropdown-item v-if="scope.row.opcionsuspension == true" :command="{command: 'SUSPENSION',id: scope.row.id}">SUSPENSION</el-dropdown-item>
+                      <el-dropdown-item icon="el-icon-edit" :command="{command: 'VER',id: scope.row.id}">Ver detalles</el-dropdown-item>
+                      <el-dropdown-item icon="el-icon-edit" :command="{command: 'REGISTRODETALLE',id: scope.row.id}">Registrar Detalle</el-dropdown-item>
                       <el-dropdown-item icon="el-icon-remove" :command="{command: 'ELIMINAR',id: scope.row.id}">ELIMINAR</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -142,6 +144,31 @@
     >
       <agregar-editar-programacion-cirugia :programacion-cirugia-id="programacionCirugiaEditarId" @close="cerrarModalAgregarEditar" />
     </el-dialog>
+    <!-- Dialogo para Registro de detalle cirugia -->
+
+    <el-dialog
+      title="Detalle Cirugia"
+      top="1vh"
+      :visible.sync="modalRegistroDetalleCirugia"
+      :width="widthModal"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <registro-detalle-cirugia :programacion-cirugia="programacionRegistroDetalle_Id" @close="cerrarModalRegistroDetalle" />
+    </el-dialog>
+
+    <el-dialog
+      :title="tituloModalAgregarEditar"
+      :visible.sync="modalAgregarEditar"
+      top="1vh"
+      :width="widthModal"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <agregar-editar-programacion-cirugia :programacion-cirugia-id="programacionCirugiaEditarId" @close="cerrarModalAgregarEditar" />
+    </el-dialog>
     <!-- Dialogo para suspension cirugia -->
     <el-dialog
       title="SUSPENSION CIRUGIA"
@@ -160,16 +187,17 @@
 // Utilidades
 import { debounce } from '@/utils'
 import Swal from 'sweetalert2'
+// Componentes
+import AgregarEditarProgramacionCirugia from './components/agregar_editar_programacion'
+import RegistroDetalleCirugia from './components/registro_detalle_cirugia'
+import AgregarSuspensionCirugia from './components/suspension_cirugia'
+import Paginator from '@/components/Pagination'
 // Resource
 import ProgramacionCirugiaResource from '@/api/programacion-cirugia'
 const programacionCirugiaResource = new ProgramacionCirugiaResource()
-// Componentes
-import AgregarEditarProgramacionCirugia from './components/agregar_editar_programacion'
-import AgregarSuspensionCirugia from './components/suspension_cirugia'
-import Paginator from '@/components/Pagination'
 export default {
   name: 'Cirugias',
-  components: { AgregarEditarProgramacionCirugia, AgregarSuspensionCirugia, Paginator },
+  components: { AgregarEditarProgramacionCirugia, RegistroDetalleCirugia, AgregarSuspensionCirugia, Paginator },
   data() {
     return {
       loading: false,
@@ -187,7 +215,10 @@ export default {
       },
       programacionCirugiaEditarId: -5,
       modalSuspensionCirugia: false,
-      suspensionCirugiaProgramacionId: -6
+      suspensionCirugiaProgramacionId: -6,
+      // variables para el registro del detalle de la cirugia
+      modalRegistroDetalleCirugia: false,
+      programacionRegistroDetalle_Id: -5
     }
   },
   mounted() {
@@ -288,12 +319,24 @@ export default {
       if (command === 'ELIMINAR') {
         this.eliminarProgramacionCirugia(id)
       }
+      if (command === 'REGISTRODETALLE') {
+        this.abrirModalRegistroDetalle(id)
+      }
       if (command === 'SUSPENSION') {
         this.abrirModalSuspension(id)
       }
     },
-    disabledSuspension(id) {
-      console.log(id)
+    abrirModalRegistroDetalle(programacion_id) {
+      this.programacionRegistroDetalle_Id = programacion_id
+      this.$nextTick(() => {
+        this.modalRegistroDetalleCirugia = true
+      })
+    },
+    cerrarModalRegistroDetalle() {
+      this.modalRegistroDetalleCirugia = false
+      this.$nextTick(() => {
+        this.programacionRegistroDetalle_Id = -5
+      })
     },
     abrirModalSuspension(programacionCirugiaId) {
       this.tituloModalSuspension = 'REGISTRAR SUSPENSIÓN'

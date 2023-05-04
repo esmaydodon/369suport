@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class ProgramacionCirugiaResource extends Resource {
   constructor() {
-    super('programacioncirugia')
+    super('programacion_cirugia')
   }
 
   opcionesSeleccion(params) {

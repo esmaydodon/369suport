@@ -3,12 +3,19 @@ import request from '@/utils/request'
 
 class CategoriasCirugiaResource extends Resource {
   constructor() {
-    super('categoriascirugia')
+    super('categorias_cirugia')
   }
   cambiarEstado(id) {
     return request({
       url: '/' + this.uri + '/' + id + '/cambiarestado',
       method: 'post'
+    })
+  }
+  opciones(params) {
+    return request({
+      url: 'opcionesseleccion/categoriacirugia',
+      method: 'get',
+      params: params
     })
   }
 }
