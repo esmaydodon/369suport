@@ -106,9 +106,11 @@
               >
                 <template slot-scope="scope">
                   <el-dropdown trigger="click" @command="handleCommand">
-                    <el-button type="text" size="mini">OPCIONES <i class="el-icon-arrow-down el-icon--right" /></el-button>
-                    <el-dropdown-menu>
+                    <el-button type="text" size="mini">
+                      OPCIONES <i class="el-icon-arrow-down el-icon--right" /></el-button>
+                    <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item icon="el-icon-edit" :command="{command: 'EDITAR',id: scope.row.id}">EDITAR</el-dropdown-item>
+                      <el-dropdown-item v-if="scope.row.opcionsuspension == true" :command="{command: 'SUSPENSION',id: scope.row.id}">SUSPENSION</el-dropdown-item>
                       <el-dropdown-item icon="el-icon-remove" :command="{command: 'ELIMINAR',id: scope.row.id}">ELIMINAR</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -140,28 +142,41 @@
     >
       <agregar-editar-programacion-cirugia :programacion-cirugia-id="programacionCirugiaEditarId" @close="cerrarModalAgregarEditar" />
     </el-dialog>
+    <!-- Dialogo para suspension cirugia -->
+    <el-dialog
+      title="SUSPENSION CIRUGIA"
+      :visible.sync="modalSuspensionCirugia"
+      :width="widthModal"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <agregar-suspension-cirugia :programacion-cirugia-id="suspensionCirugiaProgramacionId" @close="cerrarModalSuspensionCirugia" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 // Utilidades
 import { debounce } from '@/utils'
-// Componentes
-import AgregarEditarProgramacionCirugia from './components/agregar_editar_programacion'
-import Paginator from '@/components/Pagination'
+import Swal from 'sweetalert2'
 // Resource
 import ProgramacionCirugiaResource from '@/api/programacion-cirugia'
 const programacionCirugiaResource = new ProgramacionCirugiaResource()
-import Swal from 'sweetalert2'
+// Componentes
+import AgregarEditarProgramacionCirugia from './components/agregar_editar_programacion'
+import AgregarSuspensionCirugia from './components/suspension_cirugia'
+import Paginator from '@/components/Pagination'
 export default {
   name: 'Cirugias',
-  components: { AgregarEditarProgramacionCirugia, Paginator },
+  components: { AgregarEditarProgramacionCirugia, AgregarSuspensionCirugia, Paginator },
   data() {
     return {
       loading: false,
       data: [],
       tituloModalAgregarEditar: '',
       modalAgregarEditar: false,
+      tituloModalSuspension: '',
       widthModal: '80%',
       listQuery: {
         total: 0,
@@ -170,7 +185,9 @@ export default {
         keyword: '',
         fechaProgramacion: new Date()
       },
-      programacionCirugiaEditarId: -5
+      programacionCirugiaEditarId: -5,
+      modalSuspensionCirugia: false,
+      suspensionCirugiaProgramacionId: -6
     }
   },
   mounted() {
@@ -271,6 +288,26 @@ export default {
       if (command === 'ELIMINAR') {
         this.eliminarProgramacionCirugia(id)
       }
+      if (command === 'SUSPENSION') {
+        this.abrirModalSuspension(id)
+      }
+    },
+    disabledSuspension(id) {
+      console.log(id)
+    },
+    abrirModalSuspension(programacionCirugiaId) {
+      this.tituloModalSuspension = 'REGISTRAR SUSPENSIÓN'
+      this.suspensionCirugiaProgramacionId = programacionCirugiaId
+      this.$nextTick(() => {
+        this.modalSuspensionCirugia = true
+      })
+    },
+    cerrarModalSuspensionCirugia() {
+      this.modalSuspensionCirugia = false
+      this.$nextTick(() => {
+        this.suspensionCirugiaProgramacionId = -5
+        this.listarCirugias()
+      })
     }
   }
 }
