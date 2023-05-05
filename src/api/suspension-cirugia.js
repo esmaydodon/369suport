@@ -3,7 +3,7 @@ import Resource from '@/api/resource'
 
 class SuspensionCirugiaResource extends Resource {
   constructor() {
-    super('suspensioncirugia')
+    super('suspencion_cirugia')
   }
 }
 
