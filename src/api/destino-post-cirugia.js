@@ -13,7 +13,7 @@ class DestinoPostCirugiaResource extends Resource {
   }
   opciones(params) {
     return request({
-      url: 'opcionesseleccion/destinopostcirugia',
+      url: 'opcionesseleccion/' + this.uri,
       method: 'get',
       params: params
     })

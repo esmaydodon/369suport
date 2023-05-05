@@ -13,7 +13,7 @@ class TiposCirugiaResource extends Resource {
   }
   opciones(params) {
     return request({
-      url: 'opcionesseleccion/tipocirugia',
+      url: 'opcionesseleccion/' + this.uri,
       method: 'get',
       params: params
     })
