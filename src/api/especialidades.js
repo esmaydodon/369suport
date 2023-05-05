@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class EspecialidadesResource extends Resource {
   constructor() {
-    super('especialidades')
+    super('especialidades_medicas')
   }
   desactivar(id) {
     return request({

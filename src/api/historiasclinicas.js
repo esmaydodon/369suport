@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class HistoriasClinicasResource extends Resource {
   constructor() {
-    super('historiasclinicas')
+    super('historia_clinica')
   }
 
   detalle(historiaclinica_id) {

@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 class AreasResource extends Resource {
   constructor() {
-    super('areas')
+    super('area')
   }
   desactivar(id) {
     return request({
