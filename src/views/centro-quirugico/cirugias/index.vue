@@ -180,6 +180,16 @@
     >
       <agregar-suspension-cirugia :programacion-cirugia-id="suspensionCirugiaProgramacionId" @close="cerrarModalSuspensionCirugia" />
     </el-dialog>
+    <el-dialog
+      title="DETALLE"
+      :visible.sync="modalVerDetalleCirugia"
+      fullscreen
+    >
+      <detalle-programacion-cirugia
+        :detalle-cirugia-id="cirugiaDetalleId"
+        @close="cerrarModalDetalle"
+      />
+    </el-dialog>
   </div>
 </template>
 
@@ -192,12 +202,13 @@ import AgregarEditarProgramacionCirugia from './components/agregar_editar_progra
 import RegistroDetalleCirugia from './components/registro_detalle_cirugia'
 import AgregarSuspensionCirugia from './components/suspension_cirugia'
 import Paginator from '@/components/Pagination'
+import DetalleProgramacionCirugia from './components/detalle_cirugia'
 // Resource
 import ProgramacionCirugiaResource from '@/api/programacion-cirugia'
 const programacionCirugiaResource = new ProgramacionCirugiaResource()
 export default {
   name: 'Cirugias',
-  components: { AgregarEditarProgramacionCirugia, RegistroDetalleCirugia, AgregarSuspensionCirugia, Paginator },
+  components: { DetalleProgramacionCirugia, AgregarEditarProgramacionCirugia, RegistroDetalleCirugia, AgregarSuspensionCirugia, Paginator },
   data() {
     return {
       loading: false,
@@ -218,6 +229,8 @@ export default {
       suspensionCirugiaProgramacionId: -6,
       // variables para el registro del detalle de la cirugia
       modalRegistroDetalleCirugia: false,
+      modalVerDetalleCirugia: false,
+      cirugiaDetalleId: -1,
       programacionRegistroDetalle_Id: -5
     }
   },
@@ -325,6 +338,9 @@ export default {
       if (command === 'SUSPENSION') {
         this.abrirModalSuspension(id)
       }
+      if (command === 'VER') {
+        this.abrirModalDetalle(id)
+      }
     },
     abrirModalRegistroDetalle(programacion_id) {
       this.programacionRegistroDetalle_Id = programacion_id
@@ -336,6 +352,18 @@ export default {
       this.modalRegistroDetalleCirugia = false
       this.$nextTick(() => {
         this.programacionRegistroDetalle_Id = -5
+      })
+    },
+    abrirModalDetalle(programacion_id) {
+      this.cirugiaDetalleId = programacion_id
+      this.$nextTick(() => {
+        this.modalVerDetalleCirugia = true
+      })
+    },
+    cerrarModalDetalle() {
+      this.modalVerDetalleCirugia = false
+      this.$nextTick(() => {
+        this.cirugiaDetalleId = -5
       })
     },
     abrirModalSuspension(programacionCirugiaId) {
