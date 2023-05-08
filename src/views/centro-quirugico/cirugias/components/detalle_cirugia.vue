@@ -130,8 +130,8 @@
 // const vinculoLaboralResource = new VinculoLaboralResource()
 import EspecialidadesResource from '@/api/especialidades'
 const especialidadesResource = new EspecialidadesResource()
-import DetalleCirugiaResource from '@/api/detalle_cirugia'
-const detalleCirugiaResource = new DetalleCirugiaResource()
+import ProgramacionCirugiaResource from '@/api/programacion-cirugia'
+const programacionCirugiaResource = new ProgramacionCirugiaResource()
 export default {
   name: 'DetalleProgramacionCirugia',
   props: {
@@ -230,7 +230,7 @@ export default {
     getDetalleProgramacionCirugia() {
       this.loading = true
       // console.log(this.detalleCirugiaId)
-      detalleCirugiaResource.get(this.detalleCirugiaId)
+      programacionCirugiaResource.get(this.detalleCirugiaId)
         .then(
           (response) => {
             this.data = response.data
