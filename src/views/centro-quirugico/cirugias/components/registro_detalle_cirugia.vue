@@ -36,309 +36,329 @@
     <el-form ref="formDetalleCirugia" :model="modeloFormulario" :rules="reglas">
       <el-row :gutter="15">
         <el-col :xs="24" :md="12">
-          <h3>Detalle Cirugia</h3>
-          <el-form-item label="ASA" prop="detallecirugia.asa_id">
-            <el-select
-              v-model="modeloFormulario.detallecirugia.asa_id"
-              clearable
+          <el-card>
+
+            <h3>Detalle Cirugia</h3>
+            <el-form-item label="ASA" prop="detallecirugia.asa_id">
+              <el-select
+                v-model="modeloFormulario.detallecirugia.asa_id"
+                clearable
+              >
+                <el-option
+                  v-for="item in opcionesAsa"
+                  :key="item.id"
+                  :label="item.nombre"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="Tipo cirugia"
+              prop="detallecirugia.tipo_cirugia_id"
             >
-              <el-option
-                v-for="item in opcionesAsa"
-                :key="item.id"
-                :label="item.nombre"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="Tipo cirugia"
-            prop="detallecirugia.tipo_cirugia_id"
-          >
-            <el-select
-              v-model="modeloFormulario.detallecirugia.tipo_cirugia_id"
-              clearable
+              <el-select
+                v-model="modeloFormulario.detallecirugia.tipo_cirugia_id"
+                clearable
+              >
+                <el-option
+                  v-for="item in opcionesTipoCirugia"
+                  :key="item.id"
+                  :label="item.nombre"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="Categoria cirugia"
+              prop="detallecirugia.categoria_cirugia_id"
             >
-              <el-option
-                v-for="item in opcionesTipoCirugia"
-                :key="item.id"
-                :label="item.nombre"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="Categoria cirugia"
-            prop="detallecirugia.categoria_cirugia_id"
-          >
-            <el-select
-              v-model="modeloFormulario.detallecirugia.categoria_cirugia_id"
-            >
-              <el-option
-                v-for="item in opcionesCategoriaCirugia"
-                :key="item.id"
-                :label="item.nombre"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-row :gutter="10">
-            <el-col :span="10">
-              <el-form-item
-                label="Equipo Completo"
-                prop="detallecirugia.equipo_completo"
+              <el-select
+                v-model="modeloFormulario.detallecirugia.categoria_cirugia_id"
               >
-                <el-switch
-                  v-model="modeloFormulario.detallecirugia.equipo_completo"
-                  active-text="SI"
-                  inactive-text="NO"
+                <el-option
+                  v-for="item in opcionesCategoriaCirugia"
+                  :key="item.id"
+                  :label="item.nombre"
+                  :value="item.id"
                 />
-              </el-form-item>
-            </el-col>
-            <el-col :span="14">
-              <el-form-item
-                label="Observacion equipo completo"
-                prop="detallecirugia.observaciones_equipo_completo"
-              >
-                <el-input
-                  v-model="
-                    modeloFormulario.detallecirugia
-                      .observaciones_equipo_completo
-                  "
-                  type="textarea"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="8">
-              <el-form-item
-                label="Check List Cirugia"
-                prop="detallecirugia.checklist"
-              >
-                <el-switch
-                  v-model="modeloFormulario.detallecirugia.checklist"
-                  active-text="SI"
-                  inactive-text="NO"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="16">
-              <el-form-item
-                label="Cirugia Segura"
-                prop="detallecirugia.cirugia_segura"
-              >
-                <el-switch
-                  v-model="modeloFormulario.detallecirugia.cirugia_segura"
-                  active-text="Completo"
-                  inactive-text="Incompleto"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="10">
-              <el-form-item
-                label="Fallecimiento del paciente"
-                prop="detallecirugia.fallecimiento_paciente"
-              >
-                <el-switch
-                  v-model="
-                    modeloFormulario.detallecirugia.fallecimiento_paciente
-                  "
-                  active-text="SI"
-                  inactive-text="NO"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="14">
-              <el-form-item
-                label="Observaciones fallecimiento del paciente"
-                prop="detallecirugia.observacion_fallecimiento_paciente"
-              >
-                <el-input
-                  v-model="
-                    modeloFormulario.detallecirugia
-                      .observacion_fallecimiento_paciente
-                  "
-                  type="textarea"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
+              </el-select>
+            </el-form-item>
+            <el-row :gutter="10">
+              <el-col :span="10">
+                <el-form-item
+                  label="Equipo Completo"
+                  prop="detallecirugia.equipo_completo"
+                >
+                  <el-switch
+                    v-model="modeloFormulario.detallecirugia.equipo_completo"
+                    active-text="SI"
+                    inactive-text="NO"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="14">
+                <el-form-item
+                  label="Observacion equipo completo"
+                  prop="detallecirugia.observaciones_equipo_completo"
+                >
+                  <el-input
+                    v-model="
+                      modeloFormulario.detallecirugia
+                        .observaciones_equipo_completo
+                    "
+                    type="textarea"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="8">
+                <el-form-item
+                  label="Check List Cirugia"
+                  prop="detallecirugia.checklist"
+                >
+                  <el-switch
+                    v-model="modeloFormulario.detallecirugia.checklist"
+                    active-text="SI"
+                    inactive-text="NO"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="16">
+                <el-form-item
+                  label="Cirugia Segura"
+                  prop="detallecirugia.cirugia_segura"
+                >
+                  <el-switch
+                    v-model="modeloFormulario.detallecirugia.cirugia_segura"
+                    active-text="Completo"
+                    inactive-text="Incompleto"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="10">
+                <el-form-item
+                  label="Fallecimiento del paciente"
+                  prop="detallecirugia.fallecimiento_paciente"
+                >
+                  <el-switch
+                    v-model="
+                      modeloFormulario.detallecirugia.fallecimiento_paciente
+                    "
+                    active-text="SI"
+                    inactive-text="NO"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="14">
+                <el-form-item
+                  label="Observaciones fallecimiento del paciente"
+                  prop="detallecirugia.observacion_fallecimiento_paciente"
+                >
+                  <el-input
+                    v-model="
+                      modeloFormulario.detallecirugia
+                        .observacion_fallecimiento_paciente
+                    "
+                    type="textarea"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
         </el-col>
         <el-col :xs="24" :md="12">
-          <h3>Detalle Cronologico</h3>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-form-item
-                label="Fecha y hora ingreso quirofano"
-                prop="detalleCronologico.hora_ingreso_quirofano"
-              >
-                <el-date-picker
-                  v-model="modeloFormulario.detalleCronologico.hora_ingreso_quirofano"
-                  type="datetime"
-                  placeholder="seleccionar"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item
-                label="Fecha y hora salida quirofano"
-                prop="detalleCronologico.hora_salida_quirofano"
-              >
-                <el-date-picker
-                  v-model="modeloFormulario.detalleCronologico.hora_salida_quirofano"
-                  type="datetime"
-                  placeholder="seleccionar"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-form-item
-                label="Fecha y hora inicio anestesia"
-                prop="detalleCronologico.hora_inicio_anestesia"
-              >
-                <el-date-picker
-                  v-model="modeloFormulario.detalleCronologico.hora_inicio_anestesia"
-                  type="datetime"
-                  placeholder="seleccionar"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item
-                label="Fecha y hora fin anestesia"
-                prop="detalleCronologico.hora_fin_anestesia"
-              >
-                <el-date-picker
-                  v-model="modeloFormulario.detalleCronologico.hora_fin_anestesia"
-                  type="datetime"
-                  placeholder="seleccionar"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-form-item
-                label="Fecha y hora inicio cirugia"
-                prop="detalleCronologico.hora_inicio_cirugia"
-              >
-                <el-date-picker
-                  v-model="modeloFormulario.detalleCronologico.hora_inicio_cirugia"
-                  type="datetime"
-                  placeholder="seleccionar"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item
-                label="Fecha y hora fin cirugia"
-                prop="detalleCronologico.hora_fin_cirugia"
-              >
-                <el-date-picker
-                  v-model="modeloFormulario.detalleCronologico.hora_fin_cirugia"
-                  placeholder="seleccionar"
-                  type="datetime"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-form-item
-                label="Alta postanestesia"
-                prop="detalleCronologico.alta_postanestesia"
-              >
-                <el-date-picker
-                  v-model="
-                    modeloFormulario.detalleCronologico.alta_postanestesia
-                  "
-                  type="datetime"
-                  placeholder="seleccionar"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-form-item
-                label="Destino postcirugia"
-                prop="detallecirugia.destino_postcirugia_id"
-              >
-                <el-select
-                  v-model="
-                    modeloFormulario.detallecirugia.destino_postcirugia_id
-                  "
+          <el-card>
+            <h3>Detalle Cronologico</h3>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item
+                  label="Fecha y hora ingreso quirofano"
+                  prop="detalleCronologico.hora_ingreso_quirofano"
                 >
-                  <el-option
-                    v-for="item in opcionesDestinosPoscirugia"
-                    :key="item.id"
-                    :label="item.nombre"
-                    :value="item.id"
+                  <el-date-picker
+                    v-model="modeloFormulario.detalleCronologico.hora_ingreso_quirofano"
+                    type="datetime"
+                    format="dd-MM-yyyy HH:mm"
+                    placeholder="seleccionar"
                   />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item
-                label="Cama destino"
-                prop="detallecirugia.cama_destino_id"
-              >
-                <!-- :rules="[
-                  {
-                    requiredIf: modeloFormulario.detallecirugia.checklist == true,
-                    message: 'Este campo es obligatorio',
-                    trigger: 'change',
-                  },
-                ]" -->
-                <el-autocomplete
-                  v-model="cama_id_label"
-                  :fetch-suggestions="buscarCama"
-                  placeholder="Buscar por codigo"
-                  style="width: 100%"
-                  @select="seleccionarCama"
-                />
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-      <el-divider />
-      <el-row>
-        <el-col :span="24">
-          <el-form-item
-            label="Operaciones realizadas"
-            prop="detallecirugia.operacionesRealizadas"
-          >
-            <el-autocomplete
-              v-model="searchoperaciones"
-              :fetch-suggestions="buscarOperaciones"
-              placeholder="Buscar por operacion"
-              style="width: 100%"
-              @select="seleccionarOperacion"
-            />
-            <div>
-              <el-table
-                :data="modeloFormulario.detallecirugia.operacionesRealizadas"
-              >
-                <el-table-column label="Operacion" prop="value" />
-                <el-table-column label="Opciones">
-                  <template slot-scope="scope">
-                    <el-button
-                      icon="el-icon-delete"
-                      @click="eliminarOperacion(scope.row.id)"
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="Fecha y hora salida quirofano"
+                  prop="detalleCronologico.hora_salida_quirofano"
+                >
+                  <el-date-picker
+                    v-model="modeloFormulario.detalleCronologico.hora_salida_quirofano"
+                    type="datetime"
+                    format="dd-MM-yyyy HH:mm"
+                    placeholder="seleccionar"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item
+                  label="Fecha y hora inicio anestesia"
+                  prop="detalleCronologico.hora_inicio_anestesia"
+                >
+                  <el-date-picker
+                    v-model="modeloFormulario.detalleCronologico.hora_inicio_anestesia"
+                    type="datetime"
+                    format="dd-MM-yyyy HH:mm"
+                    placeholder="seleccionar"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="Fecha y hora fin anestesia"
+                  prop="detalleCronologico.hora_fin_anestesia"
+                >
+                  <el-date-picker
+                    v-model="modeloFormulario.detalleCronologico.hora_fin_anestesia"
+                    type="datetime"
+                    format="dd-MM-yyyy HH:mm"
+                    placeholder="seleccionar"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item
+                  label="Fecha y hora inicio cirugia"
+                  prop="detalleCronologico.hora_inicio_cirugia"
+                >
+                  <el-date-picker
+                    v-model="modeloFormulario.detalleCronologico.hora_inicio_cirugia"
+                    type="datetime"
+                    format="dd-MM-yyyy HH:mm"
+                    placeholder="seleccionar"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="Fecha y hora fin cirugia"
+                  prop="detalleCronologico.hora_fin_cirugia"
+                >
+                  <el-date-picker
+                    v-model="modeloFormulario.detalleCronologico.hora_fin_cirugia"
+                    placeholder="seleccionar"
+                    format="dd-MM-yyyy HH:mm"
+                    type="datetime"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item
+                  label="Alta postanestesia"
+                  prop="detalleCronologico.alta_postanestesia"
+                >
+                  <el-date-picker
+                    v-model="
+                      modeloFormulario.detalleCronologico.alta_postanestesia
+                    "
+                    format="dd-MM-yyyy HH:mm"
+                    type="datetime"
+                    placeholder="seleccionar"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item
+                  label="Destino postcirugia"
+                  prop="detallecirugia.destino_postcirugia_id"
+                >
+                  <el-select
+                    v-model="
+                      modeloFormulario.detallecirugia.destino_postcirugia_id
+                    "
+                  >
+                    <el-option
+                      v-for="item in opcionesDestinosPoscirugia"
+                      :key="item.id"
+                      :label="item.nombre"
+                      :value="item.id"
                     />
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-form-item>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="Cama destino"
+                  prop="detallecirugia.cama_destino_id"
+                >
+                  <!-- :rules="[
+                    {
+                      requiredIf: modeloFormulario.detallecirugia.checklist == true,
+                      message: 'Este campo es obligatorio',
+                      trigger: 'change',
+                    },
+                  ]" -->
+                  <el-autocomplete
+                    v-model="cama_id_label"
+                    :fetch-suggestions="buscarCama"
+                    placeholder="Buscar por codigo"
+                    style="width: 100%"
+                    @select="seleccionarCama"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
         </el-col>
       </el-row>
       <el-divider />
+      <el-card>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item
+              label="Operaciones realizadas"
+              prop="detallecirugia.operacionesRealizadas"
+            >
+              <el-autocomplete
+                v-model="searchoperaciones"
+                :fetch-suggestions="buscarOperaciones"
+                placeholder="Buscar por operacion"
+                style="width: 100%"
+                @select="seleccionarOperacion"
+              />
+              <div>
+                <el-table
+                  :data="modeloFormulario.detallecirugia.operacionesRealizadas"
+                >
+                  <el-table-column label="Operacion" prop="value" />
+                  <el-table-column label="Opciones">
+                    <template slot-scope="scope">
+                      <el-button
+                        icon="el-icon-delete"
+                        @click="eliminarOperacion(scope.row.id)"
+                      />
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-card>
+      <el-card>
+        <el-form-item label="Observaciones">
+          <el-input v-model="modeloFormulario.detallecirugia.observaciones" type="textarea" :maxlength="500" show-word-limit />
+        </el-form-item>
+      </el-card>
+      <el-divider />
+
     </el-form>
     <el-row :gutter="10" :type="rowType" justify="center" style="padding: 10px">
       <el-col :xs="24" :sm="12" :md="6" style="text-align: center">
@@ -417,6 +437,7 @@ export default {
           observacion_fallecimiento_paciente: null,
           destino_postcirugia_id: null,
           cama_destino_id: null,
+          observaciones: null,
           operacionesRealizadas: []
         },
         detalleCronologico: {
@@ -515,6 +536,19 @@ export default {
           {
             required: true,
             message: 'Este campo es obligatorio',
+            trigger: 'change'
+          },
+          {
+            validator: (rule, value, callback) => {
+              console.log(value instanceof Date)
+              console.log(this.modeloFormulario.detalleCronologico.hora_fin_cirugia instanceof Date)
+              console.log(typeof this.modeloFormulario.detalleCronologico.hora_fin_cirugia)
+              console.log('resultado ' + value > this.modeloFormulario.detalleCronologico.hora_fin_cirugia)
+              if (value <= this.modeloFormulario.detalleCronologico.hora_fin_cirugia) {
+                callback(new Error('La salida del quirofano debe ser mayor al fin de la cirugia'))
+              }
+              callback()
+            },
             trigger: 'change'
           }
         ],
@@ -738,6 +772,42 @@ export default {
       })
     },
     close() {
+      this.programacion = {
+        fecha_cirugia: '',
+        operacion_programada: '',
+        paciente: ''
+      }
+      this.modeloFormulario = {
+        programacion_id: null,
+        detallecirugia: {
+          asa_id: null,
+          tipo_cirugia_id: null,
+          categoria_cirugia_id: null,
+          equipo_completo: false,
+          observaciones_equipo_completo: '',
+          checklist: false,
+          cirugia_segura: false,
+          fallecimiento_paciente: false,
+          observacion_fallecimiento_paciente: null,
+          destino_postcirugia_id: null,
+          cama_destino_id: null,
+          observaciones: null,
+          operacionesRealizadas: []
+        },
+        detalleCronologico: {
+          programacion_cirugia_id: null,
+          hora_ingreso_quirofano: null,
+          hora_salida_quirofano: null,
+          hora_inicio_anestesia: null,
+          hora_fin_anestesia: null,
+          hora_inicio_cirugia: null,
+          hora_fin_cirugia: null,
+          alta_postanestesia: null,
+          total_horas_efectivas: null,
+          horas_acto_quirurgico: null,
+          tiempo_recuperacion: null
+        }
+      }
       this.$emit('close')
     }
   }

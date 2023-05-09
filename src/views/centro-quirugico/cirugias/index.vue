@@ -109,10 +109,10 @@
                     <el-button type="text" size="mini">
                       OPCIONES <i class="el-icon-arrow-down el-icon--right" /></el-button>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item v-if="scope.row.suspencionregistrada == false && scope.row.detalleregistrado == false" icon="el-icon-edit" :command="{command: 'EDITAR',id: scope.row.id}">EDITAR</el-dropdown-item>
-                      <el-dropdown-item v-if="scope.row.suspencionregistrada == false && scope.row.detalleregistrado == false" :command="{command: 'SUSPENSION',id: scope.row.id}">SUSPENSION</el-dropdown-item>
                       <el-dropdown-item icon="el-icon-edit" :command="{command: 'VER',id: scope.row.id}">Ver detalles</el-dropdown-item>
+                      <el-dropdown-item v-if="scope.row.suspencionregistrada == false && scope.row.detalleregistrado == false" icon="el-icon-edit" :command="{command: 'EDITAR',id: scope.row.id}">EDITAR</el-dropdown-item>
                       <el-dropdown-item v-if="scope.row.suspencionregistrada == false && scope.row.detalleregistrado == false" icon="el-icon-edit" :command="{command: 'REGISTRODETALLE',id: scope.row.id}">Registrar Detalle</el-dropdown-item>
+                      <el-dropdown-item v-if="scope.row.suspencionregistrada == false && scope.row.detalleregistrado == false" :command="{command: 'SUSPENSION',id: scope.row.id}">SUSPENSION</el-dropdown-item>
                       <el-dropdown-item icon="el-icon-remove" :command="{command: 'ELIMINAR',id: scope.row.id}">ELIMINAR</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -336,6 +336,7 @@ export default {
       this.modalRegistroDetalleCirugia = false
       this.$nextTick(() => {
         this.programacionRegistroDetalle_Id = -5
+        this.listarCirugias()
       })
     },
     abrirModalSuspension(programacionCirugiaId) {
