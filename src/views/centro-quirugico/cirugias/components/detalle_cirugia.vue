@@ -171,6 +171,9 @@
             <el-descriptions-item v-if="data.detallecirugiaFallecimiento_paciente" label="Observacion Fallecimiento Paciente" :span="2">
               {{ data.detallecirugiaObservacion_fallecimiento_paciente }}
             </el-descriptions-item>
+            <el-descriptions-item label="Observacion Detalle Cirugia" :span="2">
+              {{ data.detallecirugiaObservaciones }}
+            </el-descriptions-item>
             <el-divider />
           </el-descriptions>
           <el-descriptions v-else title="SUSPENCION" direction="vertical" :column="4" border>
@@ -379,6 +382,7 @@ export default {
             cirugia_segura: '',
             fallecimiento_paciente: '',
             observacion_fallecimiento_paciente: '',
+            detallecirugiaObservaciones: '',
             asa: {
               id: undefined,
               nombre: '',
