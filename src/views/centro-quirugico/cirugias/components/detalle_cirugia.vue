@@ -85,51 +85,6 @@
               {{ data.tipo_anestesia_id_label }}
             </el-descriptions-item>
           </el-descriptions>
-          <!-- <el-descriptions title="Información de contacto" direction="vertical" :column="4" border>
-            <el-descriptions-item label="Teléfono" :span="4">
-              {{ data.persona.telefono }}
-            </el-descriptions-item>
-            <el-descriptions-item label="Correo electronico" :span="4">
-              {{ data.persona.correo }}
-            </el-descriptions-item>
-          </el-descriptions> -->
-          <el-divider />
-          <!-- <el-descriptions title="Información geográfica" direction="vertical" :column="4" border>
-            <el-descriptions-item label="REGIÓN" :span="4">
-              {{ data.region }}
-            </el-descriptions-item>
-            <el-descriptions-item label="PROVINCIA" :span="4">
-              {{ data.provincia }}
-            </el-descriptions-item>
-            <el-descriptions-item label="DISTRITO" :span="4">
-              {{ data.distrito }}
-            </el-descriptions-item>
-          </el-descriptions> -->
-          <el-divider />
-          <!-- <div style="width: 100%;height: calc(60vh - 80px);overflow: auto; padding-top: 20px;">
-            <el-descriptions title="Especialidades" direction="vertical" :column="4" border>
-              <el-descriptions-item label="Especialidades" :span="4">
-                <el-table
-                  :data="data.especialdadpeersona"
-                  style="height: calc(60vh - 80px);"
-                >
-                  <el-table-column label="#" type="index" />
-                  <el-table-column label="Especialidad">
-                    <template slot-scope="scope">
-                      {{ scope.row.especialidad.nombre }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="Estado" prop="activo">
-                    <template slot-scope="scope">
-                      <el-tag v-if="scope.row.especialidad.activo" type="primary">Activo</el-tag>
-                      <el-tag v-else type="warning">Inactivo</el-tag>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-descriptions-item>
-            </el-descriptions>
-          </div> -->
-          <el-divider />
         </div>
       </el-col>
       <el-col :xs="24" :md="16">
@@ -253,54 +208,6 @@ export default {
         persona_id: null,
         nro_historia_clinica: null,
         nro_historia_clinica_fisica: null,
-        persona: {
-          id: null,
-          tipo_doc_identidad: null,
-          doc_identidad: null,
-          nombres: null,
-          apellido_paterno: null,
-          apellido_materno: null,
-          fecha_nacimiento: null,
-          nombre_completo: null,
-          sexo: null,
-          telefono: null,
-          correo: null,
-          distrito_id: null,
-          direccion: null,
-          provincia_id: null,
-          region_id: null,
-          distrito: null,
-          provincia: null,
-          region: null
-        },
-        especialdadpeersona: [
-          {
-            id: null,
-            persona_id: null,
-            especialidad_id: null,
-            especialidad: {
-              id: null,
-              codigo: null,
-              nombre: null,
-              abreviatura: null,
-              activo: null
-            }
-          }
-        ],
-        area: {
-          id: null,
-          abreviatura: '',
-          nombre: ''
-        },
-        cargo: {
-          id: null,
-          abreviatura: '',
-          nombre: ''
-        },
-        tipopersonal: {
-          id: undefined,
-          nombre: ''
-        },
         detalleCirugia: {
           id: undefined,
           nro_historia_clinica: '',
