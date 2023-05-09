@@ -3,50 +3,98 @@
     <el-row :gutter="10">
       <el-col :xs="24" :md="8">
         <div style="width: 100%;height: calc(100vh - 165px);overflow: auto; padding-top: 20px;">
-          <el-descriptions title="Información personal" direction="vertical" :column="4" border>
-            <!-- <el-descriptions-item label="Nro. historia clinica" :span="2">
-              {{ data.nro_historia_clinica }}
-            </el-descriptions-item>
-            <el-descriptions-item label="Nro. historia clinica fisica" :span="2">
-              {{ data.nro_historia_clinica_fisica }}
-            </el-descriptions-item> -->
-            <el-descriptions-item label="Tipo doc. identidad" :span="2">
-              <template v-if="data.persona.tipo_doc_identidad === 1">
-                DNI
-              </template>
-              <template v-else>
-                CARNET EXTRANGERIA
+          <el-descriptions title="" direction="vertical" :column="4" border>
+            <el-descriptions-item label="N° Historia Clinica" :span="2">
+              <template>
+                {{ data.nro_historia_clinica }}
               </template>
             </el-descriptions-item>
-            <el-descriptions-item label="Nro doc. identidad" :span="2">
-              {{ data.persona.doc_identidad }}
+            <el-descriptions-item label="Paciente" :span="2">
+              {{ data.paciente }}
             </el-descriptions-item>
-            <el-descriptions-item label="Nombre" :span="4">
-              {{ data.persona.nombre_completo }}
+            <el-descriptions-item label="Fecha De Cirugia" :span="2">
+              {{ data.fecha_cirugia }}
             </el-descriptions-item>
-            <el-descriptions-item label="Fecha de nacimiento" :span="2">
-              {{ data.persona.fecha_nacimiento }}
+            <el-descriptions-item label="Sala De Operaciones" :span="2">
+              {{ data.sala_operacion }}
             </el-descriptions-item>
-            <el-descriptions-item label="Sexo" :span="2">
-              <template v-if="data.persona.sexo === 'M'">
-                MASCULINO
-              </template>
-              <template v-else>
-                FEMENINO
-              </template>
+            <el-descriptions-item label="Turno" :span="2">
+              {{ data.turno }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Cama De Origen" :span="2">
+              {{ data.cama_origen }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Diagnosticon" :span="2">
+              {{ data.diagnostico }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Operacion Programada" :span="2">
+              {{ data.operacion_programada_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Observacion" :span="4">
+              {{ data.observacion }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Anestesiologo 1" :span="2">
+              {{ data.anestesiologo_1_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Anestesiologo 2" :span="2">
+              {{ data.anestesiologo_2_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Cirujano 1" :span="2">
+              {{ data.cirujano_1_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Cirujano 2" :span="2">
+              {{ data.cirujano_2_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Cirujano 3" :span="4">
+              {{ data.cirujano_3_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Medico residente anastesiologo 1" :span="2">
+              {{ data.medico_residente_anestesiologo_1_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Medico residente anastesiologo 2" :span="2">
+              {{ data.medico_residente_anestesiologo_2_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Medico Residente Cirugia 1" :span="2">
+              {{ data.medico_residente_cirugia_1_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Medico Residente Cirugia 2" :span="2">
+              {{ data.medico_residente_cirugia_2_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Licenciada Instrumentista 1" :span="2">
+              {{ data.licenciada_instrumentista_1_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Licenciada Instrumentista 2" :span="2">
+              {{ data.licenciada_instrumentista_2_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Licenciada Circulante 1" :span="2">
+              {{ data.licenciada_circulante_1_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Licenciada Circulante 2" :span="2">
+              {{ data.licenciada_circulante_2_id_label }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Turno Anestesiologo" :span="2">
+              {{ data.turno_anestesiologo }}
+            </el-descriptions-item>
+            <el-descriptions-item label="SIS" :span="2">
+              <el-switch v-model="data.sis" active-color="#13ce66" inactive-color="#ff4949" />
+            </el-descriptions-item>
+            <el-descriptions-item label="Condicional" :span="2">
+              <el-switch v-model="data.condicional" active-color="#13ce66" inactive-color="#ff4949" />
+            </el-descriptions-item>
+            <el-descriptions-item label="Tipo Anestesia" :span="2">
+              {{ data.tipo_anestesia_id_label }}
             </el-descriptions-item>
           </el-descriptions>
-          <el-divider />
-          <el-descriptions title="Información de contacto" direction="vertical" :column="4" border>
+          <!-- <el-descriptions title="Información de contacto" direction="vertical" :column="4" border>
             <el-descriptions-item label="Teléfono" :span="4">
               {{ data.persona.telefono }}
             </el-descriptions-item>
             <el-descriptions-item label="Correo electronico" :span="4">
               {{ data.persona.correo }}
             </el-descriptions-item>
-          </el-descriptions>
+          </el-descriptions> -->
           <el-divider />
-          <el-descriptions title="Información geográfica" direction="vertical" :column="4" border>
+          <!-- <el-descriptions title="Información geográfica" direction="vertical" :column="4" border>
             <el-descriptions-item label="REGIÓN" :span="4">
               {{ data.region }}
             </el-descriptions-item>
@@ -56,9 +104,9 @@
             <el-descriptions-item label="DISTRITO" :span="4">
               {{ data.distrito }}
             </el-descriptions-item>
-          </el-descriptions>
+          </el-descriptions> -->
           <el-divider />
-          <div style="width: 100%;height: calc(60vh - 80px);overflow: auto; padding-top: 20px;">
+          <!-- <div style="width: 100%;height: calc(60vh - 80px);overflow: auto; padding-top: 20px;">
             <el-descriptions title="Especialidades" direction="vertical" :column="4" border>
               <el-descriptions-item label="Especialidades" :span="4">
                 <el-table
@@ -80,36 +128,89 @@
                 </el-table>
               </el-descriptions-item>
             </el-descriptions>
-          </div>
+          </div> -->
           <el-divider />
         </div>
       </el-col>
       <el-col :xs="24" :md="16">
         <div style="width: 100%;height: calc(100vh - 165px);overflow: auto;">
-          <el-descriptions title="ÁREA - CARGO" direction="vertical" :column="4" border>
-            <el-descriptions-item label="ÁREA" :span="1">
-              {{ data.area.nombre }}
+          <el-descriptions v-if="data.detallecirugia" title="DETALLE" direction="vertical" :column="4" border>
+            <el-descriptions-item label="Destino Post Cirugia" :span="1">
+              {{ data.destinoPostCirugiaLabel }}
             </el-descriptions-item>
-            <el-descriptions-item label="CARGO" :span="1">
-              {{ data.cargo.nombre }}
+            <el-descriptions-item label="Tipo Cirugia" :span="1">
+              {{ data.tiposCirugiaLabel }}
             </el-descriptions-item>
-            <el-descriptions-item label="TIPO PERSONAL" :span="2">
-              {{ data.tipopersonal.nombre }}
+            <el-descriptions-item label="ASA" :span="2">
+              {{ data.asaLabel }}
             </el-descriptions-item>
-            <el-descriptions-item label="FECHA INICIO" :span="2">
-              {{ data.fecha_inicio }}
+            <el-descriptions-item label="Categoria Cirugia" :span="1">
+              {{ data.categoriasCirugiaLabel }}
             </el-descriptions-item>
-            <el-descriptions-item label="FECHA FIN" :span="2">
-              {{ data.fecha_fin }}
+            <el-descriptions-item label="Cama Destino" :span="2">
+              {{ data.nroCamaDestino }}
             </el-descriptions-item>
-            <el-descriptions-item label="FECHA BAJA" :span="2">
-              {{ data.fecha_baja }}
+            <el-descriptions-item label="Equipo Completo" :span="2">
+              <el-switch v-model="data.detallecirugiaEquipoCompleto" active-color="#13ce66" inactive-color="#ff4949" />
             </el-descriptions-item>
-            <el-descriptions-item label="MOTIVO BAJA" :span="2">
-              {{ data.motivo_baja }}
+            <el-descriptions-item v-if="data.detallecirugiaEquipoCompleto" label="Equipo Completo Observacion" :span="2">
+              {{ data.detallecirugiaEquipoCompletoObservacion }}
             </el-descriptions-item>
-            <el-descriptions-item label="FECHA RENUNCIA" :span="4">
-              {{ data.fecha_renuncia }}
+            <!-- <el-descriptions-item label="Checklist" :span="2">
+              {{ data.detallecirugiaChecklist }}
+            </el-descriptions-item> -->
+            <el-descriptions-item label="Checklist" :span="2">
+              <el-switch v-model="data.detallecirugiaChecklist" active-color="#13ce66" inactive-color="#ff4949" />
+            </el-descriptions-item>
+            <el-descriptions-item label="Cirugia Segura" :span="2">
+              <el-switch v-model="data.detallecirugiaCirugia_segura" active-color="#13ce66" inactive-color="#ff4949" />
+            </el-descriptions-item>
+            <el-descriptions-item label="Fallecimiento Paciente" :span="2">
+              <el-switch v-model="data.detallecirugiaFallecimiento_paciente" active-color="#13ce66" inactive-color="#ff4949" />
+            </el-descriptions-item>
+            <el-descriptions-item v-if="data.detallecirugiaFallecimiento_paciente" label="Observacion Fallecimiento Paciente" :span="2">
+              {{ data.detallecirugiaObservacion_fallecimiento_paciente }}
+            </el-descriptions-item>
+            <el-divider />
+          </el-descriptions>
+          <el-descriptions v-else title="SUSPENCION" direction="vertical" :column="4" border>
+            <el-descriptions-item label="Destino Post Cirugia" :span="1">
+              {{ data.motivoSuspensionCirugia }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Doctor Suspencion Cirugía" :span="1">
+              {{ data.doctorSuspensionCirugia }}
+            </el-descriptions-item>
+          </el-descriptions>
+          <el-descriptions v-if="data.detallecirugiaEquipoCompleto" title="Detalle Cronológico" direction="vertical" :column="4" border>
+            <el-descriptions-item label="Hora Ingreso Quirofano" :span="2">
+              {{ data.detallecronologico.hora_ingreso_quirofano }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Hora Salida Quirofano" :span="2">
+              {{ data.detallecronologico.hora_salida_quirofano }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Hora Iinicio Anestesia" :span="2">
+              {{ data.detallecronologico.hora_inicio_anestesia }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Hora fin Anestesia" :span="2">
+              {{ data.detallecronologico.hora_fin_anestesia }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Hora Inicio Cirugia" :span="2">
+              {{ data.detallecronologico.hora_inicio_cirugia }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Hora Fin Cirugia" :span="2">
+              {{ data.detallecronologico.hora_fin_cirugia }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Alta Post Anestesia" :span="2">
+              {{ data.detallecronologico.alta_postanestesia }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Total Horas Efectivas" :span="2">
+              {{ data.detallecronologico.total_horas_efectivas }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Horas Acto Quirurgico" :span="2">
+              {{ data.detallecronologico.horas_acto_quirurgico }}
+            </el-descriptions-item>
+            <el-descriptions-item label="Tiempo Recuperacion" :span="2">
+              {{ data.detallecronologico.tiempo_recuperacion }}
             </el-descriptions-item>
           </el-descriptions>
         </div>
@@ -196,6 +297,124 @@ export default {
         tipopersonal: {
           id: undefined,
           nombre: ''
+        },
+        detalleCirugia: {
+          id: undefined,
+          nro_historia_clinica: '',
+          historia_clinica_paciente_id: undefined,
+          paciente: '',
+          fecha_cirugia: '',
+          sala_operaciones_id: undefined,
+          sala_operacion: '',
+          turno: '',
+          cama_origen: '',
+          cama_id: '',
+          equipoquirurgico_id: undefined,
+          diagnostico_id: undefined,
+          diagnostico: '',
+          operacion_programada_id_label: '',
+          operacion_programada_id: undefined,
+          duracion_programada: '',
+          observacion: '',
+          anestesiologo_1_id_label: '',
+          anestesiologo_1_id: undefined,
+          anestesiologo_2_id_label: '',
+          anestesiologo_2_id: undefined,
+          cirujano_1_id_label: '',
+          cirujano_1_id: undefined,
+          cirujano_2_id_label: '',
+          cirujano_2_id: undefined,
+          cirujano_3_id_label: '',
+          cirujano_3_id: undefined,
+          medico_residente_anestesiologo_1_id_label: '',
+          medico_residente_anestesiologo_1_id: undefined,
+          medico_residente_anestesiologo_2_id_label: '',
+          medico_residente_anestesiologo_2_id: undefined,
+          medico_residente_cirugia_1_id_label: '',
+          medico_residente_cirugia_1_id: undefined,
+          medico_residente_cirugia_2_id_label: '',
+          medico_residente_cirugia_2_id: undefined,
+          licenciada_instrumentista_1_id_label: '',
+          licenciada_instrumentista_1_id: undefined,
+          licenciada_instrumentista_2_id_label: '',
+          licenciada_instrumentista_2_id: undefined,
+          licenciada_circulante_1_id_label: '',
+          licenciada_circulante_1_id: undefined,
+          licenciada_circulante_2_id_label: '',
+          licenciada_circulante_2_id: undefined,
+          // suspension_cirugia_id: undefined,
+          turno_anestesiologo: null,
+          sis: null,
+          condicional: null,
+          tipo_anestesia_id_label: null,
+          tipo_anestesia_id: undefined,
+          destinoPostCirugiaLabel: '',
+          tiposCirugiaLabel: '',
+          asaLabel: '',
+          categoriasCirugiaLabel: '',
+          doctorSuspensionCirugia: '',
+          motivoSuspensionCirugia: '',
+          nroCamaDestino: '',
+          detallecirugiaEquipoCompleto: '',
+          detallecirugiaEquipoCompletoObservacion: '',
+          detallecirugiaFallecimiento_paciente: '',
+          detallecirugiaObservacion_fallecimiento_paciente: '',
+          detallecirugiaChecklist: '',
+          suspensionCirugia: {
+            id: undefined,
+            doctor_suspende_cirugia: undefined,
+            motivo_suspension: ''
+          },
+          detallecirugia: {
+            id: undefined,
+            programacion_cirugia_id: undefined,
+            destino_postcirugia_id: undefined,
+            cama_destino_id: undefined,
+            asa_id: undefined,
+            tipo_cirugia_id: undefined,
+            categoria_cirugia_id: undefined,
+            equipo_completo: undefined,
+            observaciones_equipo_completo: '',
+            checklist: '',
+            cirugia_segura: '',
+            fallecimiento_paciente: '',
+            observacion_fallecimiento_paciente: '',
+            asa: {
+              id: undefined,
+              nombre: '',
+              abreviatura: '',
+              activo: ''
+            },
+            tipos_cirugia: {
+              id: undefined,
+              nombre: '',
+              activo: ''
+            },
+            destinos_post_cirugia: {
+              id: undefined,
+              nombre: '',
+              activo: ''
+            },
+            categorias_cirugia: {
+              id: undefined,
+              nombre: '',
+              activo: ''
+            }
+          },
+          detallecronologico: {
+            id: undefined,
+            programacion_cirugia_id: undefined,
+            hora_ingreso_quirofano: '',
+            hora_salida_quirofano: '',
+            hora_inicio_anestesia: '',
+            hora_fin_anestesia: '',
+            hora_inicio_cirugia: '',
+            hora_fin_cirugia: '',
+            alta_postanestesia: '',
+            total_horas_efectivas: '',
+            horas_acto_quirurgico: '',
+            tiempo_recuperacion: ''
+          }
         }
       }
     }
@@ -203,7 +422,7 @@ export default {
   watch: {
     detalleCirugiaId(newValue, oldValue) {
       if (newValue > 0 && newValue !== oldValue) {
-        console.log('this.detalleCirugiaId')
+        // console.log('this.detalleCirugiaId')
         this.getDetalleProgramacionCirugia()
       }
     }

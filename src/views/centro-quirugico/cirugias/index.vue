@@ -181,7 +181,7 @@
       <agregar-suspension-cirugia :programacion-cirugia-id="suspensionCirugiaProgramacionId" @close="cerrarModalSuspensionCirugia" />
     </el-dialog>
     <el-dialog
-      title="DETALLE"
+      title="Detalle De Programación De Cirugía"
       :visible.sync="modalVerDetalleCirugia"
       fullscreen
     >
