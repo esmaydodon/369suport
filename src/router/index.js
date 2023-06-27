@@ -6,8 +6,9 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import AdministracionRoutes from './modules/administracion'
-import DesarrolloRoutes from './modules/desarrollo'
-import CentroQuirurgicoRoutes from './modules/centro-quirurgico'
+import SoporteRoutes from './modules/soporte'
+// import DesarrolloRoutes from './modules/desarrollo'
+// import CentroQuirurgicoRoutes from './modules/centro-quirurgico'
 
 /* Router Modules */
 // import componentsRouter from './modules/components'
@@ -115,23 +116,24 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   AdministracionRoutes,
-  DesarrolloRoutes,
-  CentroQuirurgicoRoutes,
-  {
-    path: '/historiasclinicas',
-    component: Layout,
-    redirect: '/historiasclinicas/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/publics/historiasclinicas'),
-        name: 'HistoriasClinicas',
-        meta: { title: 'Historias Clinicas', icon: 'custom-list-to-do', noCache: true }
-      }
-    ]
-  },
+  SoporteRoutes
+  // DesarrolloRoutes
+  // CentroQuirurgicoRoutes,
+  // {
+  //   path: '/historiasclinicas',
+  //   component: Layout,
+  //   redirect: '/historiasclinicas/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/publics/historiasclinicas'),
+  //       name: 'HistoriasClinicas',
+  //       meta: { title: 'Historias Clinicas', icon: 'custom-list-to-do', noCache: true }
+  //     }
+  //   ]
+  // },
   // 404 page must be placed at the end a!!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
