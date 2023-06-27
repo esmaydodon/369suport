@@ -13,12 +13,12 @@ const DesarrolloRoutes = {
     ]
   },
   children: [
-    {
-      path: 'calendario',
-      component: () => import('@/views/desarrollo/calendario'),
-      name: 'Calendario',
-      meta: { title: 'Calendario', icon: 'table', noCache: true }
-    }
+    // {
+    //   path: 'calendario',
+    //   component: () => import('@/views/desarrollo/calendario'),
+    //   name: 'Calendario',
+    //   meta: { title: 'Calendario', icon: 'table', noCache: true }
+    // }
   ]
 }
 

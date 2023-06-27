@@ -96,7 +96,7 @@
                 prop="nro_historia_clinica"
                 label="N° HISTORIA CLINICA"
                 min-width="210"
-              />}
+              />
               <el-table-column
                 header-align="center"
                 align="center"
